@@ -1,0 +1,239 @@
+/*-- My Dashboard--*/
+
+.my-dash {
+	.side-menu .slide li a {
+	  position: relative;
+	}
+  
+	.slide, li {
+	  list-style-type: none;
+	}
+  
+	.side-menu li ul li a.active:before {
+	  display: none;
+	}
+  
+	.side-menu__item {
+	  position: relative;
+	  display: -webkit-box;
+	  display: -ms-flexbox;
+	  display: flex;
+	  -webkit-box-align: center;
+	  -ms-flex-align: center;
+	  align-items: center;
+	  padding: 0.75rem 1.25rem;
+	  font-size: 14px;
+	  -webkit-transition: border-left-color 0.3s ease, background-color 0.3s ease;
+	  -o-transition: border-left-color 0.3s ease, background-color 0.3s ease;
+	  transition: border-left-color 0.3s ease, background-color 0.3s ease;
+	  border-top: 1px solid $border;
+	}
+  
+	&.app-sidebar .mCSB_draggerContainer {
+	  right: -11px;
+	}
+  
+	.side-menu__icon {
+	  -webkit-box-flex: 0;
+	  -ms-flex: 0 0 auto;
+	  flex: 0 0 auto;
+	  width: 25px;
+	}
+  
+	.side-menu__label {
+	  white-space: nowrap;
+	  -webkit-box-flex: 1;
+	  -ms-flex: 1 1 auto;
+	  flex: 1 1 auto;
+	}
+  
+	.slide.is-expanded [data-toggle='slide'] {
+	  border-bottom: 0px solid $border;
+	}
+  
+	.side-menu li {
+	  a {
+		border-top: 1px solid $border;
+	  }
+  
+	  ul li a {
+		border-top: 0;
+		border-bottom: 0;
+	  }
+	}
+  
+	&.app-sidebar {
+	  .side-menu li a.active {
+		background: none !important;
+	  }
+  
+	  .slide-menu li.active > a {
+		font-weight: 500;
+	  }
+	}
+  
+	.slide-menu li ul {
+	  li {
+		font-size: 12px !important;
+		font-weight: 300;
+		border-bottom: 0px solid $border;
+	  }
+  
+	  a {
+		padding: 10px 10px 10px 65px;
+	  }
+	}
+  
+	.side-menu .slide-menu li a {
+	  font-size: 13px;
+	}
+  
+	&.slide ul li a {
+	  color: $color;
+	  font-weight: 400;
+	}
+  
+	&.app-sidebar-footer {
+	  clear: both;
+	  display: block;
+	  color: $white;
+	  position: fixed;
+	  bottom: 0px;
+	  background: $white;
+	  width: 228px;
+	  z-index: 999;
+	  border-top: 1px solid $border;
+	}
+  
+	.app-sidebar-footer a {
+	  padding: 10px 0;
+	  text-align: center;
+	  width: 20%;
+	  color: $white;
+	  font-size: 15px;
+	  display: block;
+	  float: left;
+	  cursor: pointer;
+	  border-right: 1px solid $border;
+	  border-bottom: 1px solid $border;
+  
+	  &:hover {
+		background: rgba(255, 255, 255, 0.02);
+	  }
+	}
+  
+	.slide ul ul a {
+	  font-size: 13px !important;
+	  padding: 0px 0px 0px 64px !important;
+	}
+  
+	&.app-sidebar ul li a {
+	  color: $color;
+	  font-weight: 400;
+	}
+  
+	.slide.is-expanded {
+	  .slide-menu {
+		display: block;
+		background: $white;
+	  }
+  
+	  .angle {
+		-webkit-transform: rotate(90deg);
+		-ms-transform: rotate(90deg);
+		transform: rotate(90deg);
+	  }
+	}
+  
+	.slide-menu, .child-sub-menu {
+	  display: none;
+	}
+  
+	.sub-slide {
+	  &.is-expanded {
+		.child-sub-menu {
+		  display: block;
+		  background: $white;
+		}
+  
+		.sub-angle {
+		  -webkit-transform: rotate(90deg);
+		  -ms-transform: rotate(90deg);
+		  transform: rotate(90deg);
+		}
+	  }
+  
+	  .sub-angle {
+		-webkit-transform-origin: center;
+		-ms-transform-origin: center;
+		transform-origin: center;
+		-webkit-transition: -webkit-transform 0.3s ease;
+		transition: -webkit-transform 0.3s ease;
+		-o-transition: transform 0.3s ease;
+		transition: transform 0.3s ease;
+		transition: transform 0.3s ease, -webkit-transform 0.3s ease;
+		margin-right: 20px;
+	  }
+	}
+  
+	.slide-item {
+	  display: -webkit-box;
+	  display: -ms-flexbox;
+	  display: flex;
+	  -webkit-box-align: center;
+	  -ms-flex-align: center;
+	  align-items: center;
+	  padding: 0px 0px 0px 45px;
+	  font-size: 13px;
+	  color: #3e4b5b;
+	  height: 33px;
+	  line-height: 40px;
+	}
+  
+	&.app-sidebar .side-menu .slide-menu li:last-child {
+	  padding-bottom: 10px;
+	  border-bottom: 0;
+	}
+  
+	.slide-item .icon {
+	  margin-right: 5px;
+	}
+  
+	.angle {
+	  -webkit-transform-origin: center;
+	  -ms-transform-origin: center;
+	  transform-origin: center;
+	  -webkit-transition: -webkit-transform 0.3s ease;
+	  transition: -webkit-transform 0.3s ease;
+	  -o-transition: transform 0.3s ease;
+	  transition: transform 0.3s ease;
+	  transition: transform 0.3s ease, -webkit-transform 0.3s ease;
+	}
+  
+	.app-sidebar ul li a {
+	  color: $color;
+	  font-weight: 400;
+	}
+  
+	.slide.is-expanded {
+	  .slide-menu {
+		display: block !important;
+	  }
+  
+	  .angle {
+		-webkit-transform: rotate(90deg);
+		-ms-transform: rotate(90deg);
+		transform: rotate(90deg);
+	  }
+	}
+  
+	.slide-menu {
+	  display: none;
+	}
+  
+	.child-sub-menu li a {
+	  border-top: 0px solid rgba(0, 0, 0, 0.06) !important;
+	}
+  }
+  
+  /*-- My Dashboard--*/

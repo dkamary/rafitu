@@ -1,0 +1,9 @@
+.bg-background::before,
+.bg-background2::before,
+.bg-background-color::before,
+.bg-background3::before,
+.bg-background-5::before,
+.bg-background-6::before,
+.slider-header .item::before {
+    background: linear-gradient(-225deg, #0096c9 0%, darken(#0096c9, 1) 48%, darken(#0096c9, 3) 100%);
+}

@@ -1,0 +1,30 @@
+/*----- Ratings -----*/
+.rating-stars {
+	display: inline-block;
+	cursor: pointer;
+	color: #ebeefb;
+	font-size: 30px !important;
+	i{
+		padding: 5px 8px;
+
+	}
+	&.sm {
+		display: inline-block;
+		font-size: 14px;
+		color: #83829c;
+		cursor: pointer;
+		padding: 1px;
+	}
+	&.is--active,
+	&.is--hover {
+		color: #f1c40f;
+	}
+	&.is--no-hover,
+	.fa-heart .is--no-hover {
+		color: #3e4b5b;
+	}
+}
+.rating-star .jq-star {
+	width: 15px !important;
+	height: 15px !important;
+}
