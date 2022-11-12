@@ -9,7 +9,7 @@ class Vehicule extends Model
     protected $table = 'vehicle';
     protected $primaryKey = 'id';
     protected $fillable = ['owner_id', 'registration', 'country_id', 'vehicle_brand_id', 'vehicle_model_id', 'allow_animal', 'allow_smoker', 'seats_available', 'is_active'];
-    public $timestamp = false;
+    public $timestamps = false;
 
     protected $country = null;
     protected $owner = null;

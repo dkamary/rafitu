@@ -10,5 +10,5 @@ class VehiculeBrand extends Model
     protected $table = 'vehicle_brand';
     protected $primaryKey = 'id';
     protected $fillable = ['code', 'name', 'logo', 'is_active'];
-    public $timestamp = false;
+    public $timestamps = false;
 }

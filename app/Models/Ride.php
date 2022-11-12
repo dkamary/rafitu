@@ -16,5 +16,5 @@ class Ride extends Model
         'ride_status_id',
         'created_at', 'updated_at',
     ];
-    public $timestamp = false;
+    public $timestamps = false;
 }

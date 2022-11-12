@@ -27,10 +27,10 @@
 						<div class="d-flex">
 							@include('_partials.back.header.brand')
 
-							@include('_partials.back.header.search')
+							{{-- @include('_partials.back.header.search') --}}
 
 							<div class="d-flex order-lg-2 ms-auto  header-right">
-								@include('_partials.back.header.search-2')
+								{{-- @include('_partials.back.header.search-2') --}}
 
 								<div class="p-0 mb-0 navbar navbar-expand-lg  responsive-navbar navbar-dark  ">
 									<div class="navbar-collapse collapse" id="navbarSupportedContent-4">
@@ -41,9 +41,9 @@
 
 											{{-- @include('_partials.back.header.notifications') --}}
 
-											@include('_partials.back.header.inbox-preview')
+											{{-- @include('_partials.back.header.inbox-preview') --}}
 
-											@include('_partials.back.header.main-app')
+											{{-- @include('_partials.back.header.main-app') --}}
 
 											@include('_partials.back.header.user-menu')
 										</div>

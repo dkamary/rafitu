@@ -7,7 +7,7 @@
 @endsection
 
 @section('main')
-    @include('_partials.back.section.breadcrumbs')
+    @include('_partials.back.section.breadcrumbs', ['page_title' => 'Tableau de bord'])
 
     @include('_partials.back.section.overview')
 

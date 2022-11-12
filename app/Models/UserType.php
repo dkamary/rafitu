@@ -9,7 +9,7 @@ class UserType extends Model
     protected $table = 'user_type';
     protected $primaryKey = 'id';
     protected $fillable = ['label', 'is_active',];
-    public $timestamp = false;
+    public $timestamps = false;
 
     public function isAdmin() : bool {
         $id = (int)$this->id;
