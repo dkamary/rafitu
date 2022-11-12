@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\UserType;
-use Illuminate\View\View;
 use App\Models\UserStatus;
+use App\Models\UserType;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class AuthController extends Controller
 {
@@ -187,6 +187,8 @@ class AuthController extends Controller
         }
 
         // envoie de notificiation
+        $user->token = $this->generateToken($user);
+        $user->save();
         $this->sendEmailReset($user);
 
         return view('pages.password-forgotten', [
@@ -239,6 +241,11 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * Get User Type
+     *
+     * @return UserType
+     */
     private function getUserType(): UserType
     {
         $userType = UserType::where('id', '=', 4)->first();
@@ -251,6 +258,11 @@ class AuthController extends Controller
         return $userType;
     }
 
+    /**
+     * Get User Status
+     *
+     * @return UserStatus
+     */
     private function getUserStatus(): UserStatus
     {
         $userStatus = UserStatus::where('id', '=', 3)->first();
@@ -264,6 +276,12 @@ class AuthController extends Controller
         return $userStatus;
     }
 
+    /**
+     * Send email verification
+     *
+     * @param User $user
+     * @return void
+     */
     private function sendEmailVerification(User $user): void
     {
         $subject = '[RAFITU] - Confirmer votre inscription';
@@ -279,6 +297,12 @@ class AuthController extends Controller
         mail($user->email, $subject, $content, $headers);
     }
 
+    /**
+     * Send email reset
+     *
+     * @param User $user
+     * @return void
+     */
     private function sendEmailReset(User $user) : void {
         $subject = '[RAFITU] - Réinitialiser votre mot de passe';
         $content = view('templates.emails.email-reset', [
@@ -293,6 +317,12 @@ class AuthController extends Controller
         mail($user->email, $subject, $content, $headers);
     }
 
+    /**
+     * Generate token
+     *
+     * @param User $user
+     * @return string
+     */
     private function generateToken(User $user): string
     {
         $md5 = md5($user->id . '-' . $user->email);
@@ -300,6 +330,13 @@ class AuthController extends Controller
         return $md5;
     }
 
+    /**
+     * Validate token
+     *
+     * @param User $user
+     * @param string $token
+     * @return boolean
+     */
     private function validateToken(User $user, string $token): bool
     {
         return $this->generateToken($user) == $token;

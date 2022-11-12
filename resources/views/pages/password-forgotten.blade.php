@@ -25,6 +25,9 @@
                                 <div class="alert alert-danger" role="alert">
                                     {!! $message !!}
                                 </div>
+                                <div class="my-2">
+                                    @include('_partials.front.forms.forgotten')
+                                </div>
                             @else
                                 @if (isset($email) && !is_null($email))
                                     <p class="text-dark">
