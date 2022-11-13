@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="35.408356mm"
+   height="39.890388mm"
+   viewBox="0 0 35.408356 39.890388"
+   version="1.1"
+   id="svg11628"
+   inkscape:version="1.2.1 (8a69933317, 2022-10-28, custom)"
+   sodipodi:docname="rafitu-icon"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview11630"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.54163861"
+     inkscape:cx="173.54745"
+     inkscape:cy="-0.92312474"
+     inkscape:window-width="1526"
+     inkscape:window-height="836"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs11625" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-58.988257,-149.07125)">
+    <g
+       id="g8168"
+       transform="matrix(0.26458333,0,0,0.26458333,-12.431543,2.131434)">
+      <rect
+         style="fill:#4c6dff;fill-opacity:1"
+         id="rect8159"
+         width="133.82686"
+         height="150.76683"
+         x="269.93311"
+         y="555.3631" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:163.273px;font-family:'Mestizo Font';-inkscape-font-specification:'Mestizo Font, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;fill-opacity:1;stroke-width:2.55115"
+         x="296.72772"
+         y="694.36951"
+         id="text8163"><tspan
+           sodipodi:role="line"
+           id="tspan8161"
+           x="296.72772"
+           y="694.36951"
+           style="fill:#ffffff;fill-opacity:1;stroke-width:2.55115">r</tspan></text>
+    </g>
+  </g>
+</svg>
