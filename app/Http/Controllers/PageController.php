@@ -104,6 +104,18 @@ class PageController extends Controller
         ]);
     }
 
+    public function faq() : View {
+        $user = auth()->user();
+        $slug = 'faq';
+        $page = Page::where('slug', 'LIKE', $slug)->first();
+
+        return view('admin.pages.edit-text', [
+            'user' => $user,
+            'page' => $page,
+            'route' => 'pages_charte_cookie',
+        ]);
+    }
+
     public function editBySlug(string $slug) : View {
         $page = Page::where('slug', 'LIKE', $slug)->first();
 

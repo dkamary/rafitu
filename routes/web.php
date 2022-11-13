@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\RideController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -50,6 +52,7 @@ Route::prefix('google')->group(function () {
 Route::prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin');
 
+    // PAGES STATIC
     Route::prefix('pages')->group(function () {
         Route::get('/', [PageController::class, 'index'])->name('pages_index');
         Route::get('/charte-confidentialite-et-cookies', [PageController::class, 'charteConfidentialiteEtCookie'])->name('pages_charte_cookie');
@@ -59,8 +62,25 @@ Route::prefix('admin')->group(function () {
         Route::get('/nos-valeurs', [PageController::class, 'nosValeurs'])->name('pages_nosValeurs');
         Route::get('/qui-sommes-nous', [PageController::class, 'quiSommesNous'])->name('pages_qui_sommes_nous');
         Route::get('/reglement-trajet', [PageController::class, 'reglementTrajet'])->name('pages_reglement_trajet');
+        Route::get('/faq', [PageController::class, 'faq'])->name('pages_faq');
 
         Route::post('/enregistrer/{slug}', [PageController::class, 'saveBySlug'])->name('pages_save_by_slug');
+    });
+
+    // BLOG
+    Route::prefix('blog')->group(function() {
+        Route::get('/', [BlogController::class, 'index'])->name('admin_blog_index');
+        Route::match(['get', 'post'], '/new', [BlogController::class, 'createNew'])->name('admin_blog_new');
+        Route::match(['get', 'post'], '/edit/{page}', [BlogController::class, 'edit'])->name('admin_blog_edit');
+        Route::get('/delete/{page}', [BlogController::class, 'archive'])->name('admin_blog_delete');
+    });
+
+    Route::prefix('users')->group(function(){
+        Route::get('/', [UserController::class, 'index'])->name('admin_user_index');
+        Route::match(['get', 'post'], '/new', [UserController::class, 'create'])->name('admin_user_new');
+        Route::match(['get', 'post'], '/edit/{user}', [UserController::class, 'edit'])->name('admin_user_edit');
+        Route::get('/deactivate/{user}', [UserController::class, 'deactivate'])->name('admin_user_deactivate');
+        Route::post('/mot-de-passe', [UserController::class, 'updatePassword'])->name('admin_user_update_password');
     });
 });
 

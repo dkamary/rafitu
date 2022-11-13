@@ -11,6 +11,8 @@ class UserType extends Model
     protected $fillable = ['label', 'is_active',];
     public $timestamps = false;
 
+    private static $_names = [];
+
     public function isAdmin() : bool {
         $id = (int)$this->id;
         $label = $this->label;
@@ -19,5 +21,13 @@ class UserType extends Model
         if($normal) return true;
 
         return (stripos($label, 'administrateur') !== false);
+    }
+
+    public static function getUserTypeName(int $id) : ?string {
+        if(isset(self::$_names[$id])) return self::$_names[$id];
+
+        $userType = UserType::where('id', '=', $id)->first();
+
+        return $userType ? self::$_names[$id] = $userType->label : null;
     }
 }

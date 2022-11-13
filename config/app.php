@@ -230,6 +230,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Google' => App\Models\OAuth\Google::class,
+        'User' => App\Models\User::class,
     ],
 
 ];

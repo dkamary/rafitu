@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -41,11 +41,19 @@ class User extends Authenticatable
         return $this->_userType;
     }
 
+    public function getUserTypeName() : ?string {
+        return UserType::getUserTypeName((int)$this->user_type_id);
+    }
+
     public function getUserStatus() :?UserStatus {
         if($this->_userStatus) return $this->_userStatus;
 
         $this->_userStatus = UserStatus::where('id', '=', (int)$this->user_status_id)->first();
 
         return $this->_userStatus;
+    }
+
+    public static function createEmptyUser() : User {
+        return new User();
     }
 }
