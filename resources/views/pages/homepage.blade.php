@@ -11,7 +11,7 @@
 @endsection
 
 @section('main')
-    @include('_partials.front.section.features', ['features_classes' => ['homepage-features']])
+    {{-- @include('_partials.front.section.features', ['features_classes' => ['homepage-features']]) --}}
 
     <section class="sptb position-relative " style="background:#0096c9;">
         <div class="container">

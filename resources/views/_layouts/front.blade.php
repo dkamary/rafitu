@@ -16,7 +16,7 @@
 
         @yield('header', view('_partials.front.header.the-header'))
 
-		@yield('hero', view('_partials.front.section.hero'))
+		@yield('hero', view('_partials.front.section.sliders'))
 
 		@yield('main')
 

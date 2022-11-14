@@ -7,8 +7,8 @@
         <div class="container">
             <a id="horizontal-navtoggle" class="animated-arrow"><span></span></a>
             <span class="smllogo">
-                <img class="mobile-light-logo" src="/assets/images/brand/logo.png" width="120" alt="" />
-                <img class="mobile-dark-logo" src="/assets/images/brand/logo1.png" width="120" alt="" />
+                <img class="mobile-light-logo" src="{{ asset('assets/images/logo/rafitu-logo.png') }}" width="120" alt="" />
+                <img class="mobile-dark-logo" src="{{ asset('assets/images/logo/rafitu-logo.png') }}" width="120" alt="" />
             </span>
             <a href="tel:245-6325-3256" class="callusbtn"><i class="fa fa-phone" aria-hidden="true"></i></a>
         </div>

@@ -1,3 +1,8 @@
+$rafitu-blue: #4c6dff;
+$navigation-menu-text-color: #504e70;
+
+@import 'widgets';
+
 .bg-background::before,
 .bg-background2::before,
 .bg-background-color::before,
@@ -5,5 +10,45 @@
 .bg-background-5::before,
 .bg-background-6::before,
 .slider-header .item::before {
-    background: linear-gradient(-225deg, #0096c9 0%, darken(#0096c9, 1) 48%, darken(#0096c9, 3) 100%);
+    // background: linear-gradient(-225deg, #0096c9 0%, darken(#0096c9, 1) 48%, darken(#0096c9, 3) 100%);
+    background: transparent;
+}
+
+.desktoplogo, .desktoplogo-1 {
+    a {
+        display: block;
+        background-color: #ffffff;
+        padding: 2px;
+
+        img {
+            width: auto;
+            height: 3.3rem;
+        }
+    }
+}
+
+.rafitu{
+    .horizontalMenu {
+        &> .horizontalMenu-list {
+            &> li {
+                &:hover {
+                    &> a {
+                        background-color: $rafitu-blue;
+                        color: #ffffff;
+                    }
+                }
+
+                &> a {
+                    color: $navigation-menu-text-color;
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 992px) {
+    .sticky-wrapper.is-sticky .horizontal-main::after {
+        background-image: none;
+        display: none;
+    }
 }

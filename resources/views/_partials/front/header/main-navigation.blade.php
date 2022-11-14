@@ -1,12 +1,12 @@
 {{-- Main navigation --}}
 
-<div class="horizontal-main bg-dark-transparent clearfix">
+<div class="rafitu horizontal-main bg-white clearfix">
     <div class="horizontal-mainwrapper container clearfix">
         <div class="desktoplogo">
-            <a href="{{ route('home') }}"><img src="{{ asset('assets/images/logo/ENTREPRISE.png') }}" alt=""></a>
+            <a href="{{ route('home') }}"><img src="{{ asset('assets/images/logo/rafitu-logo-with-text.png') }}" alt="RAFITU"></a>
         </div>
         <div class="desktoplogo-1">
-            <a href="{{ route('home') }}"><img src="{{ asset('assets/images/logo/ENTREPRISE.png') }}" alt=""></a>
+            <a href="{{ route('home') }}"><img src="{{ asset('assets/images/logo/rafitu-logo-with-text.png') }}" alt="RAFITU"></a>
         </div>
         <!--Nav-->
         <nav class="horizontalMenu clearfix d-md-flex">
