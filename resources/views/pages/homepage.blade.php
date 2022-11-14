@@ -13,6 +13,12 @@
 @section('main')
     {{-- @include('_partials.front.section.features', ['features_classes' => ['homepage-features']]) --}}
 
+    <div class="container-fluid bg-rafitu">
+        <div class="container">
+            @include('_partials.front.section.booking.new')
+        </div>
+    </div>
+
     <section class="sptb position-relative " style="background:#0096c9;">
         <div class="container">
             <div class="row">
