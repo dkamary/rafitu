@@ -1,6 +1,6 @@
 {{-- Brand --}}
 
-<a class="header-brand" href="index.html">
+<a class="header-brand" href="{{ route('admin') }}">
     <img src="{{ asset('assets/images/logo/ENTREPRISE.png') }}" class="header-brand-img light-logo" alt="Rafitu">
     <img src="{{ asset('assets/images/logo/ENTREPRISE.png') }}" class="header-brand-img dark-logo" alt="Rafitu">
 </a>

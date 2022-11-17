@@ -46,6 +46,7 @@
                         <a href="#">{{ Auth::user()->email }} <span class="fa fa-caret-down m-0"></span></a>
                         <ul class="sub-menu">
                             <li aria-haspopup="true"><a href="#">Profil</a></li>
+                            @include('_partials.front.header.manage-static-page')
                             <li aria-haspopup="true"><a href="{{ route('logout') }}">Déconnexion</a></li>
                         </ul>
                     </li>

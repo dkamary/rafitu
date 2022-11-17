@@ -35,16 +35,16 @@
                         <hr class="deep-purple  text-primary accent-2 mb-4 mt-0 d-inline-block mx-auto">
                         <ul class="list-unstyled mb-0">
                             <li>
-                                <a href="#">Qui sommes-nous</a>
+                                <a href="{{ route('static_pages', ['slug' => 'qui-sommes-nous']) }}">Qui sommes-nous</a>
                             </li>
                             <li>
-                                <a href="#">Contact</a>
+                                <a href="{{ route('static_pages', ['slug' => 'contact']) }}">Contact</a>
                             </li>
                             <li>
-                                <a href="#">Newsletter</a>
+                                <a href="{{ route('static_pages', ['slug' => 'newsletter']) }}">Newsletter</a>
                             </li>
                             <li>
-                                <a href="#">Nos valeurs, nos métiers</a>
+                                <a href="{{ route('static_pages', ['slug' => 'nos-valeurs']) }}">Nos valeurs, nos métiers</a>
                             </li>
                         </ul>
                         <ul class="list-unstyled list-inline mt-3">

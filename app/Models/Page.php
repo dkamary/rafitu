@@ -61,4 +61,10 @@ class Page extends Model
         $this->author = $this->status = $this->category = null;
         parent::refresh();
     }
+
+    public function isStatic() : bool {
+        $status = $this->getStatus();
+
+        return $status && $status->id == 1;
+    }
 }

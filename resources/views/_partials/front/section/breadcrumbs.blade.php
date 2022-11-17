@@ -1,8 +1,15 @@
 {{-- Breadcrumbs --}}
 
+@php
+    $header_image = $header_image ?? asset('assets/images/banners/banner.webp');
+    if(isset($page) && (strlen(trim($page->preview_image)) > 3)) {
+        $header_image = asset('assets/images/uploads/' . $page->preview_image);
+    }
+@endphp
+
 <!--Breadcrumb-->
 <section>
-    <div class="bannerimg cover-image bg-background3 sptb-2" data-bs-image-src="{{ asset('assets/images/banners/banner2.jpg') }}">
+    <div class="bannerimg cover-image bg-background3 sptb-2" data-bs-image-src="{{ $header_image }}">
         <div class="header-text mb-0">
             <div class="container">
                 <div class="text-center text-white ">
