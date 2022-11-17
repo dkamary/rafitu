@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Managers\TrajetDestinationManager;
 use App\Models\Page;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -10,7 +11,11 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class HomeController extends Controller
 {
     public function index() : View {
-        return view('pages.homepage');
+        $randoms = TrajetDestinationManager::random();
+
+        return view('pages.homepage', [
+            'randoms' => $randoms,
+        ]);
     }
 
     public function staticPage(string $slug) : View {

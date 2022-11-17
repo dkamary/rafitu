@@ -1,6 +1,6 @@
 {{-- Statistiques --}}
 
-<section class="sptb">
+<section class="sptb statistiques">
     <div class="container">
         <div class="section-title center-block text-center d-flex flex-column">
             <h2 class="order-2">Nos faits amusants</h2>
@@ -13,7 +13,7 @@
                         <div class="item-card-desc">
                             <a href="#"></a>
                             <div class="item-card-img">
-                                <img src="{{ asset('assets/images/products/h4.png') }}" alt="img" class="br-te-7 br-ts-7">
+                                <img src="{{ asset('assets/images/other/passager-512x512.webp') }}" alt="img" class="br-te-7 br-ts-7">
                             </div>
                             <div class="item-card-text">
                                 <h3 style="font-size: 64px"><i class="fa fa-users" aria-hidden="true"></i></h3>
@@ -29,7 +29,7 @@
                         <div class="item-card-desc">
                             <a href="#"></a>
                             <div class="item-card-img">
-                                <img src="{{ asset('assets/images/products/j3.png') }}" alt="img" class="br-te-7 br-ts-7">
+                                <img src="{{ asset('assets/images/other/conducteur-512x512.webp') }}" alt="img" class="br-te-7 br-ts-7">
                             </div>
                             <div class="item-card-text">
                                 <h3 style="font-size: 64px"><i class="fa fa-user" aria-hidden="true"></i></h3>
@@ -45,7 +45,7 @@
                         <div class="item-card-desc">
                             <a href="#"></a>
                             <div class="item-card-img">
-                                <img src="{{ asset('assets/images/products/b2.png') }}" alt="img" class="br-te-7 br-ts-7">
+                                <img src="{{ asset('assets/images/other/satisfaction-512x512.webp') }}" alt="img" class="br-te-7 br-ts-7">
                             </div>
                             <div class="item-card-text">
                                 <h3 style="font-size: 64px"><i class="fa fa-smile-o" aria-hidden="true"></i></h3>
@@ -58,3 +58,17 @@
         </div>
     </div>
 </section>
+
+@once
+    @push('head')
+        <style id="statistiques-styles">
+            .statistiques .item-card .item-card-desc::before {
+                background-color: rgba(76, 109, 255, .5);
+            }
+
+            .statistiques .item-card:hover .item-card-desc::before {
+                background: rgba(26, 66, 243, .5);
+            }
+        </style>
+    @endpush
+@endonce

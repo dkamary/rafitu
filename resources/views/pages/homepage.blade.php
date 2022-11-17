@@ -10,6 +10,10 @@
     Voyager en covoiturage à prix réduit
 @endsection
 
+@section('hero')
+    @include('_partials.front.section.sliders.bs-slider')
+@endsection
+
 @section('main')
     {{-- @include('_partials.front.section.features', ['features_classes' => ['homepage-features']]) --}}
 
@@ -64,6 +68,12 @@
             .scam-warning .image-container img {
                 height: 10rem;
                 width: auto;
+            }
+
+            @media (min-width: 992px) {
+                .owl-carousel .owl-item img {
+                    height: auto !important;
+                }
             }
         </style>
     @endpush

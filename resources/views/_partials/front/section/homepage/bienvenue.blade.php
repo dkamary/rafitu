@@ -8,7 +8,7 @@
     <main>
         <div class="row">
             <div class="col-12 col-md-6">
-                <img src="{{ asset('assets/images/homepage/bienvenue.webp') }}" class="img-fluid" alt="">
+                <img src="{{ asset('assets/images/slides/Image-3.webp') }}" class="img-fluid" alt="">
             </div>
             <div class="col-12 col-md-6 d-flex flex-column justify-content-center px-md-9 p-1 fs-5">
                 <p class="text-bold">

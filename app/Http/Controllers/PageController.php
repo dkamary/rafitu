@@ -39,7 +39,7 @@ class PageController extends Controller
         return view('admin.pages.edit-text', [
             'user' => $user,
             'page' => $page,
-            'route' => 'pages_charte_cookie',
+            'route' => 'pages_condition_utilisation',
         ]);
     }
 
@@ -51,7 +51,7 @@ class PageController extends Controller
         return view('admin.pages.edit-text', [
             'user' => $user,
             'page' => $page,
-            'route' => 'pages_charte_cookie',
+            'route' => 'pages_contact',
         ]);
     }
 
@@ -63,7 +63,7 @@ class PageController extends Controller
         return view('admin.pages.edit-text', [
             'user' => $user,
             'page' => $page,
-            'route' => 'pages_charte_cookie',
+            'route' => 'pages_newsletter',
         ]);
 
     }
@@ -76,7 +76,7 @@ class PageController extends Controller
         return view('admin.pages.edit-text', [
             'user' => $user,
             'page' => $page,
-            'route' => 'pages_charte_cookie',
+            'route' => 'pages_nosValeurs',
         ]);
     }
 
@@ -88,7 +88,7 @@ class PageController extends Controller
         return view('admin.pages.edit-text', [
             'user' => $user,
             'page' => $page,
-            'route' => 'pages_charte_cookie',
+            'route' => 'pages_qui_sommes_nous',
         ]);
     }
 
@@ -100,7 +100,7 @@ class PageController extends Controller
         return view('admin.pages.edit-text', [
             'user' => $user,
             'page' => $page,
-            'route' => 'pages_charte_cookie',
+            'route' => 'pages_reglement_trajet',
         ]);
     }
 
@@ -112,7 +112,7 @@ class PageController extends Controller
         return view('admin.pages.edit-text', [
             'user' => $user,
             'page' => $page,
-            'route' => 'pages_charte_cookie',
+            'route' => 'pages_faq',
         ]);
     }
 

@@ -1,4 +1,4 @@
-{{-- Hero Sliders --}}
+{{-- Owl Slider --}}
 
 <!--Sliders Section-->
 <section>

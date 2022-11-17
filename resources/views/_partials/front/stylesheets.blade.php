@@ -1,7 +1,7 @@
 {{-- Front office stylesheets --}}
 
-<link rel="icon" href="{{ asset('assets/images/brand/favicon.ico') }}" type="image/x-icon" />
-<link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/images/brand/favicon.ico') }}" />
+<link rel="icon" href="{{ asset('assets/images/logo/rafitu-icon.png') }}" type="image/png" />
+<link rel="shortcut icon" type="image/png" href="{{ asset('assets/images/logo/rafitu-icon.png') }}" />
 
 <!-- Bootstrap Css -->
 <link id="style" href="{{ asset('assets/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" />

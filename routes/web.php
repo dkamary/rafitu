@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\FaqController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
@@ -75,12 +76,19 @@ Route::prefix('admin')->group(function () {
         Route::get('/delete/{page}', [BlogController::class, 'archive'])->name('admin_blog_delete');
     });
 
+    // USERS
     Route::prefix('users')->group(function(){
         Route::get('/', [UserController::class, 'index'])->name('admin_user_index');
         Route::match(['get', 'post'], '/new', [UserController::class, 'create'])->name('admin_user_new');
         Route::match(['get', 'post'], '/edit/{user}', [UserController::class, 'edit'])->name('admin_user_edit');
         Route::get('/deactivate/{user}', [UserController::class, 'deactivate'])->name('admin_user_deactivate');
         Route::post('/mot-de-passe', [UserController::class, 'updatePassword'])->name('admin_user_update_password');
+    });
+
+    // FAQ
+    Route::prefix('faq')->group(function(){
+        Route::post('save', [FaqController::class, 'save'])->name('admin_faq_save');
+        Route::post('refresh', [FaqController::class, 'refresh'])->name('admin_faq_refresh');
     });
 });
 
