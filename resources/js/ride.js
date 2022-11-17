@@ -277,17 +277,22 @@ const populateItineraries = ({ route }) => {
 const autocompleteMainSearch = () => {
     console.debug("Autocomplete for search form!");
 
+    autoCompleteOrigin();
+    autoCompleteDestination();
+};
+
+const autoCompleteOrigin = () => {
     const originLat = document.querySelector("#search_origin_lat");
     const originLng = document.querySelector("#search_origin_lng");
     const origin = document.querySelector("#search_origin");
     const geocoder = new google.maps.Geocoder();
 
-    const originAutocomplete = new google.maps.places.Autocomplete(origin, {
-        fields: ["address_component", "geometry", "name", "place_id"],
-        types: ["establishment"]
-    });
-
     if(origin) {
+        const originAutocomplete = new google.maps.places.Autocomplete(origin, {
+            fields: ["address_component", "geometry", "name", "place_id"],
+            types: ["establishment"]
+        });
+
         origin.addEventListener("change", e => {
             geocoder.geocode({
                 'address': origin.value,
@@ -295,12 +300,42 @@ const autocompleteMainSearch = () => {
                 if (status == 'OK') {
                     originLng.value = results[0].geometry.location.lng();
                     originLat.value = results[0].geometry.location.lat();
-                    console.debug('Search form autocomplete!');
+                    console.debug('Origin Search form autocomplete!');
                     console.debug({
-                        input: departureLabel.value,
-                        lat: departureLng.value,
-                        lng: departureLat.value,
-                        results: results
+                        lat: results[0].geometry.location.lat(),
+                        lng: results[0].geometry.location.lng()
+                    });
+                } else {
+                    console.warn(`Geocode was not successful for the following reason: ${status}`);
+                }
+            });
+        });
+    }
+};
+
+const autoCompleteDestination = () => {
+    const destinationLat = document.querySelector("#search_destination_lat");
+    const destinationLng = document.querySelector("#search_destination_lng");
+    const destination = document.querySelector("#search_destination");
+    const geocoder = new google.maps.Geocoder();
+
+    if(destination) {
+        const destinationAutocomplete = new google.maps.places.Autocomplete(destination, {
+            fields: ["address_component", "geometry", "name", "place_id"],
+            types: ["establishment"]
+        });
+
+        destination.addEventListener("change", e => {
+            geocoder.geocode({
+                'address': destination.value,
+            }, (results, status) => {
+                if (status == 'OK') {
+                    destinationLng.value = results[0].geometry.location.lng();
+                    destinationLat.value = results[0].geometry.location.lat();
+                    console.debug('Destination Search autocomplete!');
+                    console.debug({
+                        lat: results[0].geometry.location.lat(),
+                        lng: results[0].geometry.location.lng()
                     });
                 } else {
                     console.warn(`Geocode was not successful for the following reason: ${status}`);

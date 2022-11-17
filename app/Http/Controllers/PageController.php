@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Faq;
 use App\Models\Page;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,11 +16,13 @@ class PageController extends Controller
         $this->middleware('auth.admin');
     }
 
-    public function index() : View {
+    public function index(): View
+    {
         return view('admin.pages.index');
     }
 
-    public function charteConfidentialiteEtCookie() : View {
+    public function charteConfidentialiteEtCookie(): View
+    {
         $user = auth()->user();
         $slug = 'charte-confidentialite-et-cookies';
         $page = Page::where('slug', 'LIKE', $slug)->first();
@@ -31,7 +34,8 @@ class PageController extends Controller
         ]);
     }
 
-    public function conditionUtilisation() : View {
+    public function conditionUtilisation(): View
+    {
         $user = auth()->user();
         $slug = 'conditions-utilisation';
         $page = Page::where('slug', 'LIKE', $slug)->first();
@@ -43,7 +47,8 @@ class PageController extends Controller
         ]);
     }
 
-    public function contact() : View {
+    public function contact(): View
+    {
         $user = auth()->user();
         $slug = 'contact';
         $page = Page::where('slug', 'LIKE', $slug)->first();
@@ -55,7 +60,8 @@ class PageController extends Controller
         ]);
     }
 
-    public function newsletter() : View {
+    public function newsletter(): View
+    {
         $user = auth()->user();
         $slug = 'newsletter';
         $page = Page::where('slug', 'LIKE', $slug)->first();
@@ -65,10 +71,10 @@ class PageController extends Controller
             'page' => $page,
             'route' => 'pages_newsletter',
         ]);
-
     }
 
-    public function nosValeurs() : View {
+    public function nosValeurs(): View
+    {
         $user = auth()->user();
         $slug = 'nos-valeurs';
         $page = Page::where('slug', 'LIKE', $slug)->first();
@@ -80,7 +86,8 @@ class PageController extends Controller
         ]);
     }
 
-    public function quiSommesNous() : View {
+    public function quiSommesNous(): View
+    {
         $user = auth()->user();
         $slug = 'qui-sommes-nous';
         $page = Page::where('slug', 'LIKE', $slug)->first();
@@ -92,7 +99,8 @@ class PageController extends Controller
         ]);
     }
 
-    public function reglementTrajet() : View {
+    public function reglementTrajet(): View
+    {
         $user = auth()->user();
         $slug = 'reglement-trajet';
         $page = Page::where('slug', 'LIKE', $slug)->first();
@@ -104,27 +112,34 @@ class PageController extends Controller
         ]);
     }
 
-    public function faq() : View {
+    public function faq(): View
+    {
         $user = auth()->user();
         $slug = 'faq';
         $page = Page::where('slug', 'LIKE', $slug)->first();
+        $faq = Faq::where('is_active', '=', 1)
+            ->orderBy('rank')
+            ->get();
 
-        return view('admin.pages.edit-text', [
+        return view('admin.pages.edit-faq', [
             'user' => $user,
             'page' => $page,
             'route' => 'pages_faq',
+            'faq' => $faq,
         ]);
     }
 
-    public function editBySlug(string $slug) : View {
+    public function editBySlug(string $slug): View
+    {
         $page = Page::where('slug', 'LIKE', $slug)->first();
 
         return view('');
     }
 
-    public function saveBySlug(Request $request, string $slug) : RedirectResponse {
+    public function saveBySlug(Request $request, string $slug): RedirectResponse
+    {
         $page = Page::where('slug', 'LIKE', $slug)->first();
-        if(!$page) {
+        if (!$page) {
             throw new NotFoundHttpException(sprintf('La page avec l\'URL `%s` est introuvable', $slug));
         }
 

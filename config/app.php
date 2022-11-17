@@ -231,6 +231,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Google' => App\Models\OAuth\Google::class,
         'User' => App\Models\User::class,
+        'Faq' => App\Models\Faq::class,
+        'Shortcode' => App\Models\Managers\ShortCodeManager::class,
     ],
 
 ];

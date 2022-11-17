@@ -87,8 +87,9 @@ Route::prefix('admin')->group(function () {
 
     // FAQ
     Route::prefix('faq')->group(function(){
-        Route::post('save', [FaqController::class, 'save'])->name('admin_faq_save');
-        Route::post('refresh', [FaqController::class, 'refresh'])->name('admin_faq_refresh');
+        Route::post('/save', [FaqController::class, 'save'])->name('admin_faq_save');
+        Route::post('/refresh', [FaqController::class, 'refresh'])->name('admin_faq_refresh');
+        Route::get('/remove/{faq}', [FaqController::class, 'remove'])->name('admin_faq_remove');
     });
 });
 

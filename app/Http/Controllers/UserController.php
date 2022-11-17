@@ -18,6 +18,7 @@ class UserController extends Controller
     public function index() : View {
         $users = User::where('user_status_id', '=', 1)
             ->orderBy('firstname')
+            ->orderBy('lastname')
             ->paginate(50);
 
         return view('admin.users.index', ['users' => $users]);

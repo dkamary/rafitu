@@ -10,6 +10,8 @@
     <div class="form-group  col-xl-3 col-lg-3 col-md-12 mb-0 bg-white">
         <input type="text" class="form-control input-lg br-md-0 border-end-0" name="destination" id="search_destination" placeholder="Destination">
         <span><i class="fa fa-map-marker location-gps me-1"></i></span>
+        <input type="hidden" name="destination_lat" id="search_destination_lat">
+        <input type="hidden" name="destination_lng" id="search_destination_lng">
     </div>
     <div class="form-group col-xl-3 col-lg-3 col-md-12 select2-lg  mb-0 bg-white">
         <input type="datetime" class="form-control input-lg br-md-0 border-end-0" name="search_date" id="search_date" placeholder="Aujourd'hui">
