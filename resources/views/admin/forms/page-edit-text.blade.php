@@ -1,10 +1,16 @@
 {{-- Edit page : text only --}}
-
 @php
     $formId = 'form-edit-page-with-text';
 @endphp
 
 <form action="{{ route('pages_save_by_slug', ['slug' => $page->slug]) }}" method="post" id="{{ $formId }}">
+    @if($page->id)
+        <div class="mb-3">
+            <label class="form-label text-info">
+                Prévisualiser: <a href="{{ route('static_pages', ['slug' => $page->slug]) }}" target="_blank">{{ route('static_pages', ['slug' => $page->slug]) }}</a>
+            </label>
+        </div>
+    @endif
     <div class="mb-3">
         <label for="title" class="form-label">Titre</label>
         <input type="text" name="title" id="title" class="form-control" value="{{ $page->title }}">

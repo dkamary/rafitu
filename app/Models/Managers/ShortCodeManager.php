@@ -29,6 +29,18 @@ class ShortCodeManager {
     }
 
     public static function contact(ShortcodeInterface $s) : string {
-        return 'My Contact forms';
+        $spacingY = $s->getParameter('spacing-y', 3);
+        $spacingX = $s->getParameter('spacing-x', 3);
+        $size = $s->getParameter('size', 'large');
+        $className = 'border rounded';
+        $title = 'Formulaire de contact';
+
+        return view('pages._partials.contact', [
+            'size' => $size,
+            'spacingX' => $spacingX,
+            'spacingY' => $spacingY,
+            'className' => $className,
+            'title' => $title,
+        ])->render();
     }
 }

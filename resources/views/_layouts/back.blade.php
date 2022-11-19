@@ -41,7 +41,7 @@
 
 											{{-- @include('_partials.back.header.notifications') --}}
 
-											{{-- @include('_partials.back.header.inbox-preview') --}}
+											@include('_partials.back.header.inbox-preview')
 
 											{{-- @include('_partials.back.header.main-app') --}}
 

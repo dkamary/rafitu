@@ -10,7 +10,7 @@
         @stack('head')
 	</head>
 
-	<body class="main-body">
+	<body class="main-body rafitu-body">
 
         @yield('loader', view('_partials.front.loader'))
 

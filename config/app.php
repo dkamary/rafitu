@@ -233,6 +233,7 @@ return [
         'User' => App\Models\User::class,
         'Faq' => App\Models\Faq::class,
         'Shortcode' => App\Models\Managers\ShortCodeManager::class,
+        'Messenger' => App\Models\Managers\MessengerManager::class,
     ],
 
 ];

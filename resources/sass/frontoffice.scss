@@ -7,7 +7,8 @@ $navigation-menu-text-color: #504e70;
 @import 'booking';
 @import 'home-stats';
 
-.desktoplogo, .desktoplogo-1 {
+.desktoplogo,
+.desktoplogo-1 {
     a {
         display: block;
         background-color: #ffffff;
@@ -20,18 +21,18 @@ $navigation-menu-text-color: #504e70;
     }
 }
 
-.rafitu{
+.rafitu {
     .horizontalMenu {
-        &> .horizontalMenu-list {
-            &> li {
+        &>.horizontalMenu-list {
+            &>li {
                 &:hover {
-                    &> a {
+                    &>a {
                         background-color: $rafitu-blue;
                         color: #ffffff;
                     }
                 }
 
-                &> a {
+                &>a {
                     color: $navigation-menu-text-color;
                 }
             }
@@ -44,4 +45,21 @@ $navigation-menu-text-color: #504e70;
         background-image: none;
         display: none;
     }
+}
+
+.rafitu-body {
+    #back-to-top {
+        background-color: $rafitu-blue;
+
+        &:hover {
+            background: #fff;
+            color: $rafitu-blue;
+            border: 2px solid $rafitu-blue;
+        }
+    }
+}
+
+.mini-map {
+    width: 100%;
+    height: 300px;
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\HomeController;
@@ -91,6 +92,12 @@ Route::prefix('admin')->group(function () {
         Route::post('/refresh', [FaqController::class, 'refresh'])->name('admin_faq_refresh');
         Route::get('/remove/{faq}', [FaqController::class, 'remove'])->name('admin_faq_remove');
     });
+});
+
+// CONTACT
+Route::prefix('contact')->group(function(){
+    Route::post('/enregistrement', [ContactController::class, 'submit'])->name('contact_submit');
+    Route::get('/confirmation', [ContactController::class, 'confirmation'])->name('contact_confirmation');
 });
 
 // FRONT OFFICE PAGE
