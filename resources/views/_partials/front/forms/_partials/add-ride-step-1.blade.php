@@ -1,5 +1,9 @@
 {{-- Add ride - Step 1 --}}
 
+@php
+    $tomorrow = date('Y-m-d', strtotime('tomorrow'));
+@endphp
+
 <div class="tab-pane fade" id="first">
     <div class="control-group form-group">
         <div class="form-group">
@@ -18,6 +22,7 @@
         <div class="form-group">
             <label class="form-label text-dark">Date et heure de départ</label>
             <input type="datetime-local" name="departure_date" class="form-control required Title"
+            value="{{ $tomorrow }}"
                 placeholder="dd/mm/aaaa hh:mm">
         </div>
     </div>

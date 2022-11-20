@@ -279,6 +279,8 @@ const autocompleteMainSearch = () => {
 
     autoCompleteOrigin();
     autoCompleteDestination();
+
+    console.debug("Auto complete set up?");
 };
 
 const autoCompleteOrigin = () => {
@@ -288,6 +290,8 @@ const autoCompleteOrigin = () => {
     const geocoder = new google.maps.Geocoder();
 
     if(origin) {
+        console.debug("Autocomplete Origin");
+
         const originAutocomplete = new google.maps.places.Autocomplete(origin, {
             fields: ["address_component", "geometry", "name", "place_id"],
             types: ["establishment"]
@@ -310,6 +314,8 @@ const autoCompleteOrigin = () => {
                 }
             });
         });
+    } else {
+        console.debug("Il n'y a pas de champ `#search_origin` dans la page");
     }
 };
 
@@ -320,6 +326,8 @@ const autoCompleteDestination = () => {
     const geocoder = new google.maps.Geocoder();
 
     if(destination) {
+        console.debug("Autocomplete Destination");
+
         const destinationAutocomplete = new google.maps.places.Autocomplete(destination, {
             fields: ["address_component", "geometry", "name", "place_id"],
             types: ["establishment"]
@@ -342,6 +350,8 @@ const autoCompleteDestination = () => {
                 }
             });
         });
+    }else {
+        console.debug("Il n'y a pas de champ `#search_destination` dans la page");
     }
 };
 

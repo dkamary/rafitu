@@ -12,18 +12,19 @@
 
 @section('main')
     <div class="container">
-        <div class="row">
-            <div class="col-12">
-                {{-- @dump($sql);
-                @dump($results)
-                @dump($rides)
-                @dump($ids) --}}
+        <div class="row my-5">
+            <div class="col-12 col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        @include('_partials.front.forms.search-ride')
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
+            <div class="col-12 col-md-8">
                 <div class="card">
                     <div class="card-body h-100">
+                        @dump($parameters)
+                        @dump($ids)
                         @forelse ($rides as $ride)
                             <div class="row my-3">
                                 <div class="col-12">

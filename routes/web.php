@@ -9,6 +9,7 @@ use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\RideController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -44,7 +45,7 @@ Route::prefix('trajet')->group(function () {
     Route::get('/ajouter', [RideController::class, 'add'])->name('ride_add');
     Route::post('/enregistrer', [RideController::class, 'save'])->name('ride_save');
     Route::get('/trajet-cree/{ride}', [RideController::class, 'complete'])->name('ride_complete');
-    Route::get('/search', [RideController::class, 'search'])->name('ride_search');
+    Route::get('/search', [SearchController::class, 'search'])->name('ride_search');
 });
 
 Route::prefix('google')->group(function () {
