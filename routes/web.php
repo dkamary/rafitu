@@ -4,10 +4,12 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\RideController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
@@ -46,6 +48,9 @@ Route::prefix('trajet')->group(function () {
     Route::post('/enregistrer', [RideController::class, 'save'])->name('ride_save');
     Route::get('/trajet-cree/{ride}', [RideController::class, 'complete'])->name('ride_complete');
     Route::get('/search', [SearchController::class, 'search'])->name('ride_search');
+    Route::get('/list', [RideController::class, 'list'])->name('ride_list');
+
+    Route::get('/{ride}', [RideController::class, 'show'])->name('ride_show'); // Doit toujours être à la fin!
 });
 
 Route::prefix('google')->group(function () {
@@ -99,6 +104,35 @@ Route::prefix('admin')->group(function () {
 Route::prefix('contact')->group(function(){
     Route::post('/enregistrement', [ContactController::class, 'submit'])->name('contact_submit');
     Route::get('/confirmation', [ContactController::class, 'confirmation'])->name('contact_confirmation');
+});
+
+// RESERVATION
+Route::prefix('reservation')->group(function(){
+    Route::post('/submit', [ReservationController::class, 'submit'])->name('reservation_submit');
+    Route::get('/result/{reservation}', [ReservationController::class, 'result'])->name('reservation_result');
+
+    Route::get('/{reservation}', [ReservationController::class, 'show'])->name('reservation_show');
+});
+
+// ESPACE CLIENT
+Route::prefix('espace-client')->group(function(){
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard_index');
+    Route::match(['get', 'post'], '/mon-profil', [DashboardController::class, 'user'])->name('dashboard_user');
+    Route::post('/mot-de-passe', [DashboardController::class, 'password'])->name('dashboard_update_password');
+    Route::get('/mes-trajets', [DashboardController::class, 'rides'])->name('dashboard_rides');
+    Route::get('/trajet/{ride}', [DashboardController::class, 'rideShow'])->name('dashboard_ride');
+    Route::prefix('messenger')->group(function(){
+        Route::get('/', [DashboardController::class, 'messengerIndex'])->name('dashboard_messenger_index');
+        Route::get('/{message}', [DashboardController::class, 'messengerShow'])->name('dashboard_messenger_show');
+        Route::get('/new-message/{lastId}', [DashboardController::class, 'messengerLast'])->name('dashboard_messenger_last');
+        Route::post('/send-message', [DashboardController::class, 'messengerSend'])->name('dashboard_messenger_send');
+    });
+    Route::prefix('/voiture')->group(function(){
+        Route::get('/', [DashboardController::class, 'vehicleIndex'])->name('dashboard_vehicle_index');
+        Route::match(['get', 'post'], '/ajouter', [DashboardController::class, 'vehicleAdd'])->name('dashboard_vehicle_add');
+        Route::match(['get', 'post'], '/editer/{vehicle}', [DashboardController::class, 'vehicleEdit'])->name('dashboard_vehicle_edit');
+        Route::post('/effacer', [DashboardController::class, 'vehicleRemove'])->name('dashboard_vehicle_remove');
+    });
 });
 
 // FRONT OFFICE PAGE

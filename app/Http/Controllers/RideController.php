@@ -60,6 +60,7 @@ class RideController extends Controller
             'woman_only' => $request->input('woman_only') == 'on' ? 1 : 0,
             'price' => (float)$request->input('price'),
             'ride_status_id' => $status->id,
+            'distance' => (int)$request->input('distance'),
         ];
 
         // dd($data);
@@ -87,6 +88,20 @@ class RideController extends Controller
     public function complete(Ride $ride) {
 
         return view('pages.ride-added', [
+            'ride' => $ride,
+        ]);
+    }
+
+    public function list() : View {
+        $rides = Ride::all();
+        
+        return view('pages.ride-list', [
+            'rides' => $rides,
+        ]);
+    }
+
+    public function show(Ride $ride) : View {
+        return view('pages.ride-show', [
             'ride' => $ride,
         ]);
     }

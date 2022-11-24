@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DateTime;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -25,6 +26,25 @@ class User extends Authenticatable
     public $timestamp = false;
     protected $_userType = null;
     protected $_userStatus = null;
+
+    public function getBirthdate(?string $format = 'd/m/Y') {
+        if(is_null($this->birthdate)) return null;
+        $date = new DateTime($this->birthdate);
+
+        if(is_null($format)) {
+            return $date;
+        }
+
+        return $date->format($format);
+    }
+
+    public function getFullname() : string {
+        $fullname = '';
+        $fullname .= trim($this->firstname);
+        $fullname .= strlen(trim($this->lastname)) > 0 ? ' ' .trim($this->lastname) : '';
+
+        return $fullname;
+    }
 
     public function isAdmin() : bool {
         $userType = $this->getUserType();

@@ -5,18 +5,18 @@
         <div class="form-group">
             <label class="form-label text-dark">Prix</label>
             <input type="number" name="price" class="form-control required Title" min="1"
-                max="100" placeholder="">
+                max="100000" placeholder="">
         </div>
     </div>
-    <div class="form-group">
+    {{-- <div class="form-group">
         <label class="form-label text-dark">Moyen de paiement</label>
         <select name="payment_method" class="form-control form-select required category select2">
-            <option value="0">Sélectionner le moyen de paiement</option>
+            <option value="">Tous les moyens de paiement</option>
             <option value="1">Carte Bancaire</option>
             <option value="2">Paypal</option>
             <option value="3">Orange Money</option>
         </select>
-    </div>
+    </div> --}}
     <div class="form-group row clearfix">
         <div class="col-lg-12">
             <div class="checkbox checkbox-info">
@@ -29,7 +29,8 @@
         </div>
     </div>
     <div class="form-group">
-        <div class="text-end">
+        <div class="d-flex justify-content-between">
+            <a href="#itineraire" data-bs-toggle="tab" class="btn btn-primary  mb-0 waves-effect waves-light" onclick="document.querySelector('#itineraire').click();">Revenir</a>
             <button type="submit" class="btn btn-primary  mb-0 waves-effect waves-light">Publier votre trajet</button>
         </div>
     </div>

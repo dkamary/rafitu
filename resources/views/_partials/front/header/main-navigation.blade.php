@@ -43,9 +43,11 @@
                 @endguest
                 @auth
                     <li aria-haspopup="true">
-                        <a href="#">{{ Auth::user()->email }} <span class="fa fa-caret-down m-0"></span></a>
+                        <a href="{{ route('dashboard_index') }}">{{ Auth::user()->email }} <span class="fa fa-caret-down m-0"></span></a>
                         <ul class="sub-menu">
-                            <li aria-haspopup="true"><a href="#">Profil</a></li>
+                            <li aria-haspopup="true"><a href="{{ route('dashboard_user') }}">Mon compte</a></li>
+                            <li aria-haspopup="true"><a href="{{ route('dashboard_rides') }}">Mes trajets</a></li>
+                            <li aria-haspopup="true"><a href="{{ route('dashboard_messenger_index') }}">Ma messagerie</a></li>
                             @include('_partials.front.header.manage-static-page')
                             <li aria-haspopup="true"><a href="{{ route('logout') }}">Déconnexion</a></li>
                         </ul>

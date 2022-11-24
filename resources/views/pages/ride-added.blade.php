@@ -52,7 +52,7 @@
                                                     <h5><strong>Détails</strong></h5>
                                                 </div>
                                                 <p>
-                                                    Tarif: <strong class="text-info">{{ $ride->price }} €</strong>
+                                                    Tarif: <strong class="text-info">{{ $ride->price }} F CFA</strong>
                                                 </p>
                                                 <p>
                                                     Nombre de sièges disponible: <strong class="text-info">{{ $ride->seats_available }}</strong>

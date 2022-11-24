@@ -27,7 +27,7 @@
             <input type="date" name="search_date" id="search_date" value="{{ old('search_date') }}" class="form-control" placeholder="Date de départ">
         </div>
         <div class="col-6">
-            <label for="search_count" class="form-label">Nombre de passager</label>
+            <label for="search_count" class="form-label">Passager</label>
             <input type="number" name="search_count" id="search_count" value="{{ old('search_count') }}" class="form-control" placeholder="Passager" min="1" max="7">
         </div>
     </div>

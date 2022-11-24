@@ -63,3 +63,7 @@ $navigation-menu-text-color: #504e70;
     width: 100%;
     height: 300px;
 }
+
+.rafitu .horizontalMenu > .horizontalMenu-list > li:hover > a .fa {
+    background-color: transparent !important;
+}

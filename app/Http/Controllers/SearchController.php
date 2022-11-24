@@ -9,17 +9,34 @@ use Illuminate\Http\Request;
 class SearchController extends Controller {
 
     public function search(Request $request) {
-        $origin_lat = $request->input('origin_lat');
-        $origin_lng = $request->input('origin_lng');
+        $origin = $request->input('origin');
+        $destination = $request->input('destination');
 
         $departure = new Position((float)$request->input('origin_lat'), (float)$request->input('origin_lng'));
         $arrival = new Position((float)$request->input('destination_lat'), (float)$request->input('destination_lng'));
         $date = $request->input('search_date');
         $passager = $request->input('search_count');
 
-        $distance_cmp = 5; // 10 miles radius
+        $distance_cmp = 5; // 5 miles radius
 
-        $rides = RideManager::search($departure, $arrival, $date, $passager, $distance_cmp);
+        // dd([
+        //     $origin, 
+        //     $destination, 
+        //     $departure, 
+        //     $arrival, 
+        //     $date, 
+        //     $passager, 
+        //     $distance_cmp
+        // ]);
+
+        $rides = RideManager::search(
+            $origin, 
+            $destination, 
+            $departure, 
+            $arrival, 
+            $date, 
+            $passager, 
+            $distance_cmp);
 
         return view('pages.ride-search-result', $rides);
     }

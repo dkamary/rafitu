@@ -1,7 +1,7 @@
 {{-- Add ride - Step 1 --}}
 
 @php
-    $tomorrow = date('Y-m-d', strtotime('tomorrow'));
+    $tomorrow = date('d/m/Y 08:00', strtotime('tomorrow'));
 @endphp
 
 <div class="tab-pane fade" id="first">

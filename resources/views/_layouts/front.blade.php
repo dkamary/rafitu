@@ -7,7 +7,9 @@
         <title>@yield('meta_title') | RAFITU</title>
 		@yield('meta_data', view('_partials.front.metadata'))
 		@yield('stylesheets', view('_partials.front.stylesheets'))
+        <!-- Stylesheets Head -->
         @stack('head')
+        <!-- End of Stylesheets head -->
 	</head>
 
 	<body class="main-body rafitu-body">
