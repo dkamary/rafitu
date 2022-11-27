@@ -28,7 +28,7 @@ class RideController extends Controller
         $user = Auth::user();
         $vehicules = Vehicule::where('owner_id', '=', $user->id)->get();
 
-        return view('pages.ride-add', [
+        return view('pages.ride.add', [
             'vehicules' => $vehicules
         ]);
     }
@@ -87,21 +87,21 @@ class RideController extends Controller
 
     public function complete(Ride $ride) {
 
-        return view('pages.ride-added', [
+        return view('pages.ride.added', [
             'ride' => $ride,
         ]);
     }
 
     public function list() : View {
         $rides = Ride::all();
-        
-        return view('pages.ride-list', [
+
+        return view('pages.ride.list', [
             'rides' => $rides,
         ]);
     }
 
     public function show(Ride $ride) : View {
-        return view('pages.ride-show', [
+        return view('pages.ride.show', [
             'ride' => $ride,
         ]);
     }

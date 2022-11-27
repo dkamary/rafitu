@@ -1,5 +1,9 @@
 {{-- Main navigation --}}
 
+@php
+    $user = Auth::user();
+@endphp
+
 <div class="rafitu horizontal-main bg-white clearfix">
     <div class="horizontal-mainwrapper container clearfix">
         <div class="desktoplogo">
@@ -45,11 +49,28 @@
                     <li aria-haspopup="true">
                         <a href="{{ route('dashboard_index') }}">{{ Auth::user()->email }} <span class="fa fa-caret-down m-0"></span></a>
                         <ul class="sub-menu">
-                            <li aria-haspopup="true"><a href="{{ route('dashboard_user') }}">Mon compte</a></li>
-                            <li aria-haspopup="true"><a href="{{ route('dashboard_rides') }}">Mes trajets</a></li>
-                            <li aria-haspopup="true"><a href="{{ route('dashboard_messenger_index') }}">Ma messagerie</a></li>
+                            <li aria-haspopup="true" class="d-flex justify-content-between align-items-start">
+                                <a href="{{ route('dashboard_user') }}">Mon compte</a>
+                                {{-- <i class="fa fa-user-circle-o" aria-hidden="true"></i> --}}
+                            </li>
+                            <li aria-haspopup="true" class="d-flex justify-content-between align-items-start">
+                                <a href="{{ route('dashboard_reservations') }}">Mes réservations</a>
+                                {{-- <i class="fa fa-bookmark" aria-hidden="true"></i> --}}
+                            </li>
+                            <li aria-haspopup="true" class="d-flex justify-content-between align-items-start">
+                                @php
+                                    $notReads = Messenger::myMessagesCount($user->id);
+                                @endphp
+                                <a href="{{ route('dashboard_messenger_index') }}">Ma messagerie</a>
+                                @if($notReads > 0)
+                                    <span class="badge bg-primary rounded-pill">{{ $notReads }}</span>
+                                @endif
+                            </li>
                             @include('_partials.front.header.manage-static-page')
-                            <li aria-haspopup="true"><a href="{{ route('logout') }}">Déconnexion</a></li>
+                            <li aria-haspopup="true" class="d-flex justify-content-between align-items-start">
+                                <a href="{{ route('logout') }}">Déconnexion</a>
+                                {{-- <i class="fa fa-sign-out" aria-hidden="true"></i> --}}
+                            </li>
                         </ul>
                     </li>
                 @endauth

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Managers\AvatarManager;
 use DateTime;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -26,6 +27,14 @@ class User extends Authenticatable
     public $timestamp = false;
     protected $_userType = null;
     protected $_userStatus = null;
+
+    public function getAvatar(string $size = AvatarManager::SIZE_SMALL) : ?string {
+        if(!$this->avatar) return null;
+        $info = pathinfo($this->avatar);
+        $filename = $info['filename'] . '-' . $size .'.' . $info['extension'];
+        if(is_file(AVATAR_DIR . $filename)) return $filename;
+        else return $this->avatar;
+    }
 
     public function getBirthdate(?string $format = 'd/m/Y') {
         if(is_null($this->birthdate)) return null;

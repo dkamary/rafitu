@@ -119,8 +119,8 @@ Route::prefix('espace-client')->group(function(){
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard_index');
     Route::match(['get', 'post'], '/mon-profil', [DashboardController::class, 'user'])->name('dashboard_user');
     Route::post('/mot-de-passe', [DashboardController::class, 'password'])->name('dashboard_update_password');
-    Route::get('/mes-trajets', [DashboardController::class, 'rides'])->name('dashboard_rides');
-    Route::get('/trajet/{ride}', [DashboardController::class, 'rideShow'])->name('dashboard_ride');
+    Route::get('/mes-reservations', [DashboardController::class, 'reservations'])->name('dashboard_reservations');
+    Route::get('/trajet/{ride}', [DashboardController::class, 'reservationShow'])->name('dashboard_reservation_show');
     Route::prefix('messenger')->group(function(){
         Route::get('/', [DashboardController::class, 'messengerIndex'])->name('dashboard_messenger_index');
         Route::get('/{message}', [DashboardController::class, 'messengerShow'])->name('dashboard_messenger_show');

@@ -41,9 +41,22 @@ $navigation-menu-text-color: #504e70;
 }
 
 @media (min-width: 992px) {
-    .sticky-wrapper.is-sticky .horizontal-main::after {
-        background-image: none;
-        display: none;
+    .sticky-wrapper {
+        &.is-sticky {
+            .horizontal-main {
+                &::after {
+                    background-image: none;
+                    display: none;
+                }
+            }
+
+            .horizontalMenu {
+                & > .horizontalMenu-list > li > a.active {
+                    background-color: $rafitu-blue;
+                    color: #fff;
+                }
+            }
+        }
     }
 }
 

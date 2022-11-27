@@ -10,4 +10,9 @@ class RideStatus extends Model
     protected $primaryKey = 'id';
     protected $fillable = ['label', 'is_active',];
     public $timestamps = false;
+
+    public function __toString() : string
+    {
+        return $this->label ?: '';
+    }
 }

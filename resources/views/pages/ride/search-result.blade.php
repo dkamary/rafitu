@@ -15,7 +15,7 @@ Votre résultat de recherche
     <div class="row my-5">
         <div class="col-12 col-md-4">
             <div class="card">
-                <div class="card-body">
+                <div class="card-body border rounded">
                     @include('_partials.front.forms.search-ride')
                 </div>
             </div>
@@ -24,7 +24,7 @@ Votre résultat de recherche
             {{-- @dump($parameters)
                     @dump($ids) --}}
             @forelse ($rides as $ride)
-                @include('pages._partials.ride-element', ['ride' => $ride, 'loop' => $loop])
+                @include('pages._partials.ride.element', ['ride' => $ride, 'loop' => $loop])
             @empty
             <div class="row my-3">
                 <div class="col-12">

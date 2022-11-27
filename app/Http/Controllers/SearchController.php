@@ -20,24 +20,24 @@ class SearchController extends Controller {
         $distance_cmp = 5; // 5 miles radius
 
         // dd([
-        //     $origin, 
-        //     $destination, 
-        //     $departure, 
-        //     $arrival, 
-        //     $date, 
-        //     $passager, 
+        //     $origin,
+        //     $destination,
+        //     $departure,
+        //     $arrival,
+        //     $date,
+        //     $passager,
         //     $distance_cmp
         // ]);
 
         $rides = RideManager::search(
-            $origin, 
-            $destination, 
-            $departure, 
-            $arrival, 
-            $date, 
-            $passager, 
+            $origin,
+            $destination,
+            $departure,
+            $arrival,
+            $date,
+            $passager,
             $distance_cmp);
 
-        return view('pages.ride-search-result', $rides);
+        return view('pages.ride.search-result', $rides);
     }
 }

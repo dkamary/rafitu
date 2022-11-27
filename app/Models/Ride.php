@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use DateTime;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class Ride extends Model
@@ -23,6 +24,27 @@ class Ride extends Model
     protected $vehicule = null;
     protected $driver = null;
     protected $itineraries = null;
+    protected $reservations = null;
+
+    public function getReservations() : ?Collection {
+        return ($this->reservations) ?: $this->reservations = Reservation::where('ride_id', '=', (int)$this->id)->orderBy('reservation_date')->orderBy('payment_date')->get();
+    }
+
+    public function getReservationsCount() : int {
+        $reservations = $this->getReservations();
+
+        return is_countable($reservations) ? count($reservations) : 0;
+    }
+
+    public function getSeatsAvailable() : int {
+        $reservations = $this->getReservations();
+        $count = 0;
+        foreach($reservations as $res) {
+            $count += $res->passenger;
+        }
+
+        return $this->seats_available - $count;
+    }
 
     public function getItineraries() {
         return ($this->itineraries) ?: $this->itineraries = RideItinerary::where('ride_id', '=', (int)$this->id)->get();
@@ -32,8 +54,8 @@ class Ride extends Model
         return ($this->driver) ?: $this->driver = User::where('id', '=', (int)$this->driver_id)->first();
     }
 
-    public function getVehicule() : ?Vehicle {
-        return ($this->vehicule) ?: $this->vehicule = Vehicle::where('id', '=', (int)$this->vehicle_id)->first();
+    public function getVehicule() : ?Vehicule {
+        return ($this->vehicule) ?: $this->vehicule = Vehicule::where('id', '=', (int)$this->vehicle_id)->first();
     }
 
     public function getOwner() : ?User {
@@ -48,7 +70,7 @@ class Ride extends Model
         if($this->status) return $this->status;
 
         $this->status = RideStatus::where('id', '=', (int)$this->ride_status_id)->first();
-        
+
         return $this->status;
     }
 
