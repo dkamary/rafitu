@@ -116,7 +116,7 @@
                                         Passager(s):
                                     </label>
                                     <div class="col-12 col-md-9">
-                                        <input class="form-control" type="number" name="passenger" id="passenger" min="1" max="{{ $seatsAvailable }}" placeholder="Il y a {{ $seatsAvailable }} place{{ $seatsAvailable > 1 ? 's' : '' }} de disponible" required>
+                                        <input class="form-control" type="number" name="passenger" id="passenger" min="1" max="{{ $seatsAvailable }}" value="1" placeholder="Il y a {{ $seatsAvailable }} place{{ $seatsAvailable > 1 ? 's' : '' }} de disponible" required>
                                     </div>
                                 </div>
                                 <div class="row">

@@ -10,12 +10,30 @@ class Reservation extends Model
     protected $table = 'reservation';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'ride_id', 'user_id', 'passenger', 'price', 'is_paid', 'reservation_date', 'payment_date',
+        'ride_id', 'user_id', 'passenger', 'price', 'is_paid', 'reservation_date', 'payment_date', 'transaction_id',
     ];
     public $timestamps = false;
 
     protected $ride;
     protected $user;
+
+    public function __toString() : string
+    {
+        return $this->toString();
+    }
+
+    public function toString() : string {
+        $ride = $this->getRide();
+
+        return sprintf('Trajet: %s', $ride ?: 'N/A');
+    }
+
+    public function getDescription() : string {
+        $ride = $this->getRide();
+        $driver = $ride ? $ride->getDriver() : null;
+
+        return sprintf('Trajet: `%s` %sConducteur: `%s`', $ride ?: 'N/A', "\n", $driver?: 'N/A');
+    }
 
     public function getuser() : ?User {
         return ($this->user) ?: $this->user = User::where('id', '=', (int)$this->user_id)->first();

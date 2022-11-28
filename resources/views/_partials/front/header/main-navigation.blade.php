@@ -16,13 +16,13 @@
         <nav class="horizontalMenu clearfix d-md-flex">
             <ul class="horizontalMenu-list">
                 <li aria-haspopup="true">
-                    <a href="#" class="">Long trajet</a>
+                    <a href="{{ route('long_trajet') }}" class="">Long trajet</a>
                 </li>
                 <li aria-haspopup="true">
-                    <a href="#">Voyage quotidien</a>
+                    <a href="{{ route('trajet_quotidien') }}">Voyage quotidien</a>
                 </li>
                 <li aria-haspopup="true">
-                    <a href="#">Trouver votre trajet</a>
+                    <a href="{{ route('trouver_trajet') }}">Trouver votre trajet</a>
                 </li>
                 {{-- <li aria-haspopup="true"><a href="#">Blog <span class="fa fa-caret-down m-0"></span></a>
                     <ul class="sub-menu">

@@ -28,6 +28,9 @@ class DashboardController extends Controller
     }
 
     public function user(Request $request) : View {
+        /**
+         * @var User $user
+         */
         $user = Auth::user();
         if($request->isMethod(Request::METHOD_POST)) {
             $user->firstname = $request->input('firstname', $user->firstname);
@@ -75,13 +78,13 @@ class DashboardController extends Controller
             ->orderBy('reservation_date', 'DESC')
             ->get();
 
-        return view('dashboard.reservation', [
+        return view('dashboard.reservation.index', [
             'reservations' => $reservations,
         ]);
     }
 
     public function reservationShow(Reservation $reservation) : View {
-        return view('', [
+        return view('dashboard.reservation.show', [
             'reservation' => $reservation,
         ]);
     }

@@ -28,6 +28,11 @@ class User extends Authenticatable
     protected $_userType = null;
     protected $_userStatus = null;
 
+    public function __toString()
+    {
+        return sprintf('%s %s', $this->firstname, $this->lastname);
+    }
+
     public function getAvatar(string $size = AvatarManager::SIZE_SMALL) : ?string {
         if(!$this->avatar) return null;
         $info = pathinfo($this->avatar);

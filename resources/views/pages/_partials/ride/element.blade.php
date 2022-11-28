@@ -4,6 +4,7 @@
     $showPrice = $showPrice ?? true;
     $showDetails = $showDetails ?? true;
     $showDate = $showDate ?? true;
+    $showDistance= $showDistance ?? false;
 @endphp
 
 <div class="row mb-4 border rounded ride__result py-3 {{ $loop->even ? 'bg-light' : 'bg-white' }}">
@@ -16,8 +17,14 @@
                 <div class="ride__info py-3">
                     @if($showDate)
                     <div class="row">
-                        <div class="col-12">
+                        <div @class([
+                            'col-12',
+                            'd-flex justify-content-between' => $showDistance,
+                        ])>
                             <h4 class="fw-bold txt-rafitu">{{ $ride->getDepartureDate('d/m/Y') }}</h4>
+                            @if($showDistance)
+                            <h5 class="fw-bold text-black-50">{{ $ride->getDistance() }}</h5>
+                            @endif
                         </div>
                     </div>
                     @endif
@@ -41,6 +48,7 @@
             @if($showPrice)
                 <div class="col-4 py-3">
                     <div class="row">
+                        <div class="col-12">Distance: <span class="fw-bold">{{ $ride->getDistance() }}</span></div>
                         <div class="col-12">Prix: <span class="fw-bold">{{ $ride->price }} F CFA</span></div>
                         <div class="col-12">Siège disponible: <span class="fw-bold">{{ $ride->seats_available }}</span></div>
                     </div>

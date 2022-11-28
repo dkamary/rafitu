@@ -22,7 +22,9 @@
         <input type="text" class="form-control input-lg br-md-0 border-end-0" name="search_count" id="search_count" placeholder="">
     </div>
     <div class="col-xl-2 col-lg-2 col-md-12 mb-0">
-        <button type="submit" class="btn btn-lg btn-block btn-primary br-ts-md-0 br-bs-md-0">Rechercher</button>
+        <button type="submit" class="btn btn-lg btn-block btn-primary br-ts-md-0 br-bs-md-0">
+            <span><i class="fa fa-search" aria-hidden="true"></i></span>
+        </button>
     </div>
     @csrf
 </form>

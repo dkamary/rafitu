@@ -9,6 +9,7 @@ use App\Http\Controllers\FaqController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\RideController;
 use App\Http\Controllers\SearchController;
@@ -120,7 +121,7 @@ Route::prefix('espace-client')->group(function(){
     Route::match(['get', 'post'], '/mon-profil', [DashboardController::class, 'user'])->name('dashboard_user');
     Route::post('/mot-de-passe', [DashboardController::class, 'password'])->name('dashboard_update_password');
     Route::get('/mes-reservations', [DashboardController::class, 'reservations'])->name('dashboard_reservations');
-    Route::get('/trajet/{ride}', [DashboardController::class, 'reservationShow'])->name('dashboard_reservation_show');
+    Route::get('/trajet/{reservation}', [DashboardController::class, 'reservationShow'])->name('dashboard_reservation_show');
     Route::prefix('messenger')->group(function(){
         Route::get('/', [DashboardController::class, 'messengerIndex'])->name('dashboard_messenger_index');
         Route::get('/{message}', [DashboardController::class, 'messengerShow'])->name('dashboard_messenger_show');
@@ -135,5 +136,15 @@ Route::prefix('espace-client')->group(function(){
     });
 });
 
+// PAYEMENT
+Route::prefix('paiement')->group(function(){
+    Route::post('/', [PaymentController::class, 'payReservation'])->name('pay_reservation');
+    Route::match(['get', 'post'], '/accepte', [PaymentController::class, 'paySuccess'])->name('pay_success');
+    Route::match(['get', 'post'], '/annule', [PaymentController::class, 'payCancel'])->name('pay_cancel');
+});
+
 // FRONT OFFICE PAGE
+Route::get('/long-trajet/{distance?}', [HomeController::class, 'longTrajet'])->name('long_trajet');
+Route::get('/trajet-quotidien/{distance?}', [HomeController::class, 'trajetQuotidien'])->name('trajet_quotidien');
+Route::get('/trouver-un-trajet', [HomeController::class, 'rechercherTrajet'])->name('trouver_trajet');
 Route::get('/{slug}', [HomeController::class, 'staticPage'])->name('static_pages');

@@ -26,99 +26,131 @@ class Ride extends Model
     protected $itineraries = null;
     protected $reservations = null;
 
-    public function getReservations() : ?Collection {
+    public function __toString(): string
+    {
+        return sprintf(
+            'Départ de %s à %s vers %s',
+            $this->departure_label,
+            $this->getDepartureDate(),
+            $this->arrival_label
+        );
+    }
+
+    public function getLabel(): string
+    {
+        return sprintf('%s à %s', $this->departure_label, $this->arrival_label);
+    }
+
+    public function getReservations(): ?Collection
+    {
         return ($this->reservations) ?: $this->reservations = Reservation::where('ride_id', '=', (int)$this->id)->orderBy('reservation_date')->orderBy('payment_date')->get();
     }
 
-    public function getReservationsCount() : int {
+    public function getReservationsCount(): int
+    {
         $reservations = $this->getReservations();
 
         return is_countable($reservations) ? count($reservations) : 0;
     }
 
-    public function getSeatsAvailable() : int {
+    public function getSeatsAvailable(): int
+    {
         $reservations = $this->getReservations();
         $count = 0;
-        foreach($reservations as $res) {
+        foreach ($reservations as $res) {
             $count += $res->passenger;
         }
 
         return $this->seats_available - $count;
     }
 
-    public function getItineraries() {
+    public function getItineraries()
+    {
         return ($this->itineraries) ?: $this->itineraries = RideItinerary::where('ride_id', '=', (int)$this->id)->get();
     }
 
-    public function getDriver() : ?User {
+    public function getDriver(): ?User
+    {
         return ($this->driver) ?: $this->driver = User::where('id', '=', (int)$this->driver_id)->first();
     }
 
-    public function getVehicule() : ?Vehicule {
+    public function getVehicule(): ?Vehicule
+    {
         return ($this->vehicule) ?: $this->vehicule = Vehicule::where('id', '=', (int)$this->vehicle_id)->first();
     }
 
-    public function getOwner() : ?User {
-        if($this->owner) return $this->owner;
+    public function getOwner(): ?User
+    {
+        if ($this->owner) return $this->owner;
 
         $this->owner = User::where('id', '=', (int)$this->owner_id)->first();
 
         return $this->owner;
     }
 
-    public function getStatus() : ?RideStatus {
-        if($this->status) return $this->status;
+    public function getStatus(): ?RideStatus
+    {
+        if ($this->status) return $this->status;
 
         $this->status = RideStatus::where('id', '=', (int)$this->ride_status_id)->first();
 
         return $this->status;
     }
 
-    public function getDistance(string $unit = 'km', int $precision= 2) : string {
+    public function getDistance(string $unit = 'km', int $precision = 2): string
+    {
         $units = [
             'km' => 1000,
             'm' => 1,
         ];
 
-        return number_format((int)$this->distance / ($units[$unit] ?? 1), $precision, ' ', '.') . ' ' .$unit;
+        return number_format((int)$this->distance / ($units[$unit] ?? 1), $precision, ',', ' ') . ' ' . $unit;
     }
 
-    public function hasDepartureDate() : bool {
+    public function hasDepartureDate(): bool
+    {
         return $this->hasDate($this->departure_date);
     }
 
-    public function hasArrivalDate() : bool {
+    public function hasArrivalDate(): bool
+    {
         return $this->hasDate($this->arrival_date);
     }
 
-    public function getDepartureDate(string $format = 'd/m/Y H:i') : string {
-        if(is_null($this->departure_date) || $this->departure_date == '') return '';
+    public function getDepartureDate(string $format = 'd/m/Y H:i'): string
+    {
+        if (is_null($this->departure_date) || $this->departure_date == '') return '';
 
         return $this->getDate($this->departure_date, $format);
     }
 
-    public function getArrivalDate(string $format = 'd/m/Y H:i') : string {
-        if(is_null($this->arrival_date) || $this->arrival_date == '') return '';
+    public function getArrivalDate(string $format = 'd/m/Y H:i'): string
+    {
+        if (is_null($this->arrival_date) || $this->arrival_date == '') return '';
 
         return $this->getDate($this->arrival_date, $format);
     }
 
-    public function getDateDeparture() : DateTime {
+    public function getDateDeparture(): DateTime
+    {
         return new DateTime($this->departure_date);
     }
 
-    public function getDateArrival() : DateTime {
+    public function getDateArrival(): DateTime
+    {
         return new DateTime($this->arrival_date);
     }
 
-    private function hasDate($date) : bool {
-        if(is_null($date) || trim(strlen($date)) < 10) return false;
+    private function hasDate($date): bool
+    {
+        if (is_null($date) || trim(strlen($date)) < 10) return false;
 
         return true;
     }
 
-    private function getDate(string $date, string $format) : string {
-        $datetime= new DateTime($date);
+    private function getDate(string $date, string $format): string
+    {
+        $datetime = new DateTime($date);
 
         return $datetime->format($format);
     }

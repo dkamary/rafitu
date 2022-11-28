@@ -20,13 +20,13 @@ class ReservationController extends Controller {
     }
 
     public function result(Reservation $reservation):  View {
-        return view('pages.reservation-result', [
+        return view('pages.reservation.result', [
             'reservation' => $reservation,
         ]);
     }
 
     public function show(Reservation $reservation) : View {
-        return view('pages.reservation-show', [
+        return view('pages.reservation.show', [
             'reservation'=> $reservation,
         ]);
     }
