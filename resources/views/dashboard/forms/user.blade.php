@@ -145,16 +145,28 @@
             window.addEventListener("DOMContentLoaded", event => {
                 const imgPreview = document.querySelector("#img-preview");
                 if(!imgPreview) {
-                    console.debug("No IMG preview!");
+                    imgPreview.addEventListener("click", e => {
+                        e.preventDefault();
+                        const avatar = document.querySelector("#avatar");
 
-                    return;
+                        if(avatart) avatar.click();
+                    });
+                } else {
+                    console.warn("No IMG preview!");
                 }
-                imgPreview.addEventListener("click", e => {
-                    e.preventDefault();
-                    const avatar = document.querySelector("#avatar");
 
-                    if(avatart) avatar.click();
-                })
+                const avatar = document.querySelector('#avatar');
+                if(avatar) {
+                    avatar.addEventListener('change', e => {
+                        if(e.target.files.length > 0){
+                            var src = URL.createObjectURL(e.target.files[0]);
+                            imgPreview.src = src;
+                            imgPreview.style.display = "block";
+                        }
+                    });
+                } else {
+                    console.warn("No avatar!!!");
+                }
             });
         </script>
     @endpush

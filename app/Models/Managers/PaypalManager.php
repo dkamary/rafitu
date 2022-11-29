@@ -2,7 +2,9 @@
 
 namespace App\Models\Managers;
 
+use App\Models\Order;
 use App\Models\Payment;
+use App\Models\Payments\Paypal\CreateOrderResponse;
 use App\Models\Payments\Paypal\Item;
 use App\Models\Payments\Paypal\Request;
 use App\Models\Payments\Paypal\Token;
@@ -23,8 +25,14 @@ class PaypalManager
     {
         $curl = curl_init();
 
+        $headers = [
+            'Authorization: Basic QWFLaFNrbnFEX0VaX1pLWUU1Y3BQMFZPNnB3WlhSUjlyeWdoUE9oVnBNSXBfcWE4MFNrWktybUVsaDJUTGJXcHF3WlluT0MyajdycVhlVlQ6RUR0a1kybEpqaENrUnF2WS15S1hsckZiUHEzX1RRVnZZN1UzY2RIMG03U211UzYxNmctNTZVanNBM0FhNklIRHRHLVREUjFqYnRuUGotT3E=',
+            'Content-Type: application/x-www-form-urlencoded'
+        ];
+        $postFields = 'grant_type=client_credentials&ignoreCache=true&return_authn_schemes=true&return_client_metadata=true&return_unconsented_scopes=true';
+
         curl_setopt_array($curl, array(
-            CURLOPT_URL =>  config('paypal.entry'), // 'https://api-m.sandbox.paypal.com/v1/oauth2/token',
+            CURLOPT_URL =>  'https://api-m.sandbox.paypal.com/v1/oauth2/token',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -33,7 +41,7 @@ class PaypalManager
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => 'grant_type=client_credentials',
-            CURLOPT_HTTPHEADER => self::TOKEN_HEADERS,
+            CURLOPT_HTTPHEADER => $headers,
         ));
 
         $response = curl_exec($curl);
@@ -46,56 +54,62 @@ class PaypalManager
             ));
         }
 
-        curl_close($curl);
-
         $data = json_decode($response, true);
+        if (!$data) {
+            $message = curl_error($curl);
+            curl_close($curl);
+
+            throw new Exception($message);
+        }
+
         $token = new Token($data);
+        curl_close($curl);
 
         return $token;
     }
 
-    public static function payReservation(Reservation $reservation): Result
+    public static function createOrder(Token $token, Reservation $reservation)
     {
-        $result = new Result();
-
-        $request = [
-            'intent' => 'CAPTURE',
-            'purchase_units' => [
-                [
-                    'items' => [
-                        [
-                            'name' => 'Reservation #' . $reservation->id,
-                            'description' => 'Trajet #' . $reservation->getRide()->id,
-                            'quantity' => 1,
-                            'unit_amount' => [
-                                'currency_code' => 'USD',
-                                'value' => $reservation->price,
-                            ]
-                        ],
-                    ],
-                    'amount' => [
-                        'currency_code' => 'USD',
-                        'value' => $reservation->price,
-                        'breakdown' => [
-                            'item_total' => [
-                                'currency_code' => 'USD',
-                                'value' => $reservation->price,
-                            ]
-                        ]
-                    ],
-                ]
-            ],
-            'application_context' => [
-                'return_url' => route('pay_success'),
-                'cancel_url' => route('pay_cancel'),
-            ]
-        ];
-
-        // dd($request->jsonSerialize());
-        $postfields = json_encode($request);
         $curl = curl_init();
-
-        $authorization = base64_encode(sprintf('%s:%s', config('paypal.client_id'), config('paypal.secret')));
+        $ride = $reservation->getRide();
+        $price = (float)$reservation->price;
+        if($price > 100) {
+            $price /= 100;
+        }
+        $price = number_format($price, 2, '.', '');
+        $postFields = '{
+            "intent": "CAPTURE",
+            "purchase_units": [
+                {
+                    "items": [
+                        {
+                            "name": "Traject #' .$ride->id .'",
+                            "description": "'.$ride->departure_label .'",
+                            "quantity": "1",
+                            "unit_amount": {
+                                "currency_code": "USD",
+                                "value": "'. $price .'"
+                            }
+                        }
+                    ],
+                    "amount": {
+                        "currency_code": "USD",
+                        "value": "'. $price .'",
+                        "breakdown": {
+                            "item_total": {
+                                "currency_code": "USD",
+                                "value": "'. $price .'"
+                            }
+                        }
+                    }
+                }
+            ],
+            "application_context": {
+                "return_url": "' . route('pay_success') . '",
+                "cancel_url": "' . route('pay_cancel') . '"
+            }
+        }';
+        // dd($postFields);
 
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://api-m.sandbox.paypal.com/v2/checkout/orders',
@@ -106,72 +120,62 @@ class PaypalManager
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => $postfields,
+            CURLOPT_POSTFIELDS => $postFields,
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/json',
                 'Prefer: return=representation',
-                // 'PayPal-Request-Id: 5dbde5e1-8d4e-4256-8513-d72553030668',
-                'Authorization: Basic ' . $authorization
+                // 'PayPal-Request-Id: 75fbd487-035c-4fb0-a360-3d7f5f7a5dfe',
+                'Authorization: Bearer ' . $token->getAccess_token()
             ),
         ));
 
         $response = curl_exec($curl);
-        if (!$response) {
-            $error = curl_error($curl);
-            curl_close($curl);
+        $data = json_decode($response);
 
-            throw new Exception(sprintf('Une erreur est survenue: `%s`', $error));
-        }
         curl_close($curl);
 
-        $data = json_decode($response, true);
+        return new CreateOrderResponse($data);
+    }
 
-        if (isset($data['error'])) {
-            $result
-                ->setStatus(Result::STATUS_ERROR)
-                ->setData($data)
-                ->setMessage($data['error_description'] ?? 'Une erreur est survenue');
-        } elseif (isset($data['name'])) {
-            $result
-                ->setStatus(Result::STATUS_ERROR)
-                ->setMessage(sprintf('%s : %s', $data['name'], $data['message']))
-                ->setData($data);
-        } else {
-            if(isset($data['id'])) {
-                $reservation->is_paid = 1;
-                $reservation->payment_date = date('Y-m-d H:i:s');
-                $reservation->transaction_id = $data['id'];
-                $reservation->save();
+    public static function capturePayment(string $token, Order $order)
+    {
+        $curl = curl_init();
+        $attributes = $order->getAttributes();
+        $url = 'https://api-m.sandbox.paypal.com/v2/checkout/orders/'. ($attributes['id'] ?? $order->id) .'/capture';
 
-                $payment = Payment::create([
-                    'reservation_id' => $reservation->id,
-                    'referrence_id' => $reservation->transaction_id,
-                    'amount' => $reservation->price,
-                    'payment_date' => date('Y-m-d H:i:s'),
-                    'raw_data' => $response,
-                ]);
-            }
-            $result
-                ->setStatus(Result::STATUS_SUCCESS)
-                ->setData([
-                    'data' => $data,
-                    'payment' => $payment,
-                    'reservation' => $reservation,
-                ])
-                ->setMessage('Paiement effectué avec succès!');
-        }
-
-        // echo '<pre>';
-        // echo $postfields;
-        // echo '</pre>';
-
-        // dd([
-        //     'request' => $request,
-        //     'json' => $postfields,
-        //     'data' => $data,
-        //     'result' => $result,
+        // dump([
+        //     'attributes' => $attributes['id'],
+        //     'url' => $url,
+        //     'token' => $token,
+        //     'order' => $order,
         // ]);
 
-        return $result;
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json',
+                'Prefer: return=representation',
+                'Authorization: Bearer ' . $token
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        if(!$response) {
+            $message = curl_error($curl);
+            curl_close($curl);
+
+            throw new Exception($message);
+        }
+
+        curl_close($curl);
+
+        return json_decode($response);
     }
 }

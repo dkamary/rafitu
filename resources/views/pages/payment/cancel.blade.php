@@ -1,4 +1,4 @@
-{{-- Afficher le resultat de réservation --}}
+{{-- Réservation annulé --}}
 
 @extends('_layouts.front')
 
@@ -17,11 +17,11 @@
 @endphp
 
 @section('meta_title')
-    Réservation
+    Paiement effectué
 @endsection
 
 @section('hero')
-    @include('_partials.front.section.breadcrumbs', ['page_title' => 'Réservation'])
+    @include('_partials.front.section.breadcrumbs', ['page_title' => 'Paiement effectué'])
 @endsection
 
 @section('main')
@@ -34,9 +34,13 @@
                     </div>
                 </div>
                 <div class="row border-top border-bottom mt-3 py-3">
-                    <div class="col-12 text-center text-success fs-4">
-                        La réservation a été effectué avec succès<br>
-                        Veuillez passer à l'étape suivante
+                    <div @class([
+                        'col-12 text-center fs-4',
+                        'text-success' => isset($result) ? $result->isSuccess() : (isset($order) ? $order->isSuccess() : false),
+                        'text-warning' => isset($result) ? $result->isWarning() : (isset($order) ? $order->isWarning() : false),
+                        'text-danger' => isset($result) ? $result->isError() : (isset($order) ? $order->isError() : false),
+                    ])>
+                        {!! isset($result) ? $result->getMessage() : (isset($order) ? $order->getMessage() : 'N/A') !!}
                     </div>
                 </div>
                 <div class="row py-3">

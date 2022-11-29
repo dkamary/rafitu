@@ -18,7 +18,7 @@
     ];
     $arrivalDate = $ride->getDateArrival();
     $now = new \DateTime();
-    $diff = $now->diff($arrivalDate);
+    $diff = $arrivalDate->diff($now);
 @endphp
 
 <div class="container">
@@ -74,25 +74,18 @@
             <div class="row border-top mt-3 py-3">
                 <div class="col-12">
                     @if(!$reservation->isPaid())
-                    <form class="form" action="{{ route('pay_reservation') }}" method="post">
-                        <input type="hidden" name="reservation_id" value="{{ $reservation->id }}">
-                        <input type="hidden" name="user_id" value="{{ $user ? $user->id : 0 }}">
-                        <div class="row">
-                            <div class="col-12 d-flex justify-content-center align-items-center">
-                                <button type="submit" class="btn btn-primary">
-                                    Procéder au paiement
-                                </button>
-                            </div>
-                        </div>
-                        @csrf
-                    </form>
+
+                        @include('_partials.front.forms.reservation-payment')
+
                     @elseif($diff->invert > 0)
+
                         <p class="text-center">
                             Vous avez déjà effectuer ce trajet
                         </p>
                         <p class="text-center">
                             Voulez-vous donner votre avis?
                         </p>
+
                     @else
                         <form action="#" method="post" class="form">
                             <input type="hidden" name="reservation_id" value="{{ $reservation->id }}">

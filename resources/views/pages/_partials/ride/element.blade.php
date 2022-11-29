@@ -5,6 +5,8 @@
     $showDetails = $showDetails ?? true;
     $showDate = $showDate ?? true;
     $showDistance= $showDistance ?? false;
+
+    $reservationCount = $ride->getReservationsCount();
 @endphp
 
 <div class="row mb-4 border rounded ride__result py-3 {{ $loop->even ? 'bg-light' : 'bg-white' }}">
@@ -43,6 +45,18 @@
                             @endif
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-12 py-4">
+                            @if($reservationCount == 0)
+                            <p class="fw-bold fs-italic text-info">Il n'y a pas encore de réservation pour ce trajet</p>
+                            @else
+                            <p class="fw-bold text-warning">
+                                {{ $reservationCount }} personne{{ $reservationCount > 1 ? '(s) ont' : ' a' }} réservé sur ce trajet.
+                            </p>
+                            @endif
+                        </div>
+                    </div>
                 </div>
             </div>
             @if($showPrice)
@@ -50,7 +64,11 @@
                     <div class="row">
                         <div class="col-12">Distance: <span class="fw-bold">{{ $ride->getDistance() }}</span></div>
                         <div class="col-12">Prix: <span class="fw-bold">{{ $ride->price }} F CFA</span></div>
-                        <div class="col-12">Siège disponible: <span class="fw-bold">{{ $ride->seats_available }}</span></div>
+                        <div @class([
+                            'col-12 fw-bold my-3',
+                            'text-danger' => ($ride->seats_available - $reservationCount) < 1,
+                            'text-info' => ($ride->seats_available - $reservationCount) > 0,
+                        ])>Siège disponible: <span class="fw-bold">{{ $ride->seats_available - $reservationCount }}</span></div>
                     </div>
 
                     @if($ride->woman_only)

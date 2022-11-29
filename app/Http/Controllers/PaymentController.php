@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Managers\PaypalManager;
+use App\Models\Order;
+use App\Models\OrderLink;
 use App\Models\Reservation;
+use App\Models\Transactions\Result;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -21,33 +25,114 @@ class PaymentController extends Controller
             return view('dashboard.reservation.not-found');
         }
 
-        $result = PaypalManager::payReservation($reservation);
-        session()->put('result', $result);
+        $token = PaypalManager::getToken();
+        session()->put('access_token', $token->getAccess_token());
         session()->save();
 
-        return response()->redirectToRoute('pay_success');
+        $createOrderResponse = PaypalManager::createOrder($token, $reservation);
+
+        try {
+            $order = Order::create([
+                'id' => $createOrderResponse->getId(),
+                'intent' => $createOrderResponse->getIntent(),
+                'status' => $createOrderResponse->getStatus(),
+                'create_time' => date('Y-m-d H:i:s'),
+                'reservation_id' => $reservation->id,
+            ]);
+        } catch(QueryException $ex) {
+            if($ex->getCode() != 23000){
+                dd($ex);
+            }
+        }
+
+        $orderId = $createOrderResponse->getId();
+        foreach($createOrderResponse->getLinks() as $lnk) {
+            // dump($lnk);
+            $link = new OrderLink();
+            $link->order_id = $orderId;
+            $link->rel = $lnk->rel;
+            $link->href = $lnk->href;
+
+            try {
+                $link->save();
+            } catch(\Throwable $th) {
+                dump($th->getMessage());
+
+                throw $th;
+            }
+        }
+
+        $reservation->transaction_id = $orderId;
+        $reservation->save();
+
+        if($link = $createOrderResponse->getApprovalLink()) {
+            return response()->redirectTo($link->href);
+        }
 
         return view('pages.payment.result', [
             'reservation' => $reservation,
-            'result' => $result,
+            'result' => new Result(Result::STATUS_ERROR, 'Une erreur est survenue lors du processus de paiement', $createOrderResponse),
         ]);
     }
 
     public function paySuccess(Request $request) : View {
-        $result = session()->get('result');
-        if(!$result) throw new NotFoundHttpException('Result not found!');
-        $data = $result->getData();
-        $reservation = $data['reservation'];
-        $payment = $data['payment'];
+        $token = $request->input('token');
+        $reservation = Reservation::where('transaction_id', 'LIKE', $token)->first();
+        if(!$reservation){
+            throw new NotFoundHttpException('La réservation associé est introuvable!!!');
+        }
+
+        $result = new Result();
+
+        $order = Order::where('id', 'LIKE', $token)->first();
+
+        if($order->status == 'COMPLETED') {
+            $result
+            ->setStatus(Result::STATUS_SUCCESS)
+            ->setMessage('Le paiement a été approuvé');
+
+            return view('pages.payment.result', [
+                'reservation' => $reservation,
+                'result' => $result,
+                'order' => $order,
+            ]);
+        }
+
+        $order->status = 'APPROVED';
+        $order->payer_id = $request->input('PayerID');
+        $order->save();
+
+        $result
+            ->setStatus(Result::STATUS_SUCCESS)
+            ->setMessage('Le paiement a été approuvé');
+
+        $token = session()->get('access_token', PaypalManager::getToken()->getAccess_token());
+        // dump($order);
+        $capture = PaypalManager::capturePayment($token, $order);
+
+        if($capture->intent == 'CAPTURE' && $capture->status == 'COMPLETED') {
+            $order->status = 'COMPLETED';
+            $reservation->is_paid = 1;
+            $reservation->save();
+        } else {
+            $order->status = $capture->status;
+        }
+        $order->save();
 
         return view('pages.payment.result', [
             'reservation' => $reservation,
             'result' => $result,
+            'order' => $order,
         ]);
     }
 
     public function payCancel(Request $request) : View {
-        dd($request);
-        return view('');
+        $token = $request->input('token');
+        $reservation = Reservation::where('transaction_id', 'LIKE', $token)->first();
+
+        return view('pages.payment.cancel', [
+            'reservation' => $reservation,
+            'result' => new Result(Result::STATUS_WARNING, 'Le processus de paiement n\'a pas aboutie'),
+        ]);
     }
 }

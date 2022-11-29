@@ -4,7 +4,7 @@
     <div class="control-group form-group">
         <div class="form-group">
             <label class="form-label text-dark">Prix</label>
-            <input type="number" name="price" class="form-control required Title" min="1"
+            <input type="number" name="price" class="form-control required Title" min="1" required
                 max="100000" placeholder="">
         </div>
     </div>
@@ -30,8 +30,14 @@
     </div>
     <div class="form-group">
         <div class="d-flex justify-content-between">
-            <a href="#itineraire" data-bs-toggle="tab" class="btn btn-primary  mb-0 waves-effect waves-light" onclick="document.querySelector('#itineraire').click();">Revenir</a>
-            <button type="submit" class="btn btn-primary  mb-0 waves-effect waves-light">Publier votre trajet</button>
+            <a href="#itineraire" data-bs-toggle="tab" class="btn btn-secondary bg-dark  mb-0 waves-effect waves-light" onclick="document.querySelector('#itineraire').click();">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;
+                Revenir
+            </a>
+            <button type="submit" class="btn btn-primary  mb-0 waves-effect waves-light">
+                <i class="fa fa-arrow-check" aria-hidden="true"></i>&nbsp;
+                Publier votre trajet
+            </button>
         </div>
     </div>
 </div>

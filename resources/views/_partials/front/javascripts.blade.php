@@ -54,5 +54,4 @@
 <script src="{{ asset('assets/js/custom.js') }}"></script>
 
 {{-- Google Maps API --}}
-<script defer async src="{{ asset('assets/js/ride.js') }}"></script>
-<script defer async src="https://maps.googleapis.com/maps/api/js?key={{ Config::get('google.maps.api.key') }}&libraries=places&callback=initMap"></script>
+@yield('google_maps', view('_partials.front.google-maps.default-maps'))

@@ -433,9 +433,14 @@ const rideShowHandleMap = () => {
     });
 
     let bounds = new google.maps.LatLngBounds();
+    console.debug({
+        start: 'lat: ' + parseFloat(map.dataset.start_lat) + ', lng: ' + parseFloat(map.dataset.start_lng),
+        end: 'lat: ' + parseFloat(map.dataset.end_lat) + ', lng: ' + parseFloat(map.dataset.end_lng)
+    });
     bounds.extend({ lat: parseFloat(map.dataset.start_lat), lng: parseFloat(map.dataset.start_lng) });
     bounds.extend({ lat: parseFloat(map.dataset.end_lat), lng: parseFloat(map.dataset.end_lng) });
     mapRide.fitBounds(bounds);
+    mapRide.setZoom(14);
 
     const trigger = document.querySelector('#show-map');
     if(!trigger) {

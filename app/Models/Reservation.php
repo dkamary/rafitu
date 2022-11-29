@@ -10,7 +10,8 @@ class Reservation extends Model
     protected $table = 'reservation';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'ride_id', 'user_id', 'passenger', 'price', 'is_paid', 'reservation_date', 'payment_date', 'transaction_id',
+        'ride_id', 'user_id', 'passenger', 'price', 'is_paid', 'reservation_date', 'payment_date',
+        'transaction_id',
     ];
     public $timestamps = false;
 

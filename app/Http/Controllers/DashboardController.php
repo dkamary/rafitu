@@ -24,7 +24,7 @@ class DashboardController extends Controller
     }
 
     public function index() : View {
-        return view('index');
+        return view('dashboard.index');
     }
 
     public function user(Request $request) : View {
@@ -43,7 +43,7 @@ class DashboardController extends Controller
             $user->mobile = $request->input('mobile');
             $user->biography = $request->input('biography');
             if($avatar = AvatarManager::handleUpload($request, 'avatar', $user)) {
-                dump($avatar);
+                // dump($avatar);
                 $user->avatar = $avatar;
             }
             $user->save();
