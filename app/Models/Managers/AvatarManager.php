@@ -30,7 +30,7 @@ class AvatarManager
          */
         $avatar = $request->file($fieldName);
         if (!$avatar) {
-            dd('NO FILE AT ALL!!!');
+            // dd('NO FILE AT ALL!!!');
             return null;
         }
 
@@ -114,7 +114,7 @@ class AvatarManager
         return false;
     }
 
-    public static function saveImageWebp(GdImage $gdImage, string $filename) : bool {
+    public static function saveImageWebp($gdImage, string $filename) : bool {
         return imagewebp($gdImage, $filename);
     }
 }
