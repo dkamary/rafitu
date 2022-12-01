@@ -104,7 +104,7 @@ class AvatarManager
         return null;
     }
 
-    public static function saveImage(GdImage $gdImage, string $filename) : bool {
+    public static function saveImage($gdImage, string $filename) : bool {
         $ext = pathinfo($filename, PATHINFO_EXTENSION);
         if($ext == 'jpg') return imagejpeg($gdImage, $filename, 75);
         if($ext == 'png') return imagepng($gdImage, $filename);

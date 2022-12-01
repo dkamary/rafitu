@@ -1,16 +1,16 @@
 {{-- Booking Form --}}
 
-<form action="#" class="form booking-form" method="POST">
+<form action="{{ route('ride_match') }}" class="form booking-form" method="POST">
 
     <div class="row">
         <div class="col-12 col-md-6">
             <div class="my-3">
-                <input type="text" name="fullname" id="fullname" class="form-control rounded-pill" placeholder="Votre nom" value="" required>
+                <input type="text" name="fullname" id="fullname" class="form-control rounded-pill" placeholder="Votre nom" value="" >
             </div>
         </div>
         <div class="col-12 col-md-6">
             <div class="my-3">
-                <input type="email" name="email" id="email" class="form-control rounded-pill" placeholder="Adresse e-mail" value="" required>
+                <input type="email" name="email" id="email" class="form-control rounded-pill" placeholder="Adresse e-mail" value="" >
             </div>
         </div>
     </div>
@@ -36,7 +36,7 @@
         </div>
         <div class="col-12 col-md-6">
             <div class="my-3 input-group">
-                <input type="date" name="departure_date" id="departure_date" class="form-control rounded-pill" placeholder="Date de départ" value="" required>
+                <input type="date" name="departure_date" id="departure_date" class="form-control rounded-pill" placeholder="Date de départ" value="">
                 <span class="input-group-text" id="departure_date_icon">
                     <i class="fa fa-calendar-o" aria-hidden="true"></i>
                 </span>
@@ -47,7 +47,7 @@
     <div class="row">
         <div class="col-12 col-md-6">
             <div class="my-3 input-group">
-                <input type="time" name="time" id="departure_time" class="form-control rounded-pill" placeholder="Heure de départ" value="" required  aria-label="Heure de départ" aria-describedby="departure_time_icon">
+                <input type="time" name="time" id="departure_time" class="form-control rounded-pill" placeholder="Heure de départ" value=""  aria-label="Heure de départ" aria-describedby="departure_time_icon">
                 <span class="input-group-text" id="basic-addon2">
                     <i class="fa fa-clock-o" aria-hidden="true"></i>
                 </span>
@@ -62,4 +62,5 @@
         </div>
     </div>
 
+    @csrf
 </form>

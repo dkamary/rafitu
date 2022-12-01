@@ -50,6 +50,8 @@ Route::prefix('trajet')->group(function () {
     Route::get('/trajet-cree/{ride}', [RideController::class, 'complete'])->name('ride_complete');
     Route::get('/search', [SearchController::class, 'search'])->name('ride_search');
     Route::get('/list', [RideController::class, 'list'])->name('ride_list');
+    Route::post('/reservation', [SearchController::class, 'match'])->name('ride_match');
+    Route::get('/reservation', [SearchController::class, 'matchResult'])->name('ride_match_result');
 
     Route::get('/{ride}', [RideController::class, 'show'])->name('ride_show'); // Doit toujours être à la fin!
 });

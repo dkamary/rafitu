@@ -235,6 +235,7 @@ return [
         'Shortcode' => App\Models\Managers\ShortCodeManager::class,
         'Messenger' => App\Models\Managers\MessengerManager::class,
         'DateManager' => App\Models\Managers\DateManager::class,
+        'RideManager' => App\Models\Managers\RideManager::class,
     ],
 
 ];

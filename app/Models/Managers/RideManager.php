@@ -128,6 +128,22 @@ class RideManager
         return $rides;
     }
 
+    public static function getRandom($count = 3) : ?Collection {
+        $reservationsID = [];
+        $result = DB::select('SELECT id FROM `ride` WHERE `departure_date` > NOW()');
+        foreach($result as $r) {
+            $reservationsID[] = (int)$r->id;
+        }
+
+        if(count($result) <= $count) {
+
+            return Ride::whereIn('id', $reservationsID)->get();
+        }
+        $randomIds = array_rand($reservationsID, 3);
+
+        return Ride::whereIn('id', $randomIds)->get();
+    }
+
     private static function searchByPosition(string $fieldLong, string $fieldLat, Position $position, int $distance): array
     {
         $sql = "SELECT id, ST_Distance_Sphere( point ({$position->lng}, {$position->lat}), point($fieldLong, $fieldLat)) * .000621371192 AS `distance_in_miles`
