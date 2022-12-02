@@ -76,33 +76,33 @@ class importCountries extends Command
         while($row = fgets($handle)) {
             $rowData = explode("\t", $row);
 
-            $alternatenames = (string)$rowData[alternatenames];
-            if(strlen($alternatenames) > 10000) {
-                $alternatenames = mb_substr($alternatenames, 0, 10000);
-            }
+            // $alternatenames = (string)$rowData[alternatenames];
+            // if(strlen($alternatenames) > 10000) {
+            //     $alternatenames = mb_substr($alternatenames, 0, 10000);
+            // }
 
             $data[] = [
                 'name' => (string)$rowData[name],
-                'ascii_name' => (string)$rowData[ascii_name],
-                'alternatenames' => $alternatenames,
+                // 'ascii_name' => (string)$rowData[ascii_name],
+                // 'alternatenames' => $alternatenames,
                 'latitude' => (float)$rowData[latitude],
                 'longitude' => (float)$rowData[longitude],
-                'feature_class' => $rowData[feature_class],
-                'feature_code' => $rowData[feature_code],
+                // 'feature_class' => $rowData[feature_class],
+                // 'feature_code' => $rowData[feature_code],
                 'country_code' => $rowData[country_code],
-                'cc2' => $rowData[cc2],
-                'admin1_code' => $rowData[admin1_code],
-                'admin2_code' => $rowData[admin2_code],
-                'admin3_code' => $rowData[admin3_code],
-                'admin4_code' => $rowData[admin4_code],
-                'population' => (int)$rowData[population],
-                'elevation' => (int)$rowData[elevation],
-                'dem' => $rowData[dem],
-                'timezone' => $rowData[timezone],
-                'modification_date' => $rowData[modification_date],
+                // 'cc2' => $rowData[cc2],
+                // 'admin1_code' => $rowData[admin1_code],
+                // 'admin2_code' => $rowData[admin2_code],
+                // 'admin3_code' => $rowData[admin3_code],
+                // 'admin4_code' => $rowData[admin4_code],
+                // 'population' => (int)$rowData[population],
+                // 'elevation' => (int)$rowData[elevation],
+                // 'dem' => $rowData[dem],
+                // 'timezone' => $rowData[timezone],
+                // 'modification_date' => $rowData[modification_date],
             ];
 
-            if(++$count == 2500) {
+            if(++$count == 5000) {
                 // $this->info('Inserting 1000 cities');
                 City::insert($data);
                 // $this->info('1000 cities added!');
