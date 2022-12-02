@@ -1,4 +1,5 @@
 /node_modules
+/public/allCountries.txt
 /public/hot
 /public/storage
 /storage/*.key

@@ -22,7 +22,7 @@
     </div>
     <div class="control-group form-group">
         <div class="d-flex justify-content-between">
-            <a href="#second" data-bs-toggle="tab" class="btn btn-secondary bg-dark  mb-0 waves-effect waves-light" onclick="document.querySelector('#arrive').click();">
+            <a href="#second" data-bs-toggle="tab" class="btn btn-secondary bg-dark  mb-0 waves-effect waves-light" onclick="document.querySelector('#depart').click();">
                 <i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;
                 Revenir
             </a>
@@ -55,7 +55,15 @@
                         alert('Veuillez mettre le nom dans l\'emplacement d\'arrivée s\'il vous plaît');
                         return;
                     }
-                    const arrive = document.querySelector('#arrive');
+
+                    const arrival_lng = document.querySelector('#arrival_lng');
+                    const arrival_lat = document.querySelector('#arrival_lat');
+                    if(arrival_lng.value.length = 0 || arrival_lat.value.length == 0) {
+                        alert('Veuillez sélectionner un point géographique sur la carte s\'il vous plaît!');
+                        return;
+                    }
+
+                    const arrive = document.querySelector('#itineraire');
                     arrive.click();
                 });
             });

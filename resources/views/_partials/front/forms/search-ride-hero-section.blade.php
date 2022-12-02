@@ -19,7 +19,7 @@
     </div>
     <div class="form-group col-xl-3 col-lg-3 col-md-12 select2-lg  mb-0 bg-white">
         <input type="date" class="form-control input-lg br-md-0 border-end-0" name="search_date" id="search_date" placeholder="Aujourd'hui" min="{{ $now->format('d/m/Y') }}">
-        <span><i class="fa fa-calendar location-gps me-1"></i></span>
+        <span><i class="fa fa-calendar location-gps me-1" onclick="document.querySelector('#search_date').click();"></i></span>
     </div>
     <div class="form-group col-xl-1 col-lg-1 col-md-12 select2-lg  mb-0 bg-white">
         {{-- <span><i class="fa fa-user location-gps me-1"></i></span> --}}

@@ -72,6 +72,13 @@
                         return;
                     }
 
+                    const departure_lng = document.querySelector('#departure_lng');
+                    const departure_lat = document.querySelector('#departure_lat');
+                    if(departure_lng.value.length = 0 || departure_lat.value.length == 0) {
+                        alert('Veuillez sélectionner un point géographique sur la carte s\'il vous plaît!');
+                        return;
+                    }
+
                     const arrive = document.querySelector('#arrive');
                     arrive.click();
                 });

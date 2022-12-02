@@ -18,13 +18,13 @@
                             <div class="col">
                                 {{ $ride->getDepartureLabel(true) }}
                             </div>
-                            <div class="col">
+                            <div class="col justify-content-center align-items-center">
                                 <i class="fa fa-arrow-right" aria-hidden="true"></i>
                             </div>
                             <div class="col">
                                 {{ $ride->getArrivalLabel(true) }}
                             </div>
-                            <div class="col">
+                            <div class="col-12">
                                 <strong>{{ number_format($ride->price, 2, '.', '') }}F CFA</strong>
                             </div>
                         </div>

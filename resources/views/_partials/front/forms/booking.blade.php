@@ -18,7 +18,7 @@
     <div class="row">
         <div class="col-12 col-md-6">
             <div class="my-3">
-                <input type="number" name="passager" id="passager" class="form-control rounded-pill" placeholder="Passager" value="" required min="1" max="6">
+                <input type="number" name="passager" id="passager" class="form-control rounded-pill" placeholder="Passager" value="1" required min="1" max="6">
             </div>
         </div>
         <div class="col-12 col-md-6">

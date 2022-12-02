@@ -68,17 +68,23 @@ class importCountries extends Command
         }
         $this->info('File opened!');
         City::truncate();
-        $lines = 1000000;
+        $lines = 12349988;
         $progress_bar = $this->output->createProgressBar($lines);
         $count = 0;
         $data = [];
         $progress_bar->start();
         while($row = fgets($handle)) {
             $rowData = explode("\t", $row);
+
+            $alternatenames = (string)$rowData[alternatenames];
+            if(strlen($alternatenames) > 10000) {
+                $alternatenames = mb_substr($alternatenames, 0, 10000);
+            }
+
             $data[] = [
                 'name' => (string)$rowData[name],
                 'ascii_name' => (string)$rowData[ascii_name],
-                'alternatenames' => (string)$rowData[alternatenames],
+                'alternatenames' => $alternatenames,
                 'latitude' => (float)$rowData[latitude],
                 'longitude' => (float)$rowData[longitude],
                 'feature_class' => $rowData[feature_class],
@@ -96,7 +102,7 @@ class importCountries extends Command
                 'modification_date' => $rowData[modification_date],
             ];
 
-            if(++$count == 100) {
+            if(++$count == 2500) {
                 // $this->info('Inserting 1000 cities');
                 City::insert($data);
                 // $this->info('1000 cities added!');
