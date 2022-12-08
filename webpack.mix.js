@@ -26,6 +26,7 @@ mix
     .js('resources/js/backoffice.js', 'public/assets/js')
     .js('resources/js/ride.js', 'public/assets/js')
     .js('resources/js/faq.js', 'public/assets/js')
+    .js('resources/js/autocomplete.js', 'public/assets/js')
     .react()
     .sourceMaps();
 

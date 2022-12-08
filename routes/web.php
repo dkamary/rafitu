@@ -14,6 +14,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\RideController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\SuggestionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -149,8 +150,17 @@ Route::prefix('paiement')->group(function(){
 // CITY
 Route::prefix('ville')->group(function(){
     Route::get('/list/{page?}/{count?}', [CityController::class, 'index'])->name('city_list');
-    Route::get('/search/{search}/{count?}', [CityController::class, 'search'])->name('city_search');
+    Route::get('/search/{search}/{count?}', [CityController::class, 'search0'])->name('city_search0');
     Route::get('/search2/{search}/{count?}', [CityController::class, 'searchInText'])->name('city_search2');
+
+    Route::post('/search', [CityController::class, 'search'])->name('city_search');
+    Route::post('/search-ride', [CityController::class, 'searchRide'])->name('city_search_ride');
+});
+
+// SUGGESTIONS
+Route::prefix('suggestions')->group(function() {
+    Route::get('/trajet', [SuggestionController::class, 'trajet'])->name('suggestion_trajet');
+    Route::get('/villes', [SuggestionController::class, 'ville'])->name('suggestion_ville');
 });
 
 // FRONT OFFICE PAGE

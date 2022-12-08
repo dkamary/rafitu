@@ -1,0 +1,11 @@
+// Home statistiques
+.home-stats {
+    .item-card {
+        .item-card-desc {
+            .item-card-text {
+                top: 50%;
+                transform: translateY(-50%);
+            }
+        }
+    }
+}
