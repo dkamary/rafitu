@@ -15,7 +15,7 @@ class HomeController extends Controller
     {
         $randoms = TrajetDestinationManager::random();
 
-        return view('pages.homepage', [
+        return view('pages.home.index', [
             'randoms' => $randoms,
         ]);
     }

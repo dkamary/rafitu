@@ -15,7 +15,7 @@ class AuthController extends Controller
 {
     public function index(): View
     {
-        return view('pages.login');
+        return view('pages.security.login');
     }
 
     public function authNormal(Request $request): RedirectResponse
@@ -69,7 +69,7 @@ class AuthController extends Controller
 
     public function register(): View
     {
-        return view('pages.register');
+        return view('pages.security.register');
     }
 
     public function createNewUser(Request $request): RedirectResponse
@@ -132,7 +132,7 @@ class AuthController extends Controller
     {
         $user = User::where('email', 'LIKE', $email)->first();
 
-        return view('pages.user-created-confirm-email', [
+        return view('pages.security.user-created-confirm-email', [
             'user' => $user,
         ]);
     }
@@ -163,7 +163,7 @@ class AuthController extends Controller
             $error = 'Impossible de valider votre email. Veuillez vérifier cliquer à nouveau sur le lien dans votre email';
         }
 
-        return view('pages.user-validated', [
+        return view('pages.security.user-validated', [
             'user' => $user,
             'error' => $error,
             'validate' => $validate,
@@ -205,7 +205,7 @@ class AuthController extends Controller
         $user = User::where('email', 'LIKE', $email)->first();
         if(!$user) {
 
-            return view('pages.password-reset', [
+            return view('pages.security.password-reset', [
                 'user' => $user,
                 'email' => $email,
                 'token' => $token,
@@ -227,7 +227,7 @@ class AuthController extends Controller
 
         if($request->input('action') != 'reset') {
 
-            return view('pages.password-reset', [
+            return view('pages.security.password-reset', [
                 'user' => $user,
                 'done' => false,
                 'error' => false,
@@ -237,7 +237,7 @@ class AuthController extends Controller
         $user->password = bcrypt($request->input('password'));
         $user->save();
 
-        return view('pages.password-reset', [
+        return view('pages.security.password-reset', [
             'user' => $user,
             'done' => true,
             'error' => false,
