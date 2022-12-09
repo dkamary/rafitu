@@ -30,7 +30,11 @@
                     <h1 class="mb-1 d-none d-md-block">Trouver votre trajet idéal</h1>
                     <p class="d-none d-md-block">Voyager à petit prix</p>
                 </div>
-                @include('_partials.front.forms.search-ride-hero-section')
+                <div class="row d-none d-md-block">
+                    <div class="col-12">
+                        @include('_partials.front.forms.search-ride-hero-section')
+                    </div>
+                </div>
             </div>
         </div>
     </div>

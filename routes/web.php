@@ -145,6 +145,8 @@ Route::prefix('paiement')->group(function(){
     Route::post('/', [PaymentController::class, 'payReservation'])->name('pay_reservation');
     Route::match(['get', 'post'], '/accepte', [PaymentController::class, 'paySuccess'])->name('pay_success');
     Route::match(['get', 'post'], '/annule', [PaymentController::class, 'payCancel'])->name('pay_cancel');
+    Route::match(['get', 'post'], '/notification', [PaymentController::class, 'payNotification'])->name('pay_notification');
+    Route::post('/cinetpay', [PaymentController::class, 'cinetpay'])->name('pay_cinetpay');
 });
 
 // CITY

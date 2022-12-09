@@ -12,7 +12,7 @@
         <div class="row">
             @foreach ($randomRides as $ride)
 
-                <div class="col-xl-4 col-lg-4 col-md-12 mb-0">
+                <div class="col-xl-4 col-lg-4 col-md-12 mb-0 mt-2">
                     <a href="{{ route('ride_show', ['ride' => $ride->id]) }}" class="btn btn-lg btn-block btn-primary br-ts-md-0 br-bs-md-0">
                         <div class="row">
                             <div class="col">

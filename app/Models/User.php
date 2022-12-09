@@ -27,6 +27,7 @@ class User extends Authenticatable
     public $timestamp = false;
     protected $_userType = null;
     protected $_userStatus = null;
+    protected $_town = null;
 
     public function __toString()
     {

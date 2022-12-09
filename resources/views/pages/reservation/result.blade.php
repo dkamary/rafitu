@@ -85,3 +85,26 @@
         </div>
     </div>
 @endsection
+
+@push('head')
+    <style>
+        #cinetpay-form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #cinetpay-form .cpButton {
+            background-color: #4c6dff;
+            border: solid 1px #4c6dff;
+            color: #fff;
+            font-style: normal;
+            text-shadow: unset;
+        }
+
+        #cinetpay-form .cpButton::before,
+        #cinetpay-form .cpButton::after {
+            display: none;
+        }
+    </style>
+@endpush

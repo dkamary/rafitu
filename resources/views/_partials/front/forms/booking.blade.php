@@ -67,6 +67,29 @@
 
 @once
     @push('footer')
-        @include('_partials.front.google-maps.trajet-suggestion')
+
+        <script>
+
+            (function($, window, document){
+                $(function(){
+
+                    searchAutocomplete({
+                        $,
+                        selector: '#arrival_address',
+                        url: "{{ route('suggestion_trajet') }}",
+                        field: 'arrival_label'
+                    });
+
+                    searchAutocomplete({
+                        $,
+                        selector: '#departure_address',
+                        url: "{{ route('suggestion_trajet') }}",
+                        field: 'departure_label'
+                    });
+
+                });
+            }(window.jQuery, window, window.document));
+        </script>
+
     @endpush
 @endonce

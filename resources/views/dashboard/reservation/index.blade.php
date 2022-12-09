@@ -44,9 +44,7 @@
                             </a>
                             @if (!$reservation->isPaid())
                             &nbsp;
-                            <a href="#" class="btn btn-xs btn-warning">
-                                Payer
-                            </a>
+                                @include('_partials.front.forms.reservation-payment', ['reservation' => $reservation, 'user' => Auth::user(), 'btn_classes' => 'btn btn-xs btn-warning', 'btn_text' => 'Payer'])
                             @endif
                         </div>
                     </td>

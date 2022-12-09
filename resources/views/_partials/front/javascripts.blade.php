@@ -55,3 +55,60 @@
 
 {{-- Google Maps API --}}
 {{-- @yield('google_maps', view('_partials.front.google-maps.default-maps')) --}}
+
+<script id="search-autocomplete-script">
+    function searchAutocomplete({ $, selector, url, field }) {
+
+        console.debug(`Autocomplete for ${selector}`);
+        console.debug({
+            jquery: $,
+            selector,
+            url,
+            field
+        });
+
+        // const $input = $(selector);
+
+        const options = {
+            url: function(phrase) {
+                const baseurl = url;
+                const queryString = new URLSearchParams();
+                queryString.append("search", phrase.trim());
+                if(field) {
+                    queryString.append("field", field);
+                }
+
+                return baseurl + (baseurl.includes('/') ? '' : '/') + '?' + queryString.toString();
+            },
+            // placeholder: "Départ",
+            getValue: function(element) {
+                console.debug("Get Value");
+                return element.name;
+            },
+            listLocation: "suggestions",
+            list: {
+                maxNumberOfElements: 8,
+                match: {
+                    enabled: true
+                },
+                sort: {
+                    enabled: true
+                },
+                onClickEvent: () => {
+                    const selected = $(selector).getSelectedItemData();
+                    console.debug({ selected });
+                },
+                onHideListEvent: () => {}
+            },
+            requestDelay: 600,
+            theme: "square"
+        };
+
+        console.debug({ options });
+        console.debug("Init autocomplete for %s", selector);
+
+        $(selector).easyAutocomplete(options);
+
+        console.debug("Autocomplete initialized for %s", selector);
+    }
+</script>

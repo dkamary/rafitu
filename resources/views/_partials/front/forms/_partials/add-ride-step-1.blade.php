@@ -39,13 +39,7 @@
 @once
 
     @push('head')
-        <link rel="stylesheet" href="{{ asset('assets/plugins/EasyAutocomplete/easy-autocomplete.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/plugins/EasyAutocomplete/easy-autocomplete.themes.min.css') }}">
-        <style>
-            .easy-autocomplete {
-                width: 100% !important;
-            }
-        </style>
+        {{--  --}}
 
     @endpush
 

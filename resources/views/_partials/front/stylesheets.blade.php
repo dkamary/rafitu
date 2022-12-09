@@ -35,3 +35,19 @@
 <link rel="stylesheet" href="{{ asset('assets/css/frontoffice.css') }}">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css" />
+
+<link rel="stylesheet" href="{{ asset('assets/plugins/EasyAutocomplete/easy-autocomplete.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/plugins/EasyAutocomplete/easy-autocomplete.themes.min.css') }}">
+<style>
+    .easy-autocomplete {
+        width: 100% !important;
+    }
+</style>
+
+<style id="autocomplete-additional-style">
+    @media screen and (max-width: 1024px) {
+        .easy-autocomplete.eac-square {
+            width: auto;
+        }
+    }
+</style>

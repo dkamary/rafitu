@@ -236,6 +236,7 @@ return [
         'Messenger' => App\Models\Managers\MessengerManager::class,
         'DateManager' => App\Models\Managers\DateManager::class,
         'RideManager' => App\Models\Managers\RideManager::class,
+        'CinetPayManager' => App\Models\Managers\CinePayManager::class,
     ],
 
 ];

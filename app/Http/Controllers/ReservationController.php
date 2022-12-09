@@ -20,6 +20,8 @@ class ReservationController extends Controller {
     }
 
     public function result(Reservation $reservation):  View {
+        $this->middleware('auth');
+
         return view('pages.reservation.result', [
             'reservation' => $reservation,
         ]);
