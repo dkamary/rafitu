@@ -469,14 +469,6 @@
                 input.value = element.name;
                 hideResult();
 
-                // if(options.inputLat) {
-                //     options.inputLat.value = element.latitude;
-                // }
-
-                // if(options.inputLng) {
-                //     options.inputLng.value = element.longitude;
-                // }
-
                 if(typeof options.onClick == "function") {
                     console.debug("Custom OnClick event!");
 

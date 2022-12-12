@@ -130,7 +130,8 @@ class RideManager
 
     public static function getRandom($count = 3) : ?Collection {
         $reservationsID = [];
-        $result = DB::select('SELECT id FROM `ride` WHERE `departure_date` > NOW()');
+        // $result = DB::select('SELECT id FROM `ride` WHERE `departure_date` > NOW()');
+        $result = DB::select('SELECT id FROM `ride`');
         foreach($result as $r) {
             $reservationsID[] = (int)$r->id;
         }

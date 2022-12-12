@@ -36,22 +36,22 @@ class Ride extends Model
         );
     }
 
-    public function getDepartureLabel(bool $short = false) : string {
+    public function getDepartureLabel(bool $short = false, string $separator = ',') : string {
         $departureLabel = $this->departure_label ?: '';
         if(!$short) return $departureLabel;
 
-        return $this->getShortLabel($departureLabel);
+        return $this->getShortLabel($departureLabel, $separator);
     }
 
-    public function getArrivalLabel(bool $short = false) : string {
+    public function getArrivalLabel(bool $short = false, string $separator = ',') : string {
         $arrivalLabel = $this->arrival_label ?: '';
         if(!$short) return $arrivalLabel;
 
-        return $this->getShortLabel($arrivalLabel);
+        return $this->getShortLabel($arrivalLabel, $separator);
     }
 
-    public function getShortLabel(string $label, string $sepearator = ',') : string {
-        $elements = explode($sepearator, $label);
+    public function getShortLabel(string $label, string $separator = ',') : string {
+        $elements = explode($separator, $label);
 
         return $elements[0] ?? $label;
     }
