@@ -70,25 +70,22 @@
 
         <script>
 
-            (function($, window, document){
-                $(function(){
+            window.addEventListener("DOMContentLoaded", event => {
 
-                    searchAutocomplete({
-                        $,
-                        selector: '#arrival_address',
-                        url: "{{ route('suggestion_trajet') }}",
-                        field: 'arrival_label'
-                    });
-
-                    searchAutocomplete({
-                        $,
-                        selector: '#departure_address',
-                        url: "{{ route('suggestion_trajet') }}",
-                        field: 'departure_label'
-                    });
-
+                autocompleteCity({
+                    selector: "#arrival_address",
+                    src: "{{ route('suggestion_trajet') }}",
+                    field: "arrival_label"
                 });
-            }(window.jQuery, window, window.document));
+
+                autocompleteCity({
+                    selector: "#departure_address",
+                    src: "{{ route('suggestion_trajet') }}",
+                    field: "departure_label"
+                });
+
+            });
+
         </script>
 
     @endpush

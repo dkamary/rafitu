@@ -14,20 +14,28 @@ class SuggestionController extends Controller
         $count = $request->input('count', 10);
         $field = $request->input('field');
         $trajets = SearchCityManager::searchRide($search, $count, $field);
+        $suggestions = [];
+        foreach($trajets as $ride) {
+            $suggestions[] = $ride;
+        }
 
         return response()->json([
-            'suggestions' => $trajets,
+            'suggestions' => $suggestions,
         ]);
     }
 
     public function ville(Request $request) : JsonResponse {
-        $trajets = [];
+        $cities = [];
         $search = $request->input('search');
         $count = $request->input('count', 10);
-        $cities = SearchCityManager::searchCity($search, $count, 'city2');
+        $cities = SearchCityManager::searchCityOptimized($search, $count, ['CI', 'FR']);
+        $suggestions = [];
+        foreach($cities as $city) {
+            $suggestions[] = $city;
+        }
 
         return response()->json([
-            'suggestions' => $cities,
+            'suggestions' => $suggestions,
         ]);
     }
 }

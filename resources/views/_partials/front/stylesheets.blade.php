@@ -51,3 +51,58 @@
         }
     }
 </style>
+
+<style id="auto-complete-homepage-style">
+    .suggestion__container {
+        display: none;
+        transition: 1s;
+        opacity: 0;
+        position: absolute;
+        padding: 10px;
+        background-color: #fff;
+        box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, .3);
+        z-index: 10000;
+        min-width: 300px;
+        min-height: 2rem;
+        width: auto;
+    }
+
+    .suggestion__container.show{
+        display: block;
+        opacity: 1;
+    }
+
+    .suggestion__container.start-search::after {
+        content: '';
+        display: block;
+        position: absolute;
+        right: 0px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 16px;
+        background-size: cover;
+        background-position: center;
+        background-image: url({{ asset('images/loader-1.svg') }});
+    }
+
+    .suggestion__container ul {
+        list-style: none;
+    }
+
+    .suggestion__container ul li {
+        display: block;
+        width: 100%;
+        margin-bottom: .8rem;
+        border-bottom: solid 1px rgba(0, 0, 0, .3);
+    }
+
+    .suggestion__container ul li:last-child {
+        border-bottom: none;
+    }
+
+    .suggestion__container ul li a {
+        display: block;
+        width: 100%;
+    }
+</style>

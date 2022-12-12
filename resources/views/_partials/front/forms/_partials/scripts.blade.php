@@ -377,27 +377,139 @@
             });
         });
 
-        step1Autocomplete({
-            $: window.jQuery,
-            departureMarker,
-            departureMap,
-            departureLng,
-            departureLat,
-            directionService,
-            directionRenderer,
-            itineraryMap
+        autocompleteCity({
+            selector: '#departure_label',
+            src: 'google',
+            onClick: ({ element, input }) => {
+                const selected = element;
+                console.debug({ selected });
+
+                console.debug({
+                    msg: "departure latitude changed",
+                    lat: selected.latitude,
+                    lng: selected.longitude
+                });
+
+                const pos = {
+                    lat: parseFloat(selected.latitude),
+                    lng: parseFloat(selected.longitude)
+                };
+
+                departureMarker.setMap(departureMap);
+                departureMap.panTo(pos);
+                departureMap.setZoom(14);
+                departureMarker.setPosition(pos);
+
+                departureLat.value = selected.latitude;
+                departureLng.value = selected.longitude;
+
+                setTimeout(() => {
+                    // input.value = selected.name;
+                    console.info("Info should have been updated!");
+                    console.debug({
+                        selected,
+                        value: input.value
+                    })
+                }, 500);
+
+                const arrivalLat = document.querySelector("#arrival_lat");
+                const arrivalLng = document.querySelector("#arrival_lng");
+
+                if(!arrivalLat) {
+                    console.warn("Impossible de sélectionner #arrival_lat");
+                    return;
+                }
+
+                if(!arrivalLng) {
+                    console.warn("Impossible de sélectionner #arrival_lng");
+                    return;
+                }
+
+                const arrivalPosition = {
+                    lat: parseFloat(arrivalLat.value),
+                    lng: parseFloat(arrivalLng.value)
+                };
+
+                if(isNaN(arrivalPosition.lat) || arrivalPosition.lat == 0 || isNaN(arrivalPosition.lng) || arrivalLng.lng == 0) {
+                    console.warn("Pas de calcul d'itinéraire!");
+                    return;
+                }
+
+                console.debug("calcul de l'itinéraire");
+                step3({
+                    departureLat,
+                    departureLng,
+                    arrivalLat,
+                    arrivalLng,
+                    itineraryMap,
+                    directionService,
+                    directionRenderer
+                });
+            }
         });
 
-        step2Autocomplete({
-            $: window.jQuery,
-            arrivalMarker,
-            arrivalMap,
-            arrivalLng,
-            arrivalLat,
-            directionService,
-            directionRenderer,
-            itineraryMap
+        autocompleteCity({
+            selector: '#arrival_label',
+            src: 'google',
+            onClick: ({ element, input }) => {
+                const selected = element;
+                console.debug({ selected });
+
+                console.debug({
+                    msg: "arrival latitude changed",
+                    lat: selected.latitude,
+                    lng: selected.longitude
+                });
+
+                const pos = {
+                    lat: parseFloat(selected.latitude),
+                    lng: parseFloat(selected.longitude)
+                };
+
+                arrivalMarker.setMap(arrivalMap);
+                arrivalMap.panTo(pos);
+                arrivalMap.setZoom(14);
+                arrivalMarker.setPosition(pos);
+
+                arrivalLat.value = selected.latitude;
+                arrivalLng.value = selected.longitude;
+
+                const departureLat = document.querySelector('#departure_lat');
+                const departureLng = document.querySelector("#departure_lng");
+
+                step3({
+                    departureLat,
+                    departureLng,
+                    arrivalLat,
+                    arrivalLng,
+                    itineraryMap,
+                    directionService,
+                    directionRenderer
+                });
+            }
         });
+
+        // step1Autocomplete({
+        //     $: window.jQuery,
+        //     departureMarker,
+        //     departureMap,
+        //     departureLng,
+        //     departureLat,
+        //     directionService,
+        //     directionRenderer,
+        //     itineraryMap
+        // });
+
+        // step2Autocomplete({
+        //     $: window.jQuery,
+        //     arrivalMarker,
+        //     arrivalMap,
+        //     arrivalLng,
+        //     arrivalLat,
+        //     directionService,
+        //     directionRenderer,
+        //     itineraryMap
+        // });
 
         //
     }

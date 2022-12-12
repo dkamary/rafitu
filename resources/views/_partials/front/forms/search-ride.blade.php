@@ -51,3 +51,39 @@
     </div>
     @csrf
 </form>
+
+
+@once
+
+    @prepend('footer')
+
+    <script id="hero-search-script">
+
+        function initMap() {
+            console.debug("Search Ride Hero Section script")
+
+            autocompleteCity({
+                selector: '#search_origin',
+                src: 'google',
+            });
+
+            autocompleteCity({
+                selector: '#search_destination',
+                src: 'google',
+            });
+        }
+
+        window.initMap = initMap;
+
+    </script>
+
+    @endprepend
+
+    @push('footer')
+
+    <script defer async
+        src="https://maps.googleapis.com/maps/api/js?key={{ Config::get('google.maps.api.key') }}&libraries=places&callback=initMap">
+    </script>
+
+    @endpush
+@endonce
