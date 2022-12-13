@@ -10,6 +10,7 @@
         'showPrice' => false,
         'showDetails' => false,
         'showDate' => false,
+        'showIcon' => false,
     ];
     $driver = $ride->getDriver();
     $user = Auth::user();
@@ -17,6 +18,7 @@
     $dateDepart = $ride->getDateDeparture();
     $now = new \DateTime();
     $diff = $now->diff($dateDepart);
+
 @endphp
 
 @section('meta_title')
@@ -30,7 +32,7 @@
 @section('main')
     <div class="container">
         <div class="row">
-            <div class="col-12 col-md-8 col-xl-6 mx-auto bg-white my-5 py-3">
+            <div class="col-12 col-md-12 mx-auto bg-white my-5 py-3">
                 <div class="row">
                     <div class="col-12 text-center">
                         <h2>{{ DateManager::dateFr($dateDepart) }}</h2>

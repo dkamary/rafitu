@@ -44,7 +44,8 @@ class RideManager
             $sql['position_search_departure'] = $postionSearch['sql'];
             $results['position_search_departure'] = $postionSearch['results'];
 
-            $labelSearch = self::searchByDepartureLabel($origin);
+            // $labelSearch = self::searchByDepartureLabel($origin);
+            $labelSearch = self::searchByLabel('departure_label', 'departure_date', $origin);
             $sql['label_search_departure'] = $labelSearch['sql'];
             $results['label_search_departure'] = $labelSearch['results'];
 
@@ -56,7 +57,8 @@ class RideManager
             $sql['arrival'] = $postionSearch['sql'];
             $results['arrival'] = $postionSearch['results'];
 
-            $labelSearch = self::searchByArrivalLabel($destination);
+            // $labelSearch = self::searchByArrivalLabel($destination);
+            $labelSearch = self::searchByLabel('arrival_label', 'arrival_date', $destination);
             $sql['label_search_arrival'] = $labelSearch['sql'];
             $results['label_search_arrival'] = $labelSearch['results'];
 
@@ -101,10 +103,22 @@ class RideManager
                 ->where('departure_date', '>=', 'now()');
         }
 
+        // récupération de la distance
+        $distances = [];
+        $rides = $builder->get();
+        foreach($rides as $ride) {
+            $distances[$ride->id] = (object)[
+                'id' => $ride->id,
+                'origin' => self::getDistance(new Position($ride->departure_position_lat, $ride->departure_position_long), $departure),
+                'destination' => self::getDistance(new Position($ride->arrival_position_lat, $ride->arrival_position_long), $arrival)
+            ];
+        }
+
         return [
-            'rides' => $builder->get(),
+            'rides' => $rides,
             'count' => $builder->count(),
             'ids' => $rideIds,
+            'distances' => $distances,
             'parameters' => [
                 'origin' => $departure,
                 'destination' => $arrival,
@@ -116,16 +130,21 @@ class RideManager
                 'results' => $results,
             ],
         ];
+    }
 
-        $rides = [];
-        foreach ($rideIds as $id) {
-            $ride = Ride::where('id', '=', $id)->first();
-            if ($ride) {
-                $rides[] = $ride;
-            }
+    public static function getDistance(Position $start, ?Position $end = null) : float {
+        if(!$end || $start->lat == $end->lat && $start->lng == $end->lng) {
+            return 0.0;
         }
 
-        return $rides;
+        $theta = $start->lng - $end->lng;
+        $dist = sin(deg2rad($start->lat)) * sin(deg2rad($end->lat)) + cos(deg2rad($start->lat)) * cos(deg2rad($end->lat)) * cos(deg2rad($theta));
+        $dist = acos($dist);
+        $dist = rad2deg($dist);
+        $miles = $dist * 60 * 1.1515;
+        $km = $miles * 1.609344;
+
+        return $km * 1000;
     }
 
     public static function getRandom($count = 3) : ?Collection {
@@ -207,7 +226,7 @@ class RideManager
     private static function searchByDepartureLabel(?string $label = null): array
     {
         $ids = [];
-        if (!$label) {
+        if (!$label || strlen(trim($label)) == 0) {
             return [
                 'ids' => $ids,
                 'label' => $label,
@@ -259,6 +278,49 @@ class RideManager
             . " FROM `ride`"
             . " WHERE MATCH(`arrival_label`) AGAINST('$label' IN NATURAL LANGUAGE MODE) > 0"
             . " AND `arrival_date` >= NOW()"
+            . " ORDER BY `score` DESC";
+        $results = DB::select(DB::raw($sql));
+        foreach ($results as $row) {
+            if (isset($ids[$row->id])) continue;
+            $ids[$row->id] = (int)$row->id;
+        }
+
+        return [
+            'ids' => $ids,
+            'sql' => $sql,
+            'results' => $results,
+        ];
+    }
+
+    private static function searchByLabel(string $fieldSearch, string $fieldDate, ?string $label = null) : array {
+        $ids = [];
+        if (!$label || strlen(trim($label)) == 0) {
+            return [
+                'ids' => $ids,
+                'label' => $label,
+                'sql' => null,
+                'message' => 'Label is empty',
+            ];
+        }
+
+        $label = addslashes($label);
+        $sql = "SELECT `id`, MATCH(`$fieldSearch`) AGAINST('$label' IN NATURAL LANGUAGE MODE) as `score`"
+            . " FROM `ride`"
+            . " WHERE "
+            . " ( MATCH(`$fieldSearch`) AGAINST('$label' IN NATURAL LANGUAGE MODE) > 0"
+            . " OR `$fieldSearch` LIKE '%$label%'";
+
+        $words = explode(' ', $label);
+        if(count($words) > 1) {
+            foreach($words as $w) {
+                if(strlen($w) < 3) continue;
+            }
+
+            $sql .= " OR `$fieldSearch` LIKE '%$w%'";
+        }
+
+        $sql .= " )";
+        $sql .= " AND `$fieldDate` >= NOW()"
             . " ORDER BY `score` DESC";
         $results = DB::select(DB::raw($sql));
         foreach ($results as $row) {

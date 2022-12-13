@@ -10,15 +10,15 @@
             <input type="text" class="form-control input-lg br-te-md-0 br-be-md-0 border-end-0 place-suggestion"
                 name="origin" id="search_origin" placeholder="Départ" data-form="#form-search-ride-hero">
             <span><i class="fa fa-map-marker location-gps me-1"></i></span>
-            {{-- <input type="hidden" name="origin_lat" id="search_origin_lat">
-            <input type="hidden" name="origin_lng" id="search_origin_lng"> --}}
+            <input type="hidden" name="origin_lat" id="search_origin_lat">
+            <input type="hidden" name="origin_lng" id="search_origin_lng">
         </div>
         <div class="form-group  col-xl-3 col-lg-3 col-md-12 mb-0 bg-white">
             <input type="text" class="form-control input-lg br-md-0 border-end-0 place-suggestion" name="destination"
                 id="search_destination" placeholder="Destination" data-form="#form-search-ride-hero">
             <span><i class="fa fa-map-marker location-gps me-1"></i></span>
-            {{-- <input type="hidden" name="destination_lat" id="search_destination_lat">
-            <input type="hidden" name="destination_lng" id="search_destination_lng"> --}}
+            <input type="hidden" name="destination_lat" id="search_destination_lat">
+            <input type="hidden" name="destination_lng" id="search_destination_lng">
         </div>
         <div class="form-group col-xl-3 col-lg-3 col-md-10 col-sm-8 col-12 select2-lg  mb-0 bg-white">
             <input type="date" class="form-control input-lg br-md-0 border-end-0" name="search_date" id="search_date"
@@ -52,11 +52,45 @@
             autocompleteCity({
                 selector: '#search_origin',
                 src: 'google',
+                onClick: ({ element, input }) => {
+                    const selected = element;
+                    const departureLat = document.querySelector('#search_origin_lat');
+                    const departureLng = document.querySelector("#search_origin_lng");
+
+                    console.debug({ selected });
+
+                    console.debug({
+                        msg: "departure position changed",
+                        lat: selected.latitude,
+                        lng: selected.longitude
+                    });
+
+                    departureLat.value = selected.latitude;
+                    departureLng.value = selected.longitude;
+
+                }
             });
 
             autocompleteCity({
                 selector: '#search_destination',
                 src: 'google',
+                onClick: ({ element, input }) => {
+                    const selected = element;
+                    const arrivalLat = document.querySelector('#search_destination_lat');
+                    const arrivalLng = document.querySelector("#search_destination_lng");
+
+                    console.debug({ selected });
+
+                    console.debug({
+                        msg: "arrival position changed",
+                        lat: selected.latitude,
+                        lng: selected.longitude
+                    });
+
+                    arrivalLat.value = selected.latitude;
+                    arrivalLng.value = selected.longitude;
+
+                }
             });
         }
 

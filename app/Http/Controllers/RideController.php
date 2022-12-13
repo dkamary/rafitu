@@ -101,8 +101,23 @@ class RideController extends Controller
     }
 
     public function show(Ride $ride) : View {
+        $origin = session()->get('departure');
+        $destination = session()->get('arrival');
+        $distances = [
+            $ride->id => (object)[
+                'id' => $ride->id,
+                'origin' => RideManager::getDistance(new Position($ride->departure_position_lat, $ride->departure_position_long), $origin),
+                'destination' => RideManager::getDistance(new Position($ride->arrival_position_lat, $ride->arrival_position_long), $destination),
+            ],
+        ];
+
         return view('pages.ride.show', [
             'ride' => $ride,
+            'parameters' => [
+                'origin' => $origin,
+                'destination' => $destination,
+            ],
+            'distances' => $distances,
         ]);
     }
 }

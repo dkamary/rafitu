@@ -23,16 +23,6 @@ class SearchController extends Controller {
 
         $distance_cmp = 5; // 5 miles radius
 
-        // dd([
-        //     $origin,
-        //     $destination,
-        //     $departure,
-        //     $arrival,
-        //     $date,
-        //     $passager,
-        //     $distance_cmp
-        // ]);
-
         $rides = RideManager::search(
             $origin,
             $destination,
@@ -41,6 +31,10 @@ class SearchController extends Controller {
             $date,
             $passager,
             $distance_cmp);
+
+        session()->put('departure', $departure);
+        session()->put('arrival', $arrival);
+        session()->save();
 
         return view('pages.ride.search-result', $rides);
     }

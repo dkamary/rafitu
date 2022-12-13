@@ -31,12 +31,14 @@ class User extends Authenticatable
 
     public function __toString()
     {
-        return sprintf('%s %s', $this->firstname, $this->lastname);
+        return $this->getFullname();
     }
 
     public function getAvatar(string $size = AvatarManager::SIZE_SMALL) : ?string {
         if(!$this->avatar) return null;
+        if(strpos($this->avatar, 'http') !== false) return $this->avatar;
         $info = pathinfo($this->avatar);
+        dd($info);
         $filename = $info['filename'] . '-' . $size .'.' . $info['extension'];
         if(is_file(AVATAR_DIR . $filename)) return $filename;
         else return $this->avatar;

@@ -21,8 +21,10 @@ Votre résultat de recherche
             </div>
         </div>
         <div class="col-12 col-md-8">
-            {{-- @dump($parameters)
-                    @dump($ids) --}}
+
+            {{-- @dump($distances ?? null)
+            @dump($parameters) --}}
+
             @forelse ($rides as $ride)
                 @include('pages._partials.ride.element', ['ride' => $ride, 'loop' => $loop])
             @empty
