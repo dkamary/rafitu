@@ -86,6 +86,10 @@ class DashboardController extends Controller
     public function reservationShow(Reservation $reservation) : View {
         return view('dashboard.reservation.show', [
             'reservation' => $reservation,
+            'parameters' => [
+                'origin' => null,
+                'destination' => null,
+            ],
         ]);
     }
 

@@ -65,11 +65,45 @@
             autocompleteCity({
                 selector: '#search_origin',
                 src: 'google',
+                onClick: ({ element, input }) => {
+                    const selected = element;
+                    const departureLat = document.querySelector('#search_origin_lat');
+                    const departureLng = document.querySelector("#search_origin_lng");
+
+                    console.debug({ selected });
+
+                    console.debug({
+                        msg: "departure position changed",
+                        lat: selected.latitude,
+                        lng: selected.longitude
+                    });
+
+                    departureLat.value = selected.latitude;
+                    departureLng.value = selected.longitude;
+
+                }
             });
 
             autocompleteCity({
                 selector: '#search_destination',
                 src: 'google',
+                onClick: ({ element, input }) => {
+                    const selected = element;
+                    const arrivalLat = document.querySelector('#search_destination_lat');
+                    const arrivalLng = document.querySelector("#search_destination_lng");
+
+                    console.debug({ selected });
+
+                    console.debug({
+                        msg: "arrival position changed",
+                        lat: selected.latitude,
+                        lng: selected.longitude
+                    });
+
+                    arrivalLat.value = selected.latitude;
+                    arrivalLng.value = selected.longitude;
+
+                }
             });
         }
 

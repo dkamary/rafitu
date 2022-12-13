@@ -52,7 +52,7 @@
                             <h5>{{ $ride->departure_label }}</h5>
                             <h6 class="fw-bold">{{ $ride->getDepartureDate('H:m') }}</h6>
 
-                            @if ($origin->isset())
+                            @if ($origin && $origin->isset())
                                 @isset($distances[$ride->id])
 
                                     @php
@@ -103,7 +103,7 @@
                                 <h6 class="fw-bold">{{ $ride->getArrivalDate('H:m') }}</h6>
                             @endif
 
-                            @if ($destination->isset())
+                            @if ($destination && $destination->isset())
 
                                 @isset($distances[$ride->id])
 
