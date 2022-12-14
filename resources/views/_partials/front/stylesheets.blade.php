@@ -38,17 +38,31 @@
 
 <link rel="stylesheet" href="{{ asset('assets/plugins/EasyAutocomplete/easy-autocomplete.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/plugins/EasyAutocomplete/easy-autocomplete.themes.min.css') }}">
-<style>
-    .easy-autocomplete {
-        width: 100% !important;
-    }
-</style>
 
-<style id="autocomplete-additional-style">
-    @media screen and (max-width: 1024px) {
-        .easy-autocomplete.eac-square {
-            width: auto;
-        }
+<style id="footer-styles">
+    .footer-payment-list {
+        display: flex;
+    }
+
+    .footer-payment-list a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 2px;
+        background-color: #fff;
+        margin-right: 1.5%;
+        margin-bottom: 1.5%;
+    }
+
+    .footer-icon-pay {
+        height: 2.5rem !important;
+        width: auto !important;
+        border: none !important;
+        transition: .8s;
+    }
+
+    .footer-icon-pay:hover {
+        transform: scale(1.2);
     }
 </style>
 

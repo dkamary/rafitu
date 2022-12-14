@@ -83,11 +83,26 @@
                         <h6 class="mb-0 mt-5">Paiements</h6>
                         <hr class="deep-purple  text-primary accent-2 mb-2 mt-3 d-inline-block mx-auto">
                         <div class="clearfix"></div>
-                        <ul class="footer-payments">
-                            <li class="ps-0"><a href="#"><i class="fa fa-credit-card-alt text-muted"
-                                        aria-hidden="true"></i></a></li>
-                            <li><a href="#"><i class="fa fa-cc-paypal text-muted" aria-hidden="true"></i></a></li>
-                        </ul>
+                        <div class="footer-payment-list">
+                            <a href="#" class="col">
+                                <img src="{{ asset('logos/PayPal-Logo.wine.svg') }}" alt="Paypal" class="footer-icon-pay">
+                            </a>
+                            <a href="#" class="col">
+                                <img src="{{ asset('logos/Visa_Inc.-Logo.wine.svg') }}" alt="Visa" class="footer-icon-pay">
+                            </a>
+                            <a href="#" class="col">
+                                <img src="{{ asset('logos/Mastercard-Logo.wine.svg') }}" alt="Mastercard" class="footer-icon-pay">
+                            </a>
+                            <a href="#" class="col">
+                                <img src="{{ asset('logos/Orange_Money-Logo.wine.svg') }}" alt="Orange Money" class="footer-icon-pay">
+                            </a>
+                            <a href="#" class="col">
+                                <img src="{{ asset('logos/mtn-mobile-money-logo.png') }}" alt="Mastercard" class="footer-icon-pay">
+                            </a>
+                            <a href="#" class="col">
+                                <img src="{{ asset('logos/moov-money.png') }}" alt="Mastercard" class="footer-icon-pay">
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
