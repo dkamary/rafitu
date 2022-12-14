@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CinetPayController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PaypalController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\RideController;
 use App\Http\Controllers\SearchController;
@@ -146,7 +148,27 @@ Route::prefix('paiement')->group(function(){
     Route::match(['get', 'post'], '/accepte', [PaymentController::class, 'paySuccess'])->name('pay_success');
     Route::match(['get', 'post'], '/annule', [PaymentController::class, 'payCancel'])->name('pay_cancel');
     Route::match(['get', 'post'], '/notification', [PaymentController::class, 'payNotification'])->name('pay_notification');
-    Route::post('/cinetpay', [PaymentController::class, 'cinetpay'])->name('pay_cinetpay');
+
+    Route::prefix('/cinetpay')->group(function(){
+        Route::post('/', [PaymentController::class, 'cinetpay'])->name('pay_cinetpay');
+        Route::match(['get', 'post'], 'accepte', [PaymentController::class, '']);
+    });
+});
+
+Route::prefix('paiement')->group(function(){
+
+    Route::match(['get', 'post'], '/paypal/pay', [PaypalController::class, 'pay'])->name('paypal_pay');
+    Route::match(['get', 'post'], '/paypal/notification', [PaypalController::class, 'notification'])->name('paypal_notification');
+    Route::match(['get', 'post'], '/paypal/accepte', [PaypalController::class, 'success'])->name('paypal_success');
+    Route::match(['get', 'post'], '/paypal/annule', [PaypalController::class, 'cancel'])->name('paypal_cancel');
+    Route::match(['get', 'post'], '/paypal/echec', [PaypalController::class, 'fail'])->name('paypal_fail');
+
+    Route::match(['get', 'post'], '/cinetpay/pay', [CinetPayController::class, 'pay'])->name('cinetpay_pay');
+    Route::match(['get', 'post'], '/cinetpay/notification', [CinetPayController::class, 'notification'])->name('cinetpay_notification');
+    Route::match(['get', 'post'], '/cinetpay/accepte', [CinetPayController::class, 'success'])->name('cinetpay_success');
+    Route::match(['get', 'post'], '/cinetpay/annule', [CinetPayController::class, 'cancel'])->name('cinetpay_cancel');
+    Route::match(['get', 'post'], '/cinetpay/echec', [CinetPayController::class, 'fail'])->name('cinetpay_fail');
+
 });
 
 // CITY

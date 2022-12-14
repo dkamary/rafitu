@@ -105,8 +105,8 @@ class PaypalManager
                 }
             ],
             "application_context": {
-                "return_url": "' . route('pay_success') . '",
-                "cancel_url": "' . route('pay_cancel') . '"
+                "return_url": "' . route('paypal_success') . '",
+                "cancel_url": "' . route('paypal_cancel') . '"
             }
         }';
         // dd($postFields);

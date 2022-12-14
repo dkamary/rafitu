@@ -27,7 +27,7 @@
 @section('main')
     <div class="container">
         <div class="row">
-            <div class="col-12 col-md-8 col-xl-6 mx-auto bg-white my-5 py-3">
+            <div class="col-12 col-xl-8 mx-auto bg-white my-5 py-3">
                 <div class="row">
                     <div class="col-12 text-center">
                         <h2>Votre réservation</h2>
