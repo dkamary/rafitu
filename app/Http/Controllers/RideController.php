@@ -101,8 +101,8 @@ class RideController extends Controller
     }
 
     public function show(Ride $ride) : View {
-        $origin = session()->get('departure');
-        $destination = session()->get('arrival');
+        $origin = session()->get('departure', new Position(0, 0));
+        $destination = session()->get('arrival', new Position(0, 0));
         $distances = [
             $ride->id => (object)[
                 'id' => $ride->id,

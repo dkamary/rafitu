@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Managers\TrajetDestinationManager;
 use App\Models\Page;
+use App\Models\Position;
 use App\Models\Ride;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -40,6 +41,10 @@ class HomeController extends Controller
         return view('pages.ride.list', [
             'rides' => $rides,
             'title' => 'Long Trajet',
+            'parameters' => [
+                'origin' => new Position(0, 0),
+                'destination' => new Position(0, 0),
+            ],
         ]);
     }
 
@@ -53,6 +58,10 @@ class HomeController extends Controller
         return view('pages.ride.list', [
             'rides' => $rides,
             'title' => 'Trajet Quotidien',
+            'parameters' => [
+                'origin' => new Position(0, 0),
+                'destination' => new Position(0, 0),
+            ],
         ]);
     }
 
