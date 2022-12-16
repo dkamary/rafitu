@@ -27,8 +27,8 @@
         <div class="d-block mx-auto">
             <div class="search-background bg-transparent input-field overflow-visible">
                 <div class="text-center text-white mb-6 ">
-                    <h1 class="mb-1 d-none d-md-block">Trouver votre trajet idéal</h1>
-                    <p class="d-none d-md-block">Voyager à petit prix</p>
+                    <h1 class="mb-1 d-none d-md-block text-white">Trouver votre trajet idéal</h1>
+                    <p class="d-none d-md-block text-white">Voyager à petit prix</p>
                 </div>
                 <div class="row d-none d-md-block">
                     <div class="col-12">

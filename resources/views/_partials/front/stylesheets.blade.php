@@ -39,6 +39,21 @@
 <link rel="stylesheet" href="{{ asset('assets/plugins/EasyAutocomplete/easy-autocomplete.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/plugins/EasyAutocomplete/easy-autocomplete.themes.min.css') }}">
 
+<style id="button-styles">
+    .btn-fuschia {
+        color: #ffffff;
+        background-color: #e70075;
+        border-color: #e70075;
+        transition: .8s;
+    }
+
+    .btn-fuschia:hover {
+        color: #fff;
+        ackground-color: #c80064;
+        border-color: #c80064;
+    }
+</style>
+
 <style id="footer-styles">
     .footer-payment-list {
         display: flex;
@@ -118,5 +133,82 @@
     .suggestion__container ul li a {
         display: block;
         width: 100%;
+    }
+</style>
+
+<style id="header-styles">
+    .rafitu-body .horizontalMenu {
+        font-size: 18px;
+    }
+
+    .rafitu-body h1, .rafitu-body .h1,
+    .rafitu-body h2, .rafitu-body .h2,
+    .rafitu-body h3, .rafitu-body .h3,
+    .rafitu-body h4, .rafitu-body .h4,
+    .rafitu-body h5, .rafitu-body .h5,
+    .rafitu-body h6,  .rafitu-body .h6 {
+        color: #4c6dff;
+    }
+
+    .bg-rafitu h1, .bg-rafitu .h1,
+    .bg-rafitu h2, .bg-rafitu .h2,
+    .bg-rafitu h3, .bg-rafitu .h3,
+    .bg-rafitu h4, .bg-rafitu .h4,
+    .bg-rafitu h5, .bg-rafitu .h5,
+    .bg-rafitu h6, .bg-rafitu .h6,
+    .footer-main h1, .footer-main .h1,
+    .footer-main h2, .footer-main .h2,
+    .footer-main h3, .footer-main .h3,
+    .footer-main h4, .footer-main .h4,
+    .footer-main h5, .footer-main .h5,
+    .footer-main h6, .footer-main .h6
+    {
+        color: #fff;
+    }
+
+    .item-card-desc .item-card-text h1, .item-card-desc .item-card-text .h1,
+    .item-card-desc .item-card-text h2, .item-card-desc .item-card-text .h2,
+    .item-card-desc .item-card-text h3, .item-card-desc .item-card-text .h3,
+    .item-card-desc .item-card-text h4, .item-card-desc .item-card-text .h4,
+    .item-card-desc .item-card-text h5, .item-card-desc .item-card-text .h5,
+    .item-card-desc .item-card-text h6, .item-card-desc .item-card-text .h6 {
+        color: #fff;
+        text-shadow: 0px 3px rgba(0, 0, 0, .3);
+    }
+
+    .rafitu-body h1,
+    .rafitu-body .h1 {
+        font-size: 36px;
+        margin-bottom: .8rem;
+    }
+
+    .rafitu-body h2,
+    .rafitu-body .h2 {
+        font-size: 32px;
+        margin-bottom: .7rem;
+    }
+
+    .rafitu-body h3,
+    .rafitu-body .h3 {
+        font-size: 28px;
+        margin-bottom: .6rem;
+    }
+
+    .rafitu-body h4,
+    .rafitu-body .h4 {
+        font-size: 22px;
+        margin-bottom: .5rem;
+    }
+
+    .rafitu-body h5,
+    .rafitu-body .h5 {
+        font-size: 20px;
+        margin-bottom: .5rem;
+    }
+
+    .rafitu-body h6,
+    .rafitu-body .h6 {
+        font-size: 18px;
+        margin-bottom: .5rem;
     }
 </style>

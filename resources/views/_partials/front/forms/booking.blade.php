@@ -55,7 +55,7 @@
         </div>
         <div class="col-12 col-md-6">
             <div class="my-3">
-                <button type="submit" class="btn btn-warning btn-block rounded-pill">
+                <button type="submit" class="btn btn-fuschia btn-block rounded-pill">
                     Réserver maintenant
                 </button>
             </div>

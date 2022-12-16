@@ -9,7 +9,7 @@
         @endif
         <div class="container">
             <div class="row">
-                <div class="col-12 col-md-10 mx-auto">
+                <div class="col-12">
                     {!! Shortcode::process($page->content) !!}
                 </div>
             </div>
@@ -33,8 +33,28 @@
             .page-static ul {
                 margin-bottom: 1rem;
                 font-size: 16px;
-                line-height: 120%;
+                line-height: 180%;
             }
+
+            .page-static h1, .page-static .h1,
+            .page-static h2, .page-static .h2,
+            .page-static h3, .page-static .h3,
+            .page-static h4, .page-static .h4,
+            .page-static h5, .page-static .h5,
+            .page-static h6, .page-static .h6 {
+                border-bottom: solid 1px #4c6dff;
+                padding-bottom: .8rem;
+                margin-top: 1.6rem;
+            }
+
+            .page-static .accordion-header {
+                border-bottom: none;
+            }
+
+            .page-static .accordion-header button.accordion-button {
+                font-size: 24px;
+            }
+
         </style>
     @endpush
 @endonce

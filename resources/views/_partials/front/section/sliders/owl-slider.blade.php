@@ -22,8 +22,8 @@
                 <div class="col-xl-8 col-lg-8 col-md-8 d-block mx-auto">
                     <div class="search-background bg-transparent input-field">
                         <div class="text-center text-white  mb-6 ">
-                            <h1 class="mb-1 d-none d-md-block">Trouver votre trajet idéal</h1>
-                            <p class="d-none d-md-block">Voyager à petit prix</p>
+                            <h1 class="mb-1 d-none d-md-block text-white">Trouver votre trajet idéal</h1>
+                            <p class="d-none d-md-block text-white">Voyager à petit prix</p>
                         </div>
                         @include('_partials.front.forms.search-ride-hero-section')
                     </div>
