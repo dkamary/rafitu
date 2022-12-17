@@ -14,9 +14,10 @@ class Ride extends Model
         'owner_id', 'vehicle_id', 'driver_id',
         'departure_label', 'departure_date', 'departure_position_long', 'departure_position_lat',
         'arrival_label', 'arrival_date', 'arrival_position_long', 'arrival_position_lat',
-        'seats_available', 'woman_only', 'price',
+        'seats_available', 'woman_only', 'price', 'smokers', 'animals',
         'ride_status_id', 'distance',
         'created_at', 'updated_at',
+        'has_recurrence',
     ];
     public $timestamps = false;
     protected $status = null;
@@ -173,5 +174,9 @@ class Ride extends Model
         $datetime = new DateTime($date);
 
         return $datetime->format($format);
+    }
+
+    public function hasRecurrence() : bool {
+        return $this->has_recurrence == 1;
     }
 }

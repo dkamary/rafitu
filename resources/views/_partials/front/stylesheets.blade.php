@@ -138,7 +138,7 @@
 
 <style id="header-styles">
     .rafitu-body .horizontalMenu {
-        font-size: 18px;
+        font-size: 16px;
     }
 
     .rafitu-body h1, .rafitu-body .h1,
@@ -210,5 +210,21 @@
     .rafitu-body .h6 {
         font-size: 18px;
         margin-bottom: .5rem;
+    }
+</style>
+
+<style id="icon-payment-styles">
+    .icon-payment img {
+        height: 2.5rem !important;
+        width: auto !important;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+</style>
+
+<style id="ride-icons">
+    .indicator-icon {
+        height: 2rem;
+        width: auto;
     }
 </style>

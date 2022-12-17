@@ -251,9 +251,18 @@
         });
 
         let bounds = new google.maps.LatLngBounds();
-        bounds.extend({ lat: parseFloat(departureLat.value), lng: parseFloat(departureLng.value) });
-        bounds.extend({ lat: parseFloat(arrivalLat.value), lng: parseFloat(arrivalLng.value) });
+        const topLeft = { lat: parseFloat(departureLat.value), lng: parseFloat(departureLng.value) };
+        const bottomRight = { lat: parseFloat(arrivalLat.value), lng: parseFloat(arrivalLng.value) };
+
+        console.debug({
+            topLeft,
+            bottomRight
+        });
+
+        bounds.extend(topLeft);
+        bounds.extend(bottomRight);
         itineraryMap.fitBounds(bounds);
+        itineraryMap.setZoom(16);
     }
 
     function populateItineraries({ route }) {
@@ -489,29 +498,6 @@
             }
         });
 
-        // step1Autocomplete({
-        //     $: window.jQuery,
-        //     departureMarker,
-        //     departureMap,
-        //     departureLng,
-        //     departureLat,
-        //     directionService,
-        //     directionRenderer,
-        //     itineraryMap
-        // });
-
-        // step2Autocomplete({
-        //     $: window.jQuery,
-        //     arrivalMarker,
-        //     arrivalMap,
-        //     arrivalLng,
-        //     arrivalLat,
-        //     directionService,
-        //     directionRenderer,
-        //     itineraryMap
-        // });
-
-        //
     }
 </script>
 <script defer async

@@ -5,6 +5,7 @@ namespace App\Models\Managers;
 use App\Models\ContactMessage;
 use App\Models\Message;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 use stdClass;
 
 class MessengerManager
@@ -36,14 +37,20 @@ class MessengerManager
 
     public static function myMessages(int $userId) : array {
         $messages = [];
-        $messagesByToken = Message::where('sender_id', '=', $userId)
-            ->orWhere('receiver_id', '=', $userId)
-            ->orderBy('date_sent', 'DESC')
-            ->groupBY('token')
+        // $messagesByToken = Message::where('sender_id', '=', $userId)
+        //     ->orWhere('receiver_id', '=', $userId)
+        //     ->orderBy('date_sent', 'DESC')
+        //     ->groupBY('token')
+        //     ->limit(10)
+        //     ->get();
+
+        $tokens = DB::table('message')
+            ->selectRaw('DISTINCT token')
+            ->where('receiver_id', '=', $userId)
             ->limit(10)
             ->get();
 
-        foreach($messagesByToken as $msgToken) {
+        foreach($tokens as $msgToken) {
             $messages[$msgToken->token] = self::myMessagesByToken($msgToken->token);
         }
 

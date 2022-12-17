@@ -50,8 +50,7 @@ class HomeController extends Controller
 
     public function trajetQuotidien(int $distance = 10000): View
     {
-        $rides = Ride::where('distance', '<', $distance)
-            ->where('departure_date', '>', date('Y-m-d H:i:s'))
+        $rides = Ride::where('has_recurrence', '=', 1)
             ->orderBy('departure_date', 'ASC')
             ->get();
 

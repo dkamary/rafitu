@@ -6,6 +6,7 @@ use App\Models\Managers\RideManager;
 use App\Models\Position;
 use App\Models\Ride;
 use App\Models\RideItinerary;
+use App\Models\RideRecurrence;
 use App\Models\RideStatus;
 use App\Models\Vehicule;
 use Illuminate\Http\RedirectResponse;
@@ -61,12 +62,43 @@ class RideController extends Controller
             'price' => (float)$request->input('price'),
             'ride_status_id' => $status->id,
             'distance' => (int)$request->input('distance'),
+            'smokers' => $request->input('smokers') == 'on' ? 1 : 0,
+            'animals' => $request->input('animals') == 'on' ? 1 : 0,
+            'has_recurrence' => $request->input('recurrence') == 'yes' ? 1 : 0,
         ];
 
-        // dd($data);
+        // dd([
+        //     'post' => $_POST,
+        //     'request' => $request,
+        //     'data' => $data,
+        //     'recurrence' => [
+        //         'recurrence' => $request->post('recurrence'),
+        //         'lundi' => $request->input('lundi-check') == 'on',
+        //         'mardi' => $request->input('mardi-check') == 'on',
+        //         'mercredi' => $request->input('mercredi-check') == 'on',
+        //         'jeudi' => $request->input('jeudi-check') == 'on',
+        //         'vendredi' => $request->input('vendredi-check') == 'on',
+        //         'samedi' => $request->input('samedi-check') == 'on',
+        //         'dimanche' => $request->input('dimanche-check') == 'on',
+        //     ],
+        // ]);
 
         $ride = Ride::create($data);
         $rideID = (int)$ride->id;
+
+        // Ride Recurrence
+        if($request->input('reccurrence') == 'yes') {
+            $recurrence = RideRecurrence::create([
+                'ride_id' => $rideID,
+                'lundi' => $request->input('lundi-check') == 'on',
+                'mardi' => $request->input('mardi-check') == 'on',
+                'mercredi' => $request->input('mercredi-check') == 'on',
+                'jeudi' => $request->input('jeudi-check') == 'on',
+                'vendredi' => $request->input('vendredi-check') == 'on',
+                'samedi' => $request->input('samedi-check') == 'on',
+                'dimanche' => $request->input('dimanche-check') == 'on',
+            ]);
+        }
 
         // Create Itinerary
         $itineraries = $request->input('itinerary');

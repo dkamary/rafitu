@@ -97,7 +97,7 @@ class DashboardController extends Controller
         $user = Auth::user();
         $messages = MessengerManager::myMessages($user->id);
 
-        return view('', [
+        return view('dashboard.message.index', [
             'messages' => $messages,
         ]);
     }

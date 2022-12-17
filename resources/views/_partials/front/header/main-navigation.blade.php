@@ -78,7 +78,7 @@
             <ul class="mb-0">
                 <li aria-haspopup="true" class="mt-5 d-none d-lg-block ">
                     <span>
-                        <a class="btn btn-fuschia ad-post " href="{{ route('ride_add') }}">
+                        <a class="btn btn-orange ad-post " href="{{ route('ride_add') }}">
                             <i class="fa fa-plus-circle" aria-hidden="true" style="color: #fff"></i>&nbsp;
                             Publier un trajet
                         </a>

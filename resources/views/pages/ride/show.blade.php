@@ -89,16 +89,42 @@
                     </div>
                 </div>
 
-                @if ($ride->woman_only == 1)
-                <div class="row my-3 py-5">
-                    <div class="col-12">
-                        <span class="text-info">
-                            <i class="fa fa-female" aria-hidden="true"></i> &nbsp;
+
+                <div class="row my-3 py-5 d-flex justify-content-between">
+                    @if ($ride->woman_only == 1)
+                    <div class="col">
+                        <span class="text-info fw-bold">
+                            <img src="{{ asset('assets/images/icons/woman-group.svg') }}" alt="" class="indicator-icon"> &nbsp;
                             Pour femme uniquement
                         </span>
                     </div>
+                    @endif
+
+                    <div class="col">
+                        <span class="text-info fw-bold">
+                            @if ($ride->smokers == 1)
+                                <img src="{{ asset('assets/images/icons/smoking-area-icon.svg') }}" alt="Fumeurs" class="indicator-icon">&nbsp;
+                                Fumeurs autorisés
+                            @else
+                                <img src="{{ asset('assets/images/icons/no-smoking-area-icon.svg') }}" alt="Non-fumeurs" class="indicator-icon">&nbsp;
+                                Non fumeurs
+                            @endif
+                        </span>
+                    </div>
+
+                    <div class="col">
+                        <span class="text-info fw-bold">
+                            @if ($ride->animals == 1)
+                                <img src="{{ asset('assets/images/icons/pets-allowed-icon.svg') }}" alt="Animaux autorisés" class="indicator-icon">&nbsp;
+                                Animaux autorisés
+                            @else
+                                <img src="{{ asset('assets/images/icons/no-pets-allowed-icon.svg') }}" alt="Animaux non autorisés" class="indicator-icon">&nbsp;
+                                Animaux non autorisés
+                            @endif
+                        </span>
+                    </div>
+
                 </div>
-                @endif
 
                 <div class="row border-top mt-3 py-3">
                     <div class="col-12">

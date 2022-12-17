@@ -78,7 +78,7 @@
 
                 <div class="row border-top mt-3 py-3">
                     <div class="col-12">
-                        @include('_partials.front.forms.reservation-payment')
+                        @include('_partials.front.payment.choice')
                     </div>
                 </div>
             </div>

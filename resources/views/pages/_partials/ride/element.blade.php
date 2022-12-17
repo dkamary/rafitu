@@ -1,6 +1,11 @@
 {{-- Affichage d'un trajet - Resultat de recherche --}}
 
 @php
+    $parameters = $parameters ?? [
+        'origin' => new App\Models\Position(0, 0),
+        'destination' => new App\Models\Position(0, 0),
+    ];
+
     $showPrice = $showPrice ?? true;
     $showDetails = $showDetails ?? true;
     $showDate = $showDate ?? true;
