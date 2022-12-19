@@ -31,7 +31,7 @@
     }
 @endphp
 
-<div class="row mb-4 border rounded ride__result py-3 {{ $loop->even ? 'bg-light' : 'bg-white' }}">
+<div class="row mb-4 border rounded ride__result py-5 {{ $loop->even ? 'bg-light' : 'bg-white' }}">
     <div class="col-12">
         <div class="row">
             <div @class([
@@ -156,7 +156,10 @@
                     </div>
 
                     @if ($showDriver)
-                    <div class="row">
+                        <div class="my-5">
+                            @include('pages._partials.ride.driver', ['ride' => $ride])
+                        </div>
+                    {{-- <div class="row">
                         <div class="col-12 py-4">
 
                             <a href="#" class="row" title="{{ $driver->getFullname() }}">
@@ -173,7 +176,7 @@
                             </a>
 
                         </div>
-                    </div>
+                    </div> --}}
                     @endif
 
                 </div>
@@ -210,8 +213,9 @@
         </div>
         @if($showDetails)
             <div class="row mb-4">
-                <div class="col-12 text-center">
-                    <a href="{{ route('ride_show', ['ride' => $ride,]) }}" class="btn btn-primary">
+                <div class="col-auto text-center mx-auto">
+                    <a href="{{ route('ride_show', ['ride' => $ride,]) }}" class="btn btn-primary d-flex justify-content-center align-items-center">
+                        <i class="fa fa-info-circle fa-2x" aria-hidden="true"></i>&nbsp;
                         Voir les détails
                     </a>
                 </div>

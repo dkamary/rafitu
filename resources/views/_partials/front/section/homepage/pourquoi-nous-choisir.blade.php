@@ -8,7 +8,10 @@
         <div class="row">
             <div class="col-12 col-md-4">
                 <div class="card bg-transparent border-0 shadow-none">
-                    <i class="fa fa-shield card-img-top text-center" aria-hidden="true" style="font-size: 82px"></i>
+                    {{-- <i class="fa fa-shield card-img-top text-center" aria-hidden="true" style="font-size: 82px"></i> --}}
+                    <div class="d-flex justify-content-center align-items-center">
+                        <img src="{{ asset('images/shield.png') }}" alt="" class="card-img-top text-center" style="height: 82px; width: 82px;">
+                    </div>
                     <div class="card-body">
                         <div class="card-text">
                             <h3 class="text-center">Sécurité garantie</h3>
@@ -23,7 +26,10 @@
             </div>
             <div class="col-12 col-md-4">
                 <div class="card bg-transparent border-0 shadow-none">
-                    <i class="fa fa-cube card-img-top text-center" aria-hidden="true" style="font-size: 82px"></i>
+                    {{-- <i class="fa fa-cube card-img-top text-center" aria-hidden="true" style="font-size: 82px"></i> --}}
+                    <div class="d-flex justify-content-center align-items-center">
+                        <img src="{{ asset('images/easy-installation.png') }}" alt="" class="card-img-top text-center" style="height: 82px; width: 82px;">
+                    </div>
                     <div class="card-body">
                         <div class="card-text">
                             <h3 class="text-center">Simplicité</h3>
@@ -38,7 +44,10 @@
             </div>
             <div class="col-12 col-md-4">
                 <div class="card bg-transparent border-0 shadow-none">
-                    <i class="fa fa-commenting-o card-img-top text-center" aria-hidden="true" style="font-size: 82px"></i>
+                    {{-- <i class="fa fa-commenting-o card-img-top text-center" aria-hidden="true" style="font-size: 82px"></i> --}}
+                    <div class="d-flex justify-content-center align-items-center">
+                        <img src="{{ asset('images/comments.png') }}" alt="" class="card-img-top text-center" style="height: 82px; width: 82px;">
+                    </div>
                     <div class="card-body">
                         <div class="card-text">
                             <h3 class="text-center">Système d'avis libre</h3>

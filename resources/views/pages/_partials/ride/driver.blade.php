@@ -24,8 +24,8 @@
         <div class="my-2"><em>Aucun avis pour le moment</em></div>
         <div class="row">
             <div class="col-12">
-                @if ($driver && $driver->bio)
-                    <em class="text-info">{!! $driver->bio !!}</em>
+                @if ($driver && $driver->biography)
+                    <em class="text-info">{!! $driver->biography !!}</em>
                 @else
                     <em class="fw-bold">Le conducteur n'a pas encore partager sa bio.</em>
                 @endif

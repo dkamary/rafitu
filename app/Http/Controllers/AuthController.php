@@ -78,6 +78,7 @@ class AuthController extends Controller
         $lastname = $request->input('lastname');
         $email = $request->input('email');
         $password = $request->input('password');
+        $mobile = $request->input('mobile');
 
         $errors = [];
 
@@ -91,6 +92,10 @@ class AuthController extends Controller
 
         if (strlen(trim($lastname)) < 2) {
             $errors[] = 'Votre nom est trop court!';
+        }
+
+        if(strlen(trim($mobile)) < 2) {
+            $errors[] = 'Votre numéro de téléphone est trop court!';
         }
 
         if ($errors != []) {
@@ -118,6 +123,7 @@ class AuthController extends Controller
             'lastname' => $lastname,
             'user_type_id' => $this->getUserType()->id,
             'user_status_id' => $this->getUserStatus()->id,
+            'mobile' => $mobile,
         ]);
         $user->save();
         $user->token = $this->generateToken($user);

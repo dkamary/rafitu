@@ -38,7 +38,8 @@
             <div class="my-3 input-group">
                 <input type="date" name="departure_date" id="departure_date" class="form-control rounded-pill" placeholder="Date de départ" value="">
                 <span class="input-group-text" id="departure_date_icon">
-                    <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                    {{-- <i class="fa fa-calendar-o" aria-hidden="true"></i> --}}
+                    <img src="{{ asset('assets/images/icons/calendar-color-icon.svg') }}" alt="" style="height: 1.5rem; width: auto;">
                 </span>
             </div>
         </div>
@@ -49,13 +50,14 @@
             <div class="my-3 input-group">
                 <input type="time" name="time" id="departure_time" class="form-control rounded-pill" placeholder="Heure de départ" value=""  aria-label="Heure de départ" aria-describedby="departure_time_icon">
                 <span class="input-group-text" id="basic-addon2">
-                    <i class="fa fa-clock-o" aria-hidden="true"></i>
+                    {{-- <i class="fa fa-clock-o" aria-hidden="true"></i> --}}
+                    <img src="{{ asset('assets/images/icons/pending-clock-icon.svg') }}" alt="" style="height: 1.5rem; width: auto;">
                 </span>
             </div>
         </div>
         <div class="col-12 col-md-6">
             <div class="my-3">
-                <button type="submit" class="btn btn-fuschia btn-block rounded-pill">
+                <button type="submit" class="btn btn-orange btn-block rounded-pill fw-bold text-uppercase">
                     Réserver maintenant
                 </button>
             </div>

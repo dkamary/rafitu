@@ -42,7 +42,7 @@
     <div class="row my-3">
         <label for="tel" class="col-12 col-md-4">Téléphone Fixe</label>
         <div class="col-12 col-md-8">
-            <input type="tel" name="tel" id="tel" class="form-control" value="{{ $user->tel }}" placeholder="Votre numéro de téléphone fixe">
+            <input type="tel" name="tel" id="tel" class="form-control" value="{{ $user->tel }}" placeholder="Votre numéro de téléphone fixe" required>
         </div>
     </div>
     <div class="row my-3">

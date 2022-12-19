@@ -20,6 +20,10 @@
         <input type="email" name="email" required value="{{ old('email') }}">
         <label>Adresse email</label>
     </div>
+    <div class="tel">
+        <input type="tel" name="mobile" required value="{{ old('mobile') }}">
+        <label>Numéro de téléphone</label>
+    </div>
     <div class="passwd">
         <input type="password" name="password" required>
         <label>Mot de passe</label>
