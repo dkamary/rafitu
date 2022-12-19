@@ -48,17 +48,17 @@
             <li><a href="{{ route('admin_user_new') }}" class="slide-item">Vérification d'identité</a></li>
         </ul>
     </li>
-    {{-- <li class="slide">
+    <li class="slide">
         <a class="side-menu__item" data-bs-toggle="slide" href="#">
-            <i class="side-menu__icon fa fa-bar-chart"></i>
-            <span class="side-menu__label">Trajet</span>
+            <i class="side-menu__icon fa fa-id-card" aria-hidden="true"></i>
+            <span class="side-menu__label">Chauffeur</span>
             <i class="angle fa fa-angle-right"></i>
         </a>
         <ul class="slide-menu">
-            <li><a href="chart-chartist.html" class="slide-item">Liste</a></li>
-            <li><a href="chart-dygraph.html" class="slide-item">Ajouter</a></li>
+            <li><a href="{{ route('admin_driver_index') }}" class="slide-item">A valider</a></li>
+            <li><a href="{{ route('admin_driver_list') }}" class="slide-item">Liste</a></li>
         </ul>
-    </li> --}}
+    </li>
     <li class="slide">
         <a class="side-menu__item" data-bs-toggle="slide" href="#">
             <i class="side-menu__icon fa fa-cubes"></i>

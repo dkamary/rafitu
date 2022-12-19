@@ -8,6 +8,7 @@ use App\Models\Ride;
 use App\Models\RideItinerary;
 use App\Models\RideRecurrence;
 use App\Models\RideStatus;
+use App\Models\User;
 use App\Models\Vehicule;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -26,8 +27,23 @@ class RideController extends Controller
     }
 
     public function add() {
+        /**
+         * @var User $user
+         */
         $user = Auth::user();
         $vehicules = Vehicule::where('owner_id', '=', $user->id)->get();
+
+        if($user->identification_scan || $user->licence_scan || $user->insurrance_scan) {
+
+            return view('pages.ride.add', [
+                'vehicules' => $vehicules
+            ]);
+        }
+
+        if(!$user->isVerified()) {
+
+            return response()->redirectToRoute('driver_verification');
+        }
 
         return view('pages.ride.add', [
             'vehicules' => $vehicules

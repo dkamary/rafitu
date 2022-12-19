@@ -20,7 +20,9 @@ class User extends Authenticatable
         'login', 'email', 'password', 'user_type_id', 'firstname', 'lastname',
         'address_line1', 'address_line2', 'zip_code', 'town_id', 'country_id', 'language_id',
         'sexe_id', 'birthdate', 'tel', 'mobile', 'biography', 'avatar',
-        'identification_number', 'identification_type_id', 'identification_release_place', 'identification_date',
+        'identification_scan', 'identification_number', 'identification_type_id', 'identification_release_place', 'identification_date',
+        'licence_number', 'licence_scan',
+        'technical_check_scan', 'insurrance_scan', 'gray_card_scan',
         'user_status_id',
         'token',
     ];
@@ -92,5 +94,19 @@ class User extends Authenticatable
 
     public static function createEmptyUser() : User {
         return new User();
+    }
+
+    public function isVerified() : bool {
+        $array = [
+            'identification_scan', 'identification_number', 'identification_type_id', 'identification_release_place', 'identification_date',
+            'licence_number', 'licence_scan',
+            'technical_check_scan', 'insurrance_scan', 'gray_card_scan',
+        ];
+
+        foreach($array as $field) {
+            if(is_null($this->$field)) return false;
+        }
+
+        return true;
     }
 }

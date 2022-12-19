@@ -7,6 +7,8 @@ use App\Http\Controllers\CinetPayController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DriverAdminController;
+use App\Http\Controllers\DriverController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\HomeController;
@@ -105,6 +107,13 @@ Route::prefix('admin')->group(function () {
         Route::post('/refresh', [FaqController::class, 'refresh'])->name('admin_faq_refresh');
         Route::get('/remove/{faq}', [FaqController::class, 'remove'])->name('admin_faq_remove');
     });
+
+    Route::prefix('drivers')->group(function(){
+        Route::get('/', [DriverAdminController::class, 'index'])->name('admin_driver_index');
+        Route::get('/list', [DriverAdminController::class, 'list'])->name('admin_driver_list');
+        Route::get('/{driver}', [DriverAdminController::class, 'show'])->name('admin_driver_show');
+        Route::get('/validate/{driver}', [DriverAdminController::class, 'validateDriver'])->name('admin_driver_validate');
+    });
 });
 
 // CONTACT
@@ -185,6 +194,21 @@ Route::prefix('ville')->group(function(){
 Route::prefix('suggestions')->group(function() {
     Route::get('/trajet', [SuggestionController::class, 'trajet'])->name('suggestion_trajet');
     Route::get('/villes', [SuggestionController::class, 'ville'])->name('suggestion_ville');
+});
+
+// VERIFICATION CHAUFFEUR
+Route::prefix('chauffeur')->group(function(){
+    Route::match(['get', 'post'], '/verification', [DriverController::class, 'verification'])->name('driver_verification');
+
+    Route::get('/deja-verifier', function(){
+        return view('pages.ride.already-verified');
+    })->name('driver_already_verified');
+
+    Route::get('/verification-en-cours', function(){
+        return view('pages.ride.verification-in-process');
+    })->name('driver_verification_in_progress');
+
+    Route::get('/{driver}', [DriverController::class, 'show'])->name('driver_show');
 });
 
 // FRONT OFFICE PAGE

@@ -76,15 +76,40 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12 d-flex justify-content-between align-items-center py-5">
-                        <div>
-                            <div class="fs-6">{{ $driver ? $driver->getFullname() : '' }}</div>
-                            <div class="my-2"><em>Aucun avis pour le moment</em></div>
-                        </div>
-                        <div>
+                    <div class="col-12 py-5">
+                        <div class="row">
                             @if($driver)
-                                <img src="{{ $driver->avatar }}" alt="" class="img-fluid border rounded-circle" alt="Avatar">
+                                <div class="col-4 col-md-2">
+                                    <img src="{{ $driver->avatar }}" alt="" class="img-fluid border rounded-circle" alt="Avatar">
+                                </div>
                             @endif
+                            <div class="col">
+                                <div class="fs-6">{{ $driver ? $driver->getFullname() : '' }}</div>
+                                <div class="my-2"><em>Aucun avis pour le moment</em></div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        @if ($driver && $driver->bio)
+                                            <em class="text-info">{!! $driver->bio !!}</em>
+                                        @else
+                                            <em class="fw-bold">Le conducteur n'a pas encore partager sa bio.</em>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <a href="#" id="messenger" class="btn btn-outline-info my-3 d-flex justify-content-center align-items-center">
+                                            <i class="fa fa-envelope fa-2x" aria-hidden="true"></i>
+                                            <span class="ml-2">
+                                                &nbsp;
+                                                Contacter {{ $driver ? $driver->getFullname() : '' }}
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -273,5 +298,14 @@
             }
         </script>
         <script defer async src="https://maps.googleapis.com/maps/api/js?key={{ Config::get('google.maps.api.key') }}&libraries=places&callback=displayItineraryMap"></script>
+
+        <script>
+            window.addEventListener("DOMContentLoaded", event => {
+                document.querySelector('#messenger').addEventListener("click", e => {
+                    e.preventDefault();
+                    alert("Fonctionalité de messagerie bientôt disponible!");
+                });
+            });
+        </script>
     @endpush
 @endonce
