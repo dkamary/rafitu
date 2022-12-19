@@ -11,6 +11,7 @@
     $showDate = $showDate ?? true;
     $showDistance = $showDistance ?? false;
     $showIcon = $showIcon ?? true;
+    $showDriver = $showDriver ?? true;
 
     $reservationCount = $ride->getReservationsCount();
     $origin = $parameters['origin'];
@@ -154,6 +155,7 @@
                         </div>
                     </div>
 
+                    @if ($showDriver)
                     <div class="row">
                         <div class="col-12 py-4">
 
@@ -172,6 +174,7 @@
 
                         </div>
                     </div>
+                    @endif
 
                 </div>
             </div>

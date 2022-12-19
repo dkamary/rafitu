@@ -98,7 +98,8 @@ class User extends Authenticatable
 
     public function isVerified() : bool {
         $array = [
-            'identification_scan', 'identification_number', 'identification_type_id', 'identification_release_place', 'identification_date',
+            'identification_scan', 'identification_number', 'identification_type_id', 'identification_date',
+            // 'identification_release_place',
             'licence_number', 'licence_scan',
             'technical_check_scan', 'insurrance_scan', 'gray_card_scan',
         ];

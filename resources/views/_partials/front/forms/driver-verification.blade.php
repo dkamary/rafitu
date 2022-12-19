@@ -46,6 +46,15 @@
     <div class="row mb-3">
         <div class="col">
             <div class="form-floating">
+                <input type="text" class="form-control" id="licence_number" name="licence_number" placeholder="" required>
+                <label for="licence_number">Numéro du permis de conduire</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col">
+            <div class="form-floating">
                 <input type="file" class="form-control" id="licence_scan" name="licence_scan" placeholder="" required>
                 <label for="licence_scan">Scan du permis de conduire</label>
             </div>

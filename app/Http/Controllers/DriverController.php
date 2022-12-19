@@ -37,6 +37,8 @@ class DriverController extends Controller
         // dd([
         //     'post' => $_POST,
         //     'request' => $request,
+        //     'user' => $user,
+        //     'licence_number' => $request->input('licence_number'),
         // ]);
 
         // identification
