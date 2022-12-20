@@ -40,7 +40,9 @@ class User extends Authenticatable
         if(!$this->avatar) return null;
         if(strpos($this->avatar, 'http') !== false) return $this->avatar;
         $info = pathinfo($this->avatar);
-        dd($info);
+
+        // dd($info);
+
         $filename = $info['filename'] . '-' . $size .'.' . $info['extension'];
         if(is_file(AVATAR_DIR . $filename)) return $filename;
         else return $this->avatar;

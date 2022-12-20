@@ -40,11 +40,18 @@
                     <td class="action-{{ $reservation->id }}">
                         <div class="d-flex justify-content-between">
                             <a href="{{ route('dashboard_reservation_show', ['reservation' => $reservation]) }}" class="btn btn-xs btn-primary">
+                                <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;
                                 Afficher
                             </a>
                             @if (!$reservation->isPaid())
                             &nbsp;
-                                @include('_partials.front.forms.reservation-payment', ['reservation' => $reservation, 'user' => Auth::user(), 'btn_classes' => 'btn btn-xs btn-warning', 'btn_text' => 'Payer'])
+                                {{-- @include('_partials.front.forms.reservation-payment', ['reservation' => $reservation, 'user' => Auth::user(), 'btn_classes' => 'btn btn-xs btn-warning', 'btn_text' => 'Payer']) --}}
+                                @include('_partials.front.payment.choice', [
+                                    'reservation' => $reservation,
+                                    'btn_classes' => 'btn btn-xs btn-warning',
+                                    'btn_text' => 'Payer',
+                                    'user' => Auth::user(),
+                                ])
                             @endif
                         </div>
                     </td>

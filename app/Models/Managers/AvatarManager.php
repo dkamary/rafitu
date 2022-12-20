@@ -30,7 +30,7 @@ class AvatarManager
          */
         $avatar = $request->file($fieldName);
         if (!$avatar) {
-            // dd('NO FILE AT ALL!!!');
+
             return null;
         }
 

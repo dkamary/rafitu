@@ -73,7 +73,7 @@
                 <div class="row border-top border-bottom mt-3 py-3">
                     <div class="col-12 d-flex justify-content-between">
                         <span>Prix</span>
-                        <h3><strong>{{ $ride->price }}</strong> F CFA</h3>
+                        <h3><strong>{{ $ride->price }}</strong> F CFA / Passager</h3>
                     </div>
                 </div>
                 <div class="row">
@@ -135,19 +135,24 @@
                                 @csrf
                                 <input type="hidden" name="ride_id" value="{{ $ride->id }}">
                                 <input type="hidden" name="user_id" value="{{ $user ? $user->id : 0 }}">
-                                <input type="hidden" name="price" value="{{ $ride->price }}">
+                                <input type="hidden" name="price" id="price" value="{{ $ride->price }}">
                                 <input type="hidden" name="is_paid" value="0">
-                                <div class="row mb-3">
+                                <div class="row mt-4 mb-3">
                                     <label class="col-12 col-md-3 d-flex align-items-end">
                                         Passager(s):
                                     </label>
-                                    <div class="col-12 col-md-9">
+                                    <div class="col-6 col-md-2">
                                         <input class="form-control" type="number" name="passenger" id="passenger" min="1" max="{{ $seatsAvailable }}" value="1" placeholder="Il y a {{ $seatsAvailable }} place{{ $seatsAvailable > 1 ? 's' : '' }} de disponible" required>
                                     </div>
+                                    <div class="col-6 col-md-3 d-flex justify-content-start align-items-center fs-4">
+                                        <span id="amount" class="fw-bold">{{ $ride->price }}</span>
+                                        <span id="currency">F CFA</span>
+                                    </div>
                                 </div>
-                                <div class="row">
+                                <div class="row my-4">
                                     <div class="col-12 d-flex justify-content-center align-items-center">
                                         <button type="submit" class="btn btn-primary">
+                                            <i class="fa fa-check-circle fa-2x" aria-hidden="true"></i>&nbsp;
                                             Réserver
                                         </button>
                                     </div>
@@ -277,6 +282,33 @@
                     e.preventDefault();
                     alert("Fonctionalité de messagerie bientôt disponible!");
                 });
+
+                const passager = document.querySelector("#passenger");
+                if(passager) {
+                    passager.addEventListener("change", e => {
+                        e.preventDefault();
+                        calcul({
+                            count: passager.value,
+                            price: {{ $ride->price }}
+                        });
+                    });
+                }
+
+                const calcul = ({ count, price }) => {
+                    console.debug("Calcul montant");
+
+                    const input = document.querySelector('#price');
+                    const value = parseFloat(count) * parseFloat(price);
+
+                    console.debug({ value });
+
+                    if(input) {
+                        input.value = value;
+                        document.querySelector('#amount').innerHTML = value;
+                    } else {
+                        console.warn("Unable to select #price!!!");
+                    }
+                };
             });
         </script>
     @endpush

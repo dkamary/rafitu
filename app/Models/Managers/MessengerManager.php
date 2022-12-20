@@ -37,12 +37,6 @@ class MessengerManager
 
     public static function myMessages(int $userId) : array {
         $messages = [];
-        // $messagesByToken = Message::where('sender_id', '=', $userId)
-        //     ->orWhere('receiver_id', '=', $userId)
-        //     ->orderBy('date_sent', 'DESC')
-        //     ->groupBY('token')
-        //     ->limit(10)
-        //     ->get();
 
         $tokens = DB::table('message')
             ->selectRaw('DISTINCT token')
