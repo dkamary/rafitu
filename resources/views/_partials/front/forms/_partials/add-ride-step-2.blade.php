@@ -13,7 +13,7 @@
     <div class="control-group form-group">
         <div class="mini-map" id="arrival_map"></div>
     </div>
-    <div class="control-group form-group">
+    <div class="control-group form-group d-none">
         <div class="form-group">
             <label class="form-label text-dark">Date et heure d'arrivée</label>
             <input type="datetime-local" name="arrival_date" class="form-control required Title"

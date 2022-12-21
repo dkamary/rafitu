@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Managers\NotificationManager;
 use App\Models\Managers\RideManager;
 use App\Models\Position;
 use App\Models\Ride;
@@ -19,7 +20,7 @@ use Illuminate\View\View;
 class RideController extends Controller
 {
     public function __construct() {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     public function index() {
@@ -81,6 +82,7 @@ class RideController extends Controller
             'smokers' => $request->input('smokers') == 'on' ? 1 : 0,
             'animals' => $request->input('animals') == 'on' ? 1 : 0,
             'has_recurrence' => $request->input('recurrence') == 'yes' ? 1 : 0,
+            'duration' => $request->input('duration'),
         ];
 
         // dd([
@@ -130,22 +132,35 @@ class RideController extends Controller
 
         RideItinerary::insert($dataItinerary);
 
+        NotificationManager::adminNewRide($ride);
+
         return response()->redirectToRoute('ride_complete', ['ride' => $ride]);
     }
 
     public function complete(Ride $ride) {
+        $this->middleware('auth');
 
-        return view('pages.ride.added', [
+        return view('trajet.creation-termine', [
             'ride' => $ride,
         ]);
+
+        // return view('pages.ride.added', [
+        //     'ride' => $ride,
+        // ]);
     }
 
     public function list() : View {
-        $rides = Ride::all();
+        $rides = Ride::where('owner_id', '>', 0)
+            ->orderBy('departure_date', 'desc')
+            ->get();
 
-        return view('pages.ride.list', [
-            'rides' => $rides,
+        return view('trajet.liste', [
+            'rides' => $rides
         ]);
+
+        // return view('pages.ride.list', [
+        //     'rides' => $rides,
+        // ]);
     }
 
     public function show(Ride $ride) : View {
@@ -159,6 +174,15 @@ class RideController extends Controller
             ],
         ];
 
+        return view('trajet.details', [
+            'ride' => $ride,
+            'parameters' => [
+                'origin' => $origin,
+                'destination' => $destination,
+            ],
+            'distances' => $distances,
+        ]);
+
         return view('pages.ride.show', [
             'ride' => $ride,
             'parameters' => [
@@ -166,6 +190,33 @@ class RideController extends Controller
                 'destination' => $destination,
             ],
             'distances' => $distances,
+        ]);
+    }
+
+    public function detailsDepart(Ride $ride) : View {
+
+        return view('trajet.point-details', [
+            'ride' => $ride,
+            'title' => $ride->departure_label,
+            'centerLat' => $ride->departure_position_lat,
+            'centerLng' => $ride->departure_position_long,
+        ]);
+    }
+
+    public function detailsArrivee(Ride $ride) : View {
+
+        return view('trajet.point-details', [
+            'ride' => $ride,
+            'title' => $ride->arrival_departure,
+            'centerLat' => $ride->arrival_position_lat,
+            'centerLng' => $ride->arrival_position_long,
+        ]);
+    }
+
+    public function detailsChauffeur(Ride $ride) : View {
+
+        return view('trajet.chauffeur-details', [
+            'ride' => $ride,
         ]);
     }
 }

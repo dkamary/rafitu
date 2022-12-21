@@ -26,7 +26,8 @@ Votre résultat de recherche
             @dump($parameters) --}}
 
             @forelse ($rides as $ride)
-                @include('pages._partials.ride.element', ['ride' => $ride, 'loop' => $loop])
+                {{-- @include('pages._partials.ride.element', ['ride' => $ride, 'loop' => $loop]) --}}
+                @include('trajet._partials.minimal', ['ride' => $ride, 'loop' => $loop])
             @empty
             <div class="row my-3">
                 <div class="col-12">

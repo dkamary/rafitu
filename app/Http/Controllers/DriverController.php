@@ -17,7 +17,9 @@ class DriverController extends Controller
     public function verification(Request $request) {
         if($request->isMethod(Request::METHOD_GET)) {
 
-            return view('pages.ride.verification');
+            return view('chauffeur.verification');
+
+            // return view('pages.ride.verification');
         }
 
         /**

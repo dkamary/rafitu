@@ -15,7 +15,7 @@ class Ride extends Model
         'departure_label', 'departure_date', 'departure_position_long', 'departure_position_lat',
         'arrival_label', 'arrival_date', 'arrival_position_long', 'arrival_position_lat',
         'seats_available', 'woman_only', 'price', 'smokers', 'animals',
-        'ride_status_id', 'distance',
+        'ride_status_id', 'distance', 'duration',
         'created_at', 'updated_at',
         'has_recurrence',
     ];
@@ -178,5 +178,25 @@ class Ride extends Model
 
     public function hasRecurrence() : bool {
         return $this->has_recurrence == 1;
+    }
+
+    public function getDuration(bool $formated = false) {
+        if(!$formated) return $this->duration;
+
+        $time = (int)$this->duration;
+        $hours = 0;
+        $minutes = (int)($time / 60);
+        $seconds = $time - ($minutes * 60);
+        if ($minutes > 60) {
+            $hours = (int)($minutes / 60);
+            $minutes = $minutes - ($hours * 60);
+        }
+        $display = sprintf(
+            '%s:%s',
+            str_pad($hours, 2, '0', STR_PAD_LEFT),
+            str_pad($minutes, 2, '0', STR_PAD_LEFT)
+        );
+
+        return $display;
     }
 }

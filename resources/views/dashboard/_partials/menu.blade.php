@@ -14,7 +14,7 @@
         <a href="{{ route('dashboard_user') }}">Mon profil</a>
     </li>
     <li @class(['list-group-item', 'active' => ('dashboard_reservations' == $routeName)])>
-        <a href="{{ route('dashboard_reservations') }}">Mes trajets</a>
+        <a href="{{ route('dashboard_reservations') }}">Mes réservations</a>
     </li>
     <li @class([
         'list-group-item',

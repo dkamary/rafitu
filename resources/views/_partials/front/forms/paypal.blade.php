@@ -1,5 +1,5 @@
 {{-- Paypal --}}
-<form class="form" action="{{ route('paypal_pay') }}" method="post">
+<form class="form" action="{{ route('paypal_pay') }}" method="post" id="paypal-form">
     <input type="hidden" name="reservation_id" value="{{ $reservation->id }}">
     <input type="hidden" name="user_id" value="{{ $user ? $user->id : 0 }}">
     <div class="row">
