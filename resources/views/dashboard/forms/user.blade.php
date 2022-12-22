@@ -42,7 +42,7 @@
     <div class="row my-3">
         <label for="tel" class="col-12 col-md-4">Téléphone Fixe</label>
         <div class="col-12 col-md-8">
-            <input type="tel" name="tel" id="tel" class="form-control" value="{{ $user->tel }}" placeholder="Votre numéro de téléphone fixe" required>
+            <input type="tel" name="tel" id="tel" class="form-control" value="{{ $user->tel }}" placeholder="Votre numéro de téléphone fixe">
         </div>
     </div>
     <div class="row my-3">
@@ -63,12 +63,12 @@
             <input type="text" name="address_line2" id="address_line2" class="form-control" value="{{ $user->address_line2 }}" placeholder="Complément d'adresse">
         </div>
     </div>
-    <div class="row my-3">
+    {{-- <div class="row my-3">
         <label for="zip_code" class="col-12 col-md-4">Code Postal</label>
         <div class="col-12 col-md-8 required">
             <input type="text" name="zip_code" id="zip_code" class="form-control" value="{{ $user->zip_code }}" required placeholder="Code Postal">
         </div>
-    </div>
+    </div> --}}
     {{-- <div class="row my-3">
         <label for="town_id" class="col-12 col-md-4">Ville</label>
         <div class="col-12 col-md-8">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Managers\NotificationManager;
 use App\Models\Managers\ReservationManager;
 use App\Models\Reservation;
 use Illuminate\Http\RedirectResponse;
@@ -10,9 +11,17 @@ use Illuminate\View\View;
 
 class ReservationController extends Controller {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function submit(Request $request) : RedirectResponse {
         $data = ReservationManager::getDataFromRequest($request);
         $reservation = Reservation::create($data);
+
+        NotificationManager::adminNewReservation($reservation);
+        NotificationManager::ownerNewReservation($reservation);
 
         return response()->redirectToRoute('reservation_result', [
             'reservation' => $reservation,
@@ -20,11 +29,11 @@ class ReservationController extends Controller {
     }
 
     public function result(Reservation $reservation):  View {
-        $this->middleware('auth');
+        return view('reservation.paiement', ['reservation' => $reservation]);
 
-        return view('pages.reservation.result', [
-            'reservation' => $reservation,
-        ]);
+        // return view('pages.reservation.result', [
+        //     'reservation' => $reservation,
+        // ]);
     }
 
     public function show(Reservation $reservation) : View {

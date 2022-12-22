@@ -51,15 +51,29 @@ Route::prefix('google/authentification')->group(function () {
 });
 
 Route::prefix('trajet')->group(function () {
-    Route::get('/ajouter', [RideController::class, 'add'])->name('ride_add');
-    Route::post('/enregistrer', [RideController::class, 'save'])->name('ride_save');
-    Route::get('/trajet-cree/{ride}', [RideController::class, 'complete'])->name('ride_complete');
+
+    // Auth required
+    Route::get('/ajouter', [RideController::class, 'add'])
+        ->middleware('auth')
+        ->name('ride_add');
+    Route::post('/enregistrer', [RideController::class, 'save'])
+        ->middleware('auth')
+        ->name('ride_save');
+    Route::get('/trajet-cree/{ride}', [RideController::class, 'complete'])
+        ->middleware('auth')
+        ->name('ride_complete');
+
+    // No auth Required
     Route::get('/search', [SearchController::class, 'search'])->name('ride_search');
     Route::get('/list', [RideController::class, 'list'])->name('ride_list');
     Route::post('/reservation', [SearchController::class, 'match'])->name('ride_match');
     Route::get('/reservation', [SearchController::class, 'matchResult'])->name('ride_match_result');
 
-    Route::get('/{ride}', [RideController::class, 'show'])->name('ride_show'); // Doit toujours être à la fin!
+    Route::get('/point-de-depart/{ride}', [RideController::class, 'detailsDepart'])->name('ride_show_departure');
+    Route::get('/point-d-arrivee/{ride}', [RideController::class, 'detailsArrivee'])->name('ride_show_arrival');
+    Route::get('/chauffeur/{ride}', [RideController::class, 'detailsChauffeur'])->name('ride_driver');
+
+    Route::get('/{ride}', [RideController::class, 'show'])->name('ride_show');
 });
 
 Route::prefix('google')->group(function () {

@@ -1,7 +1,15 @@
 {{-- Add ride - Step 1 --}}
 
 @php
-    $tomorrow = date('d/m/Y 08:00', strtotime('tomorrow'));
+    $tomorrow = date('Y-m-d\T08:00', strtotime('tomorrow'));
+    $oneWeek = new \DateTime('now');
+    $oneWeek->modify('+7 days');
+    $oneMonth = new \DateTime('now');
+    $oneMonth->modify('+1 month');
+    $apresDemain = new \DateTime('now');
+    $apresDemain->modify('+1 days');
+    $demain = new \DateTime('now');
+    $demain->modify('+1 day');
 @endphp
 
 <div class="tab-pane fade" id="first">
@@ -24,6 +32,29 @@
             <input type="datetime-local" name="departure_date" id="departure_date" class="form-control required Title"
             value="{{ $tomorrow }}" required
                 placeholder="dd/mm/aaaa hh:mm">
+
+            <div class="date-suggestions d-flex justify-content-start align-items-center my-4">
+                <a href="#" class="date-suggestion btn btn-outline-info btn-xs me-2" data-time="{{ date('Y-m-d\TH:i') }}">
+                    <i class="fa fa-clock-o" aria-hidden="true"></i>
+                    Ajourd'hui
+                </a>
+                <a href="#" class="date-suggestion btn btn-outline-info btn-xs me-2" data-time="{{ $demain->format('Y-m-d\TH:i') }}">
+                    <i class="fa fa-clock-o" aria-hidden="true"></i>
+                    Demain
+                </a>
+                <a href="#" class="date-suggestion btn btn-outline-info btn-xs me-2" data-time="{{ $apresDemain->format('Y-m-d\TH:i') }}">
+                    <i class="fa fa-clock-o" aria-hidden="true"></i>
+                    Apprès demain
+                </a>
+                <a href="#" class="date-suggestion btn btn-outline-info btn-xs me-2" data-time="{{ $oneWeek->format('Y-m-d\TH:i') }}">
+                    <i class="fa fa-clock-o" aria-hidden="true"></i>
+                    Dans une semaine
+                </a>
+                <a href="#" class="date-suggestion btn btn-outline-info btn-xs me-2" data-time="{{ $oneMonth->format('Y-m-d\TH:i') }}">
+                    <i class="fa fa-clock-o" aria-hidden="true"></i>
+                    Dans un mois
+                </a>
+            </div>
         </div>
     </div>
     <div class="control-group form-group">
@@ -101,6 +132,15 @@
                         console.info({ date: $departureDate.val() });
 
                         document.querySelector("#arrive").click();
+                    })
+                    .on('click', '.date-suggestion', e => {
+                        e.preventDefault();
+                        const $this = $(e.currentTarget);
+                        $('#departure_date').val($this.data('time'));
+                        console.debug({
+                            time: $this.data('time'),
+                            value: $('#departure_date').val()
+                        });
                     })
                     ;
 

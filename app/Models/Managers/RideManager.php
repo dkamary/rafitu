@@ -37,6 +37,11 @@ class RideManager
             $positionSearch = self::searchByPositionByOriginDestination($departure, $arrival, $distance);
             $labelSearch = self::searchByLabelByOriginDestination($origin, $destination);
             $rideIds = array_merge($positionSearch['ids'], $labelSearch['ids']);
+            // dump([
+            //     'position' => $positionSearch,
+            //     'label' => $labelSearch,
+            //     'rideIds' => $rideIds,
+            // ]);
         } elseif ($origin || $departure->isset()) {
             $postionSearch = self::searchByDeparture($departure, $distance);
 
@@ -67,6 +72,7 @@ class RideManager
 
         if ($rideIds != []) {
             $rideIds = array_unique($rideIds);
+            // dump($rideIds);
         }
 
         if (count($rideIds) == 0 && $searchDone) {
@@ -86,22 +92,24 @@ class RideManager
             ];
         }
 
-        $builder = Ride::where('ride_status_id', '=', 1);
+        $builder = Ride::where('ride_status_id', '=', 1)
+            ->where('departure_date', '>=', date('Y-m-d H:i:s'));
 
         if (count($rideIds)) {
             $builder->whereIn('id', $rideIds);
         }
 
         if ($passager > 0) {
-            $builder->where('seats_available', '=', $passager);
+            $builder->where('seats_available', '>=', $passager);
         }
 
-        // $builder->orderBy('departure_date', 'ASC');
+        $builder->orderBy('departure_date', 'ASC');
 
         if ($date && $date != '') {
-            $builder->where('departure_date', '>=', $date)
-                ->where('departure_date', '>=', 'now()');
+            $builder->where('departure_date', '>=', $date);
         }
+
+        // dump($builder->toSql());
 
         // récupération de la distance
         $distances = [];

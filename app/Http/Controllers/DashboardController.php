@@ -38,7 +38,7 @@ class DashboardController extends Controller
             $user->birthdate = $request->input('birthdate');
             $user->address_line1 = $request->input('address_line1');
             $user->address_line2 = $request->input('address_line2');
-            $user->zip_code = $request->input('zip_code');
+            // $user->zip_code = $request->input('zip_code');
             $user->tel = $request->input('tel');
             $user->mobile = $request->input('mobile');
             $user->biography = $request->input('biography');

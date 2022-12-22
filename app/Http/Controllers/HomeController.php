@@ -38,7 +38,7 @@ class HomeController extends Controller
             ->orderBy('departure_date', 'ASC')
             ->get();
 
-        return view('pages.ride.list', [
+        return view('trajet.liste', [
             'rides' => $rides,
             'title' => 'Long Trajet',
             'parameters' => [
@@ -54,7 +54,7 @@ class HomeController extends Controller
             ->orderBy('departure_date', 'ASC')
             ->get();
 
-        return view('pages.ride.list', [
+        return view('trajet.liste', [
             'rides' => $rides,
             'title' => 'Trajet Quotidien',
             'parameters' => [

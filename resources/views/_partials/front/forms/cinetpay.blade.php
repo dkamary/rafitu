@@ -1,5 +1,10 @@
 {{-- CinetPay --}}
-<form class="form" action="{{ route('cinetpay_pay') }}" method="post">
+
+@php
+    $user = Auth::user();
+@endphp
+
+<form class="form" action="{{ route('cinetpay_pay') }}" method="post" id="cinetpay-form">
     <input type="hidden" name="reservation_id" value="{{ $reservation->id }}">
     <input type="hidden" name="user_id" value="{{ $user ? $user->id : 0 }}">
     <div class="row">
