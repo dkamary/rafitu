@@ -5,6 +5,8 @@
     $origin = isset($distances[$ride->id]) ? $distances[$ride->id]->origin : null;
     $destination = isset($distances[$ride->id]) ? $distances[$ride->id]->destination : null;
 
+    $showPlaceLink = $showPlaceLink ?? true;
+
     $reservationCount = $ride->getReservationsCount();
     $titleOrigin = 'à environ ' . number_format($origin, 0, ',', ' ') . ' m de votre adresse de départ';
     $titleDestination = 'à environ ' . number_format($destination, 0, ',', ' ') . ' m de votre adresse d\'arrivée';
@@ -22,9 +24,11 @@
             <td width="70%">
                 <div class="d-flex justify-content-between align-items-center">
                     <h2 class="fs-5 fw-bold">{{ $ride->departure_label }}</h2>
+                    @if($showPlaceLink)
                     <a href="{{ route('ride_show_departure', ['ride' => $ride]) }}" class="txt-rafitu">
                         <i class="fa fa-chevron-right fa-2x" aria-hidden="true"></i>
                     </a>
+                    @endif
                 </div>
             </td>
             <td width="20%" class="text-end">
@@ -67,9 +71,11 @@
             <td>
                 <div class="d-flex justify-content-between align-items-center">
                     <h2 class="fs-5 fw-bold">{{ $ride->arrival_label }}</h2>
+                    @if($showPlaceLink)
                     <a href="{{ route('ride_show_arrival', ['ride' => $ride]) }}" class="txt-rafitu">
                         <i class="fa fa-chevron-right fa-2x" aria-hidden="true"></i>
                     </a>
+                    @endif
                 </div>
             </td>
             <td>

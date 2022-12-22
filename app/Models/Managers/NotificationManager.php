@@ -33,7 +33,7 @@ class NotificationManager {
 
     public static function adminNewReservation(Reservation $reservation) {
         $subject = 'Nouvelle réservation';
-        $content = view('templates.emails.admin-ride-new', [
+        $content = view('templates.emails.admin-reservation-new', [
             'reservation' => $reservation,
         ])->render();
 

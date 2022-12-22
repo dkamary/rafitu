@@ -21,7 +21,7 @@
     <div class="row trajet trajet__unique">
         <div class="col-12 py-5 bg-white">
 
-            @include('trajet._partials.trajet-info', ['ride' => $ride,])
+            @include('trajet._partials.trajet-info', ['ride' => $ride, 'showPlaceLink' => false])
 
             <hr>
 
