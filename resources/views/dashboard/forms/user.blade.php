@@ -24,11 +24,11 @@
                 placeholder="Votre nom de famille">
         </div>
     </div>
-    <div class="row my-3">
+    <div class="row my-3 py-3">
         <label for="password" class="col-12 col-md-4">Mot de passe</label>
-        <div class="col-12 col-md-8">
-            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#update-password">
-                <i class="fa fa-key" aria-hidden="true"></i> &nbsp;
+        <div class="col-12 col-md-8 d-flex justify-content-start align-items-center">
+            <button type="button" class="btn btn-dark d-flex justify-content-center align-items-center" data-bs-toggle="modal" data-bs-target="#update-password">
+                <i class="fa fa-key fa-2x me-2" aria-hidden="true"></i> &nbsp;
                 Mettre à jour le mot de passe
             </button>
         </div>
@@ -63,24 +63,6 @@
             <input type="text" name="address_line2" id="address_line2" class="form-control" value="{{ $user->address_line2 }}" placeholder="Complément d'adresse">
         </div>
     </div>
-    {{-- <div class="row my-3">
-        <label for="zip_code" class="col-12 col-md-4">Code Postal</label>
-        <div class="col-12 col-md-8 required">
-            <input type="text" name="zip_code" id="zip_code" class="form-control" value="{{ $user->zip_code }}" required placeholder="Code Postal">
-        </div>
-    </div> --}}
-    {{-- <div class="row my-3">
-        <label for="town_id" class="col-12 col-md-4">Ville</label>
-        <div class="col-12 col-md-8">
-            <input type="text" name="town_id" id="town_id" class="form-control" value="{{ $user->town_id }}">
-        </div>
-    </div>
-    <div class="row my-3">
-        <label for="country_id" class="col-12 col-md-4">Pays</label>
-        <div class="col-12 col-md-8">
-            <input type="text" name="country_id" id="country_id" class="form-control" value="{{ $user->country_id }}">
-        </div>
-    </div> --}}
     <div class="row my-3">
         <label for="biography" class="col-12 col-md-4">Bio</label>
         <div class="col-12 col-md-8">
@@ -95,9 +77,9 @@
         </div>
     </div>
     <div class="row my-3">
-        <div class="col-12 text-end">
-            <button type="submit" class="btn btn-primary">
-                <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;
+        <div class="col-12 d-flex justify-content-end align-items-center py-3">
+            <button type="submit" class="btn btn-primary d-flex justify-content-center align-items-center px-4">
+                <i class="fa fa-floppy-o fa-2x me-2" aria-hidden="true"></i>&nbsp;
                 Enregister les modifications
             </button>
         </div>
@@ -115,7 +97,7 @@
             <div class="modal-body">
 
                     <div class="row">
-                        <label for="password" class="col-12">Nouveau mot de passe</label>
+                        <label for="password" class="col-12 fs-5">Nouveau mot de passe</label>
                         <div class="col-12">
                             <input type="password" name="password" id="password" class="form-control"
                                 required placeholder="Mot de passe">

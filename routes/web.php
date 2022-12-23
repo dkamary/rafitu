@@ -140,6 +140,8 @@ Route::prefix('contact')->group(function(){
 Route::prefix('reservation')->group(function(){
     Route::post('/submit', [ReservationController::class, 'submit'])->name('reservation_submit');
     Route::get('/result/{reservation}', [ReservationController::class, 'result'])->name('reservation_result');
+    Route::post('/annulation', [ReservationController::class, 'cancel'])->name('reservation_cancel');
+    Route::get('/annulee/{reservation}', [ReservationController::class, 'canceled'])->name('reservation_canceled');
 
     Route::get('/{reservation}', [ReservationController::class, 'show'])->name('reservation_show');
 });

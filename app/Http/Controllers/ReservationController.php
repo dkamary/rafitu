@@ -41,4 +41,32 @@ class ReservationController extends Controller {
             'reservation'=> $reservation,
         ]);
     }
+
+    public function cancel(Request $request) : RedirectResponse {
+        $reservation = Reservation::where('id', '=', (int)$request->input('reservation_id'))->first();
+
+        if(!$reservation) {
+            return response()->redirectToRoute('reservation_canceled', ['reservation' => $reservation]);
+        }
+
+        $order = $reservation->getOrder();
+        if(!$order) {
+            return response()->redirectToRoute('reservation_canceled', ['reservation' => $reservation]);
+        }
+
+        if($order->intent == 'ORDER') {
+            $order->status = 'CANCEL';
+            $order->save();
+
+            return response()->redirectToRoute('reservation_canceled', ['reservation' => $reservation]);
+        }
+
+        // Remboursement
+        return response()->redirectToRoute('reservation_canceled', ['reservation' => $reservation]);
+    }
+
+    public function canceled(Reservation $reservation) : View {
+
+        return view('reservation.canceled', ['reservation' => $reservation]);
+    }
 }

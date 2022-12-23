@@ -45,7 +45,7 @@
                 </div>
                 <div class="row py-3">
                     <div class="col-12">
-                        @include('pages._partials.ride.element', $rideOptions)
+                        @include('trajet.details', ['ride' => $ride, 'reservation' => $reservation])
                     </div>
                 </div>
 

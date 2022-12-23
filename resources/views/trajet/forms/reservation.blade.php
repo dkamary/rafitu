@@ -46,8 +46,9 @@
     @endif
 @else
     <p class="text-center">
-        <strong class='text-danger'>Vous ne pouvez plus faire de réservation car la date de départ est déjà
-            passée</strong>
+        <strong class='text-danger'>
+            Vous ne pouvez plus faire de réservation car la date de départ est déjà passée
+        </strong>
     </p>
 @endif
 

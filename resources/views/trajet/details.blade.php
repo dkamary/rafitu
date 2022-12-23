@@ -40,7 +40,15 @@
 
             <hr>
 
-            @include('trajet.forms.reservation', ['ride' => $ride])
+            @if (isset($reservation))
+                @if($reservation->isPaid())
+                    @include('trajet.forms.reservation-cancel', ['reservation' => $reservation, 'btn_text' => 'Annuler la réservation'])
+                @else
+                    @include('_partials.front.payment.choice', ['reservation' => $reservation, 'btn_classes' => 'btn btn-orange btn-xs mx-2', 'buttonOnly' => false])
+                @endif
+            @else
+                @include('trajet.forms.reservation', ['ride' => $ride])
+            @endif
 
         </div>
     </div>

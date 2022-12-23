@@ -17,6 +17,7 @@ class Reservation extends Model
 
     protected $ride;
     protected $user;
+    protected $order;
 
     public function __toString() : string
     {
@@ -62,5 +63,21 @@ class Reservation extends Model
         $date = new DateTime($this->payment_date);
 
         return !$format ? $date : $date->format($format);
+    }
+
+    public function getOrder() : ?Order {
+        return $this->order ?: $this->order = Order::where('reservation_id', '=', (int)$this->id)->first();
+    }
+
+    public function getStatus() : ?string {
+        $order = $this->getOrder();
+
+        if(is_null($order)) return null;
+
+        return $order->status;
+    }
+
+    public function paymentDone() : bool {
+        return $this->getStatus() == 'COMPLETED';
     }
 }

@@ -48,7 +48,7 @@
 </div>
 
 
-<div class="d-none">
+<div class="d-none" style="display: none;">
     @include('_partials.front.forms.paypal')
     @include('_partials.front.forms.cinetpay')
 </div>

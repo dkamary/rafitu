@@ -13,6 +13,8 @@
     } else {
         $driverAvatar = asset('avatars/user-01.svg');
     }
+
+    $showPreferrences = $showPreferrences ?? true;
 @endphp
 
 <div class="row trajet-chauffeur my-4 py-2">
@@ -62,9 +64,12 @@
     </div>
 </div>
 
-<hr>
+@if ($showPreferrences)
 
-@include('trajet._partials.trajet-preferrences', ['ride' => $ride, 'preferrence_title' => 'Les préférences du trajet'])
+    <hr>
+    @include('trajet._partials.trajet-preferrences', ['ride' => $ride, 'preferrence_title' => 'Les préférences du trajet'])
+
+@endif
 
 @once
 

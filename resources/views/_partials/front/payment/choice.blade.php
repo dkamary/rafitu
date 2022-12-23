@@ -1,5 +1,21 @@
 {{-- payment choice --}}
 
+@php
+    $buttonOnly = $buttonOnly ?? false;
+@endphp
+
+@if($buttonOnly)
+<!-- Button trigger modal -->
+<button type="button" class="{{ $btn_classes ?? 'btn btn-primary' }}" data-bs-toggle="modal" data-bs-target="#paymentModal">
+    @if(isset($btn_icon))
+        {!! $btn_icon !!}
+    @else
+        <i class="fa fa-credit-card" aria-hidden="true"></i>
+    @endif
+    &nbsp;
+    {{ $btn_text ?? 'Procéder au paiement' }}
+</button>
+@else
 <div class="row">
     <div class="col-12 text-center">
         <!-- Button trigger modal -->
@@ -14,6 +30,7 @@
         </button>
     </div>
 </div>
+@endif
 
 <!-- Modal -->
 <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">

@@ -13,6 +13,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -24,7 +25,23 @@ class DashboardController extends Controller
     }
 
     public function index() : View {
-        return view('dashboard.index');
+        $user = Auth::user();
+
+        $messageCount = MessengerManager::myMessagesCount($user->id);
+        $reservationCount = Reservation::where('user_id', '=', (int)$user->id)->count();
+        $unpaidCount = DB::table('order')
+            ->select('order.id')
+            ->join('reservation', 'order.reservation_id', '=', 'reservation.id')
+            ->where('reservation.user_id', '=', (int)$user->id)
+            ->where('order.intent', 'LIKE', 'ORDER')
+            ->where('order.status', 'LIKE', 'CREATED')
+            ->count();
+
+        return view('dashboard.index', [
+            'messages' => $messageCount,
+            'reservations' => $reservationCount,
+            'unpaids' => $unpaidCount,
+        ]);
     }
 
     public function user(Request $request) : View {
