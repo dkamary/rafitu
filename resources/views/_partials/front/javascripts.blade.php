@@ -100,13 +100,13 @@
         window.signal = window.controller.signal;
 
         input.addEventListener("input", e => {
-            console.debug("input event!!!");
-            console.debug({
-                timeoutQuery
-            });
+            // console.debug("input event!!!");
+            // console.debug({
+            //     timeoutQuery
+            // });
 
             if(timeoutQuery != 0) {
-                console.debug("stop the next query and create new timeout!");
+                // console.debug("stop the next query and create new timeout!");
 
                 clearTimeout(timeoutQuery);
             }
@@ -153,10 +153,10 @@
     };
 
     const buildSuggestionContainerOld = (params) => {
-        console.debug("Build Container!");
+        // console.debug("Build Container!");
 
         if(suggestionContainer) {
-            console.debug("Le conteneur des suggestions est déjà créé!");
+            // console.debug("Le conteneur des suggestions est déjà créé!");
 
             return;
         }
@@ -175,7 +175,7 @@
 
     const manageClickOutside = () => {
         if(clickOutsite) {
-            console.debug("Click outside already defined!");
+            // console.debug("Click outside already defined!");
 
             return;
         }
@@ -188,7 +188,7 @@
 
                 elements.forEach(elt => {
                     if(targetEl == elt) {
-                        console.debug("Click inside!");
+                        // console.debug("Click inside!");
                         inside = true;
                         return false;
                     }
@@ -199,7 +199,7 @@
             } while(targetEl = targetEl.parentNode);
 
             if(!inside) {
-                console.debug("Click outsite");
+                // console.debug("Click outsite");
                 hideResult();
             }
         });
@@ -219,7 +219,7 @@
 
         if(input.value.trim().length == 0) {
             inExecution = false;
-            console.debug("Aucune requête!");
+            // console.debug("Aucune requête!");
             hideResult();
             return;
         }
@@ -237,10 +237,10 @@
     };
 
     const searchGoogle = ({ options, input }) => {
-        console.debug("Search Google");
+        // console.debug("Search Google");
 
         if(googleAutocompleteService == undefined) {
-            console.info("Google Autocomple Service!");
+            // console.info("Google Autocomple Service!");
 
             googleAutocompleteService = new google.maps.places.AutocompleteService();
 
@@ -248,15 +248,15 @@
         }
 
         if(geocoderService == undefined) {
-            console.info("Google Geocoder Service!");
+            // console.info("Google Geocoder Service!");
 
             geocoderService = new google.maps.Geocoder();
 
-            console.debug({ geocoderService });
+            // console.debug({ geocoderService });
         }
 
         if(placesService == undefined) {
-            console.info("Google Places Service!");
+            // console.info("Google Places Service!");
             hiddenElement = document.createElement("div");
             document.body.append(hiddenElement);
             hiddenMap = new google.maps.Map(hiddenElement, { center: { lat: -33.66, lng: 151.196 }, zoom: 14 });
@@ -274,14 +274,14 @@
             });
 
             if(google.maps.places.PlacesServiceStatus.OK != status || !predictions) {
-                console.debug("Aucun résultat!");
+                // console.debug("Aucun résultat!");
 
                 displayResult({ options, input, results: [] });
 
                 return;
             }
 
-            console.debug("Display Google Result!");
+            // console.debug("Display Google Result!");
 
             const suggestions = predictions;
             options.suggestionContainer.innerHTML = '';
@@ -297,7 +297,7 @@
             });
 
             if(!suggestions || suggestions.length == 0) {
-                console.debug("Aucune correspondance!");
+                // console.debug("Aucune correspondance!");
 
                 const div = document.createElement("div");
                 div.innerHTML = "Aucune correspondance";
@@ -307,10 +307,10 @@
                 return;
             }
 
-            console.debug("Il y a des éléments");
-            console.debug({
-                suggestions
-            });
+            // console.debug("Il y a des éléments");
+            // console.debug({
+            //     suggestions
+            // });
 
             const ul = document.createElement("ul");
             options.suggestionContainer.appendChild(ul);
@@ -323,7 +323,7 @@
                 li.appendChild(a);
                 ul.appendChild(li);
 
-                console.debug("Adding: %s", element.description);
+                // console.debug("Adding: %s", element.description);
 
                 a.addEventListener("click", e => {
                     e.preventDefault();
@@ -362,7 +362,7 @@
     };
 
     const searchUrl = ({ options, input }) => {
-        console.debug("Search URL");
+        // console.debug("Search URL");
 
         const value = input.value.trim();
 
@@ -417,7 +417,7 @@
         results
     }) => {
 
-        console.debug("Display result!");
+        // console.debug("Display result!");
 
         const suggestions = results.suggestions;
         options.suggestionContainer.innerHTML = '';
@@ -434,7 +434,7 @@
         });
 
         if(!suggestions || suggestions.length == 0) {
-            console.debug("Aucune correspondance!");
+            // console.debug("Aucune correspondance!");
 
             const div = document.createElement("div");
             div.innerHTML = "Aucune correspondance";
@@ -444,11 +444,11 @@
             return;
         }
 
-        console.debug("Il y a des éléments");
-        console.debug({
-            results,
-            suggestions
-        });
+        // console.debug("Il y a des éléments");
+        // console.debug({
+        //     results,
+        //     suggestions
+        // });
 
         const ul = document.createElement("ul");
         options.suggestionContainer.appendChild(ul);
@@ -482,7 +482,7 @@
     };
 
     const hideResult = () => {
-        console.debug("Hide result!");
+        // console.debug("Hide result!");
 
         const elements = document.querySelectorAll(".suggestion__container");
 

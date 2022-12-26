@@ -7,14 +7,14 @@
     <form id="form-search-ride-hero" action="{{ route('ride_search') }}" method="GET"
         class="form row g-0 form-search-ride-hero">
         <div class="form-group  col-xl-3 col-lg-3 col-md-12 mb-0 bg-white ">
-            <input type="text" class="form-control input-lg br-te-md-0 br-be-md-0 border-end-0 place-suggestion"
+            <input type="text" class="form-control input-lg br-te-md-0 br-be-md-0 border-end-0 place-suggestion pe-6"
                 name="origin" id="search_origin" placeholder="Départ" data-form="#form-search-ride-hero">
             <span><img src="{{ asset('assets/images/icons/marker-icon.svg') }}" alt="" class="location-gps"></span>
             <input type="hidden" name="origin_lat" id="search_origin_lat">
             <input type="hidden" name="origin_lng" id="search_origin_lng">
         </div>
         <div class="form-group  col-xl-3 col-lg-3 col-md-12 mb-0 bg-white">
-            <input type="text" class="form-control input-lg br-md-0 border-end-0 place-suggestion" name="destination"
+            <input type="text" class="form-control input-lg br-md-0 border-end-0 place-suggestion pe-6" name="destination"
                 id="search_destination" placeholder="Destination" data-form="#form-search-ride-hero">
             <span><img src="{{ asset('assets/images/icons/marker-icon.svg') }}" alt="" class="location-gps"></span>
             <input type="hidden" name="destination_lat" id="search_destination_lat">
@@ -24,7 +24,7 @@
             <input type="date" class="form-control input-lg br-md-0 border-end-0" name="search_date" id="search_date"
                 placeholder="Aujourd'hui" min="{{ $now->format('d/m/Y') }}">
             <span>
-                <img src="{{ asset('assets/images/icons/calendar-color-icon.svg') }}" alt="" class="location-gps" onclick="document.querySelector('#search_date').click();">
+                <img src="{{ asset('assets/images/icons/calendar-color-icon.svg') }}" alt="" class="location-gps" onclick="document.querySelector('#search_date').showPicker();">
             </span>
         </div>
         <div class="form-group col-xl-1 col-lg-1 col-md-2 col-sm-4 col-12 select2-lg  mb-0 bg-white">

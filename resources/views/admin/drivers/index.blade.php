@@ -2,12 +2,16 @@
 
 @extends('_layouts.back')
 
+@php
+    $pageTitle = $pageTitle ?? 'Chauffeurs';
+@endphp
+
 @section('meta_title')
-    Chauffeurs
+    {{ $pageTitle }}
 @endsection
 
 @section('main')
-    @include('_partials.back.section.breadcrumbs', ['page_title' => 'Chauffeurs'])
+    @include('_partials.back.section.breadcrumbs', ['page_title' => $pageTitle])
 
     @include('_partials.back.notifications.flash-message')
 
@@ -48,7 +52,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="3">
+                            <td colspan="4">
                                 Il n'y a pas encore de chauffeur à valider.
                             </td>
                         </tr>
@@ -56,7 +60,7 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="3">
+                        <td colspan="4">
                             &nbsp;
                         </td>
                     </tr>

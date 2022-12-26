@@ -45,7 +45,7 @@
         <ul class="slide-menu">
             <li><a href="{{ route('admin_user_index') }}" class="slide-item">Liste</a></li>
             <li><a href="{{ route('admin_user_new') }}" class="slide-item">Ajouter</a></li>
-            <li><a href="{{ route('admin_user_new') }}" class="slide-item">Vérification d'identité</a></li>
+            {{-- <li><a href="{{ route('admin_user_new') }}" class="slide-item">Vérification d'identité</a></li> --}}
         </ul>
     </li>
     <li class="slide">
@@ -66,11 +66,10 @@
             <i class="angle fa fa-angle-right"></i>
         </a>
         <ul class="slide-menu">
-            <li><a href="#" class="slide-item">Paiements</a></li>
-            <li><a href="#" class="slide-item">Commissions</a></li>
-            <li><a href="#" class="slide-item">Remboursement</a></li>
-            <li><a href="#" class="slide-item">Modes de paiement</a></li>
-            <li><a href="#" class="slide-item">Paiements</a></li>
+            <li><a href="{{ route('transaction_paiements') }}" class="slide-item">Paiements</a></li>
+            <li><a href="{{ route('transaction_commissions') }}" class="slide-item">Commissions</a></li>
+            <li><a href="{{ route('transaction_remboursements') }}" class="slide-item">Remboursement</a></li>
+            <li><a href="{{ route('transaction_mode_de_paiements') }}" class="slide-item">Modes de paiement</a></li>
         </ul>
     </li>
     {{-- <li class="slide">

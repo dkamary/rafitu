@@ -9,11 +9,12 @@
     $destination_lng = Request::get('destination_lng');
     $search_date = Request::get('search_date');
     $search_count = Request::get('search_count');
+    $withIcons = $withIcons ?? false;
 @endphp
 
 <form class="form form-search-ride-hero" action="{{ route('ride_search') }}" method="get">
     <div class="row mb-3">
-        <div class="col-12">
+        <div @class(['col-12', 'pin-icon' => $withIcons])>
             <label for="search_origin" class="form-label">Départ</label>
             <input type="search" name="origin" id="search_origin" class="form-control"
             value="{{ $origin }}"
@@ -23,7 +24,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <div class="col-12">
+        <div @class(['col-12', 'pin-icon' => $withIcons])>
             <label for="search_destination" class="form-label">Arrivée</label>
             <input type="search" name="destination" id="search_destination" class="form-control"
             value="{{ $destination }}"
@@ -33,19 +34,22 @@
         </div>
     </div>
     <div class="row mb-3">
-        <div class="col-6">
+        <div @class(['col-6', 'calendar-icon' => $withIcons])>
             <label for="search_date" class="form-label">Date</label>
-            <input type="date" name="search_date" id="search_date" value="{{ $search_date }}" class="form-control" placeholder="Date de départ">
+            <input type="date" name="search_date" id="search_date" value="{{ $search_date }}" placeholder="Date de départ" class="form-control">
         </div>
-        <div class="col-6">
+        <div @class(['col-6', 'user-icon' => $withIcons])>
             <label for="search_count" class="form-label">Passager</label>
-            <input type="number" name="search_count" id="search_count" value="{{ $search_count }}" class="form-control" placeholder="Passager" min="1" max="7">
+            <input type="number" name="search_count" id="search_count" value="{{ $search_count }}" placeholder="Passager" min="1" max="7" class="form-control">
         </div>
     </div>
     <div class="row mb-3">
         <div class="col-12">
-            <button type="submit" class="btn btn-primary btn-block">
-                Rechercher
+            <button type="submit" class="btn btn-primary btn-block" id="btn-search">
+                <div class="d-flex justify-content-center align-items-center">
+                    <i class="fa fa-search fa-2x" aria-hidden="true"></i>&nbsp;
+                    Rechercher
+                </div>
             </button>
         </div>
     </div>
@@ -118,6 +122,53 @@
     <script defer async
         src="https://maps.googleapis.com/maps/api/js?key={{ Config::get('google.maps.api.key') }}&libraries=places&callback=initMap">
     </script>
+
+    @endpush
+
+    @push('head')
+
+        <style id="search-styles">
+            .pin-icon, .calendar-icon, .user-icon {
+                position: relative;
+            }
+
+            .pin-icon::after,
+            .calendar-icon::after,
+            .user-icon::after {
+                display: block;
+                width: 1.5rem;
+                height: 1.5rem;
+                position: absolute;
+                right: 5%;
+                top: 52%;
+                /* transform: translateY(-50%); */
+                content: '';
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+
+            #search_origin::before {
+                content: 'XXX';
+                display: block;
+                background: red;
+            }
+
+            .pin-icon::after {
+                right: 2%;
+                background-image: url({{ asset('assets/images/icons/marker-icon.svg') }});
+            }
+
+            .calendar-icon::after {
+                background-image: url({{ asset('assets/images/icons/calendar-color-icon.svg') }});
+            }
+
+            .user-icon::after {
+                background-image: url({{ asset('assets/images/icons/user-group.svg') }});
+                right: 14%;
+            }
+
+        </style>
 
     @endpush
 @endonce

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Managers\ParamManager;
 use App\Models\Managers\TrajetDestinationManager;
 use App\Models\Page;
 use App\Models\Position;
@@ -33,7 +34,9 @@ class HomeController extends Controller
 
     public function longTrajet(int $distance = 30000): View
     {
-        $rides = Ride::where('distance', '>=', $distance)
+        $parameter = ParamManager::getParameters();
+
+        $rides = Ride::where('distance', '>=', $parameter->getDistanceLongTrajet())
             ->where('departure_date', '>', date('Y-m-d H:i:s'))
             ->orderBy('departure_date', 'ASC')
             ->get();

@@ -46,6 +46,7 @@
                 <label for="" class="col-12 col-md-3 fw-bold">Scan du permis de conduire</label>
                 <div class="col-12 col-md-6">
                     <img src="{{ asset('licence/' . $driver->licence_scan) }}" alt="" class="img-fluid">
+                    @include('admin.drivers._partials.view-and-download', ['link' => asset('licence/' . $driver->licence_scan)])
                 </div>
             </div>
 
@@ -53,6 +54,7 @@
                 <label for="" class="col-12 col-md-3 fw-bold">Scan du certificat de visite technique en cours</label>
                 <div class="col-12 col-md-6">
                     <img src="{{ asset('technicals/' . $driver->technical_check_scan) }}" alt="" class="img-fluid">
+                    @include('admin.drivers._partials.view-and-download', ['link' => asset('technicals/' . $driver->technical_check_scan)])
                 </div>
             </div>
 
@@ -60,6 +62,7 @@
                 <label for="" class="col-12 col-md-3 fw-bold">Scan de l'assurance en cours</label>
                 <div class="col-12 col-md-6">
                     <img src="{{ asset('insurrances/' . $driver->insurrance_scan) }}" alt="" class="img-fluid">
+                    @include('admin.drivers._partials.view-and-download', ['link' => asset('insurrances/' . $driver->insurrance_scan)])
                 </div>
             </div>
 
@@ -67,6 +70,7 @@
                 <label for="" class="col-12 col-md-3 fw-bold">Scan de la carte grise</label>
                 <div class="col-12 col-md-6">
                     <img src="{{ asset('gray-cards/' . $driver->gray_card_scan) }}" alt="" class="img-fluid">
+                    @include('admin.drivers._partials.view-and-download', ['link' => asset('gray-cards/' . $driver->gray_card_scan)])
                 </div>
             </div>
 

@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Parameter extends Model
 {
-    protected $table = 'parameter';
+    protected $table = 'parameters';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'com_longtrajet', 'com_quotidien', 'dist_longtrajet',
+        'com_longtrajet', 'com_quotidien', 'dist_longtrajet', 'heure_execution',
     ];
     public $timestamps = false;
 

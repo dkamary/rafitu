@@ -1,13 +1,23 @@
 {{-- User Menu --}}
 
 @php
-    $user = isset($user) && !is_null($user) ? $user : Auth::user();
-    $userAvatar = !is_null($user->avatar) ? $user->avatar : asset('assets/images/default/user.svg');
+    $driver = isset($user) && !is_null($user) ? $user : Auth::user();
+    $avatar = $driver->getAvatar();
+    $driverAvatar = $avatar;
+    if($avatar) {
+        if(strpos($avatar, 'http') !== false) {
+            $driverAvatar = $avatar;
+        } else {
+            $driverAvatar = asset('avatars/' . $avatar);
+        }
+    } else {
+        $driverAvatar = asset('avatars/user-01.svg');
+    }
 @endphp
 
 <div class="dropdown">
     <a href="#" class="nav-link pe-0 leading-none user-img" data-bs-toggle="dropdown">
-        <img src="{{ $userAvatar }}" alt="profile-img" class="avatar avatar-md brround">
+        <img src="{{ $driverAvatar }}" alt="profile-img" class="avatar avatar-md brround bg-light">
     </a>
     <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow ">
         <a class="dropdown-item" href="#">

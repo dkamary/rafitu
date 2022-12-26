@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminTransactionController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CinetPayController;
@@ -225,6 +226,14 @@ Route::prefix('chauffeur')->group(function(){
     })->name('driver_verification_in_progress');
 
     Route::get('/{driver}', [DriverController::class, 'show'])->name('driver_show');
+});
+
+// TRANSACTIONS
+Route::prefix('transactions')->group(function(){
+    Route::get('/paiements', [AdminTransactionController::class, 'paiements'])->name('transaction_paiements');
+    Route::match(['get', 'post',], '/commissions', [AdminTransactionController::class, 'commissions'])->name('transaction_commissions');
+    Route::get('/remboursements', [AdminTransactionController::class, 'remboursements'])->name('transaction_remboursements');
+    Route::get('/mode-de-paiements', [AdminTransactionController::class, 'modePaiements'])->name('transaction_mode_de_paiements');
 });
 
 // FRONT OFFICE PAGE

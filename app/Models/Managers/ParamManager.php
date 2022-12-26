@@ -18,12 +18,13 @@ class ParamManager {
             'com_longtrajet' => 10.0,
             'com_quotidien' => 8.0,
             'dist_longtrajet' => 30000,
+            'heure_execution' => 16*3600,
         ]);
 
         return self::$_parameter;
     }
 
-    public function get(string $param) {
+    public static function get(string $param) {
         return (self::getParameters())->$param;
     }
 }

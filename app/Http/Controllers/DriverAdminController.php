@@ -41,14 +41,15 @@ class DriverAdminController extends Controller
         // dd($ids);
 
         $queryBuilder = User::whereIn('id', $ids)
-        ->orderBy('firstname')
-        ->orderBy('lastname');
+            ->orderBy('firstname')
+            ->orderBy('lastname');
         $drivers = $queryBuilder->get();
 
         // dd($queryBuilder->toSql());
 
         return view('admin.drivers.index', [
             'drivers' => $drivers,
+            'pageTitle' => 'Liste des chauffeurs à valider',
         ]);
     }
 
@@ -60,6 +61,7 @@ class DriverAdminController extends Controller
 
         return view('admin.drivers.index', [
             'drivers' => $drivers,
+            'pageTitle' => 'Liste des chauffeurs validés',
         ]);
     }
 
