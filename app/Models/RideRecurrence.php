@@ -37,4 +37,8 @@ class RideRecurrence extends Model
             'dimanche' => $this->dimanche == 1,
         ];
     }
+
+    public function getDateEnd() : DateTime {
+        return new DateTime($this->until);
+    }
 }

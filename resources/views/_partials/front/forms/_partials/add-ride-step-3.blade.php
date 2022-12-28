@@ -18,7 +18,7 @@
 
     <div class="control-group form-group">
         <div class="form-group">
-            <label class="form-label text-dark">Durée: <span id="duration_display">0.0 Km</span> </label>
+            <label class="form-label text-dark">Durée: <span id="duration_display">0.0 s</span> </label>
             <input type="hidden" name="duration" id="duration" value="0">
         </div>
     </div>

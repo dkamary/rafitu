@@ -46,7 +46,9 @@
             </td>
             <td class="pb-3" title="{{ $titleOrigin }}">
 
-                <span class="trajet__distance-evaluation bg-{{ !is_null($origin) && $origin < 1500 ? 'success' : 'light-none' }}">
+                @include('trajet._partials.trajet-distance', ['distance' => $origin])
+
+                {{-- <span class="trajet__distance-evaluation bg-{{ !is_null($origin) && $origin < 1500 ? 'success' : 'light-none' }}">
                     <img src="{{ asset('assets/img/walk-01.svg') }}" alt="">
                 </span>
                 <span class="trajet__distance-evaluation bg-{{ !is_null($origin) && $origin >= 1500 && $origin < 3000 ? 'warning' : 'light-none' }}">
@@ -54,7 +56,7 @@
                 </span>
                 <span class="trajet__distance-evaluation bg-{{ !is_null($origin) && $origin >= 3000 ? 'danger' : 'light-none' }}">
                     <img src="{{ asset('assets/img/walk-01.svg') }}" alt="">
-                </span>
+                </span> --}}
 
             </td>
             <td class="text-end">
@@ -90,7 +92,10 @@
                 &nbsp;
             </td>
             <td title="{{ $titleDestination }}">
-                @if (!is_null($destination))
+
+                @include('trajet._partials.trajet-distance', ['distance' => $origin])
+
+                {{-- @if (!is_null($destination))
 
                 <span class="trajet__distance-evaluation bg-{{ !is_null($destination) && $destination < 1500 ? 'success' : 'light-none' }}">
                     <img src="{{ asset('assets/img/walk-01.svg') }}" alt="">
@@ -102,7 +107,7 @@
                     <img src="{{ asset('assets/img/walk-01.svg') }}" alt="">
                 </span>
 
-                @endif
+                @endif --}}
 
                 <div @class([
                             'fw-bold my-3 fs-6',

@@ -1,5 +1,22 @@
 {{-- Add Ride - Step 4 --}}
 
+@php
+    $week1 = new \DateTime('now');
+    $week1->modify('+7 days');
+
+    $month1 = new \DateTime('now');
+    $month1->modify('+1 month');
+
+    $month3 = new \DateTime('now');
+    $month3->modify('+3 months');
+
+    $month6 = new \DateTime('now');
+    $month6->modify('+6 months');
+
+    $month12 = new \DateTime('now');
+    $month12->modify('+12 months');
+@endphp
+
 <div class="tab-pane fade" id="fourth">
 
     <div class="control-group form-group">
@@ -15,7 +32,7 @@
             <div class="col-12 col-sm-4 col-md-2">
 
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="recurrence" id="recurrence-yes" value="yes" onclick="document.querySelector('#weekdays').classList.remove('d-none');">
+                    <input class="form-check-input" type="radio" name="recurrence" id="recurrence-yes" value="yes">
                     <label class="form-check-label" for="recurrence-yes">
                         Oui
                     </label>
@@ -25,7 +42,7 @@
             <div class="col-12 col-sm-4 col-md-2">
 
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="recurrence" id="recurrence-no" value="no" onclick="document.querySelector('#weekdays').classList.add('d-none');">
+                    <input class="form-check-input" type="radio" name="recurrence" id="recurrence-no" value="no">
                     <label class="form-check-label" for="recurrence-no">
                         Non
                     </label>
@@ -37,8 +54,8 @@
 
     <div class="control-group form-group d-none" id="weekdays">
         <div class="row mt-3">
-            <div class="col-12">
-                Quels sont les jours de la semaine où vous faites le trajet ?
+            <div class="col-12 mb-3">
+                Quels sont les jours de la semaine où vous faites ce trajet ?
             </div>
         </div>
         <div class="row">
@@ -65,6 +82,16 @@
                     <input type="checkbox" class="btn-check" name="dimanche-check" id="dimanche-check" autocomplete="off">
                     <label class="btn btn-outline-secondary" for="dimanche-check">Dimanche</label>
                 </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12">
+                Quand est-ce que vous allez arrêter de faire ce trajet?
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12 col-md-6">
+                <input type="date" class="form-control" name="date-end" id="date-end" value="" min="{{ date('Y-m-d') }}" value="{{ $week1->format('Y-m-d') }}" autocomplete="off">
             </div>
         </div>
     </div>
@@ -94,3 +121,31 @@
     </div>
 
 </div>
+
+
+@once
+    @push('footer')
+        <script id="step-4-scripts">
+            window.addEventListener("DOMContentLoaded", event => {
+                const weekdays = document.querySelector('#weekdays');
+                const dateEnd = document.querySelector("#date-end");
+
+                const recurrenceYes = document.querySelector("#recurrence-yes");
+                if(recurrenceYes) {
+                    recurrenceYes.addEventListener("click", e => {
+                        weekdays.classList.remove('d-none');
+                        dateEnd.required = true;
+                    });
+                }
+
+                const recurrenceNo = document.querySelector("#recurrence-no");
+                if(recurrenceNo) {
+                    recurrenceNo.addEventListener("click", e => {
+                        weekdays.classList.add('d-none');
+                        dateEnd.required = false;
+                    });
+                }
+            });
+        </script>
+    @endpush
+@endonce

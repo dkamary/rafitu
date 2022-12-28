@@ -234,6 +234,8 @@ Route::prefix('transactions')->group(function(){
     Route::match(['get', 'post',], '/commissions', [AdminTransactionController::class, 'commissions'])->name('transaction_commissions');
     Route::get('/remboursements', [AdminTransactionController::class, 'remboursements'])->name('transaction_remboursements');
     Route::get('/mode-de-paiements', [AdminTransactionController::class, 'modePaiements'])->name('transaction_mode_de_paiements');
+    Route::post('/mode-de-paiements/cinetpay', [AdminTransactionController::class, 'updateCinetPay'])->name('transaction_mode_de_paiements_cinetpay');
+    Route::post('/mode-de-paiements/paypal', [AdminTransactionController::class, 'updatePaypal'])->name('transaction_mode_de_paiements_paypal');
 });
 
 // FRONT OFFICE PAGE

@@ -47,28 +47,9 @@
                                 <a href="{{ route('static_pages', ['slug' => 'nos-valeurs']) }}">Nos valeurs, nos métiers</a>
                             </li>
                         </ul>
-                        <ul class="list-unstyled list-inline mt-3">
-                            <li class="list-inline-item">
-                                <a class="btn-floating btn-sm rgba-white-slight mx-1 waves-effect waves-light">
-                                    <i class="fa fa-facebook bg-facebook"></i>
-                                </a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a class="btn-floating btn-sm rgba-white-slight mx-1 waves-effect waves-light">
-                                    <i class="fa fa-twitter bg-info"></i>
-                                </a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a class="btn-floating btn-sm rgba-white-slight mx-1 waves-effect waves-light">
-                                    <i class="fa fa-google-plus bg-danger"></i>
-                                </a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a class="btn-floating btn-sm rgba-white-slight mx-1 waves-effect waves-light">
-                                    <i class="fa fa-linkedin bg-linkedin"></i>
-                                </a>
-                            </li>
-                        </ul>
+
+                        @include('_partials.front.footer.social-networks')
+
                     </div>
                     <div class="col-lg-4 col-md-12">
                         <h6>Newsletter</h6>

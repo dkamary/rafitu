@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Managers\NotificationManager;
+use App\Models\Managers\ParamManager;
+use App\Models\Managers\RecurrenceManager;
 use App\Models\Managers\RideManager;
 use App\Models\Position;
 use App\Models\Ride;
@@ -11,6 +13,7 @@ use App\Models\RideRecurrence;
 use App\Models\RideStatus;
 use App\Models\User;
 use App\Models\Vehicule;
+use DateTime;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -47,7 +50,7 @@ class RideController extends Controller
         }
 
         return view('pages.ride.add', [
-            'vehicules' => $vehicules
+            'vehicules' => $vehicules,
         ]);
     }
 
@@ -85,7 +88,14 @@ class RideController extends Controller
             'duration' => $request->input('duration'),
         ];
 
-        // dd([
+        $parameters = ParamManager::getParameters();
+        $commission = $data['has_recurrence'] == 1 ? (float)$parameters->com_quotidien : (float)$parameters->com_longtrajet;
+        $data['price'] = $data['price'] * (1 + ($commission / 100));
+        $arrivalDate = new DateTime();
+        $arrivalDate->modify('+' . $request->input('duration') . ' seconds');
+        $data['arrival_date'] = $arrivalDate->format('Y-m-d H:i:s');
+
+        // dump([
         //     'post' => $_POST,
         //     'request' => $request,
         //     'data' => $data,
@@ -105,7 +115,8 @@ class RideController extends Controller
         $rideID = (int)$ride->id;
 
         // Ride Recurrence
-        if($request->input('reccurrence') == 'yes') {
+        if($request->input('recurrence') == 'yes') {
+            // dump('recurrence');
             $recurrence = RideRecurrence::create([
                 'ride_id' => $rideID,
                 'lundi' => $request->input('lundi-check') == 'on',
@@ -115,7 +126,10 @@ class RideController extends Controller
                 'vendredi' => $request->input('vendredi-check') == 'on',
                 'samedi' => $request->input('samedi-check') == 'on',
                 'dimanche' => $request->input('dimanche-check') == 'on',
+                'until' => $request->input('date-end'),
             ]);
+
+            RecurrenceManager::buildRecurrence($recurrence);
         }
 
         // Create Itinerary
@@ -133,6 +147,8 @@ class RideController extends Controller
         RideItinerary::insert($dataItinerary);
 
         NotificationManager::adminNewRide($ride);
+
+        // dd('Redirection!');
 
         return response()->redirectToRoute('ride_complete', ['ride' => $ride]);
     }

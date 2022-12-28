@@ -242,6 +242,7 @@ return [
         'DateManager' => App\Models\Managers\DateManager::class,
         'RideManager' => App\Models\Managers\RideManager::class,
         'CinetPayManager' => App\Models\Managers\CinePayManager::class,
+        'SocialNetworkManager' => App\Models\Managers\SocialNetworkManager::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
     ],
 

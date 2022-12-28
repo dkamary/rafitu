@@ -10,6 +10,8 @@ class Parameter extends Model
     protected $primaryKey = 'id';
     protected $fillable = [
         'com_longtrajet', 'com_quotidien', 'dist_longtrajet', 'heure_execution',
+        'paypal_mode', 'paypal_account', 'paypal_client_id', 'paypal_secret', 'paypal_bn_code', 'paypal_plateform_partner_app', 'paypal_entry_live', 'paypal_entry_sandbox',
+        'cinetpay_mode', 'cinetpay_api', 'cinetpay_site_id', 'cinetpay_secret', 'cinetpay_currency', 'cinetpay_lang', 'cinetpay_entry_live',
     ];
     public $timestamps = false;
 
