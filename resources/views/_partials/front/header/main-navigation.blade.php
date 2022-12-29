@@ -49,27 +49,47 @@
                     <li aria-haspopup="true">
                         <a href="{{ route('dashboard_index') }}">{{ Auth::user()->email }} <span class="fa fa-caret-down m-0"></span></a>
                         <ul class="sub-menu">
-                            <li aria-haspopup="true" class="d-flex justify-content-between align-items-start">
-                                <a href="{{ route('dashboard_user') }}">Mon compte</a>
-                                {{-- <i class="fa fa-user-circle-o" aria-hidden="true"></i> --}}
+                            <li aria-haspopup="true">
+                                <a href="{{ route('dashboard_user') }}" class="d-flex justify-content-between align-items-center">
+                                    Mon compte
+                                    <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                </a>
                             </li>
-                            <li aria-haspopup="true" class="d-flex justify-content-between align-items-start">
-                                <a href="{{ route('dashboard_reservations') }}">Mes réservations</a>
-                                {{-- <i class="fa fa-bookmark" aria-hidden="true"></i> --}}
+                            <li aria-haspopup="true">
+                                <a href="{{ route('dashboard_reservations') }}" class="d-flex justify-content-between align-items-center">
+                                    Mes réservations
+                                    <i class="fa fa-bookmark" aria-hidden="true"></i>
+                                </a>
                             </li>
-                            <li aria-haspopup="true" class="d-flex justify-content-between align-items-start">
+                            <li aria-haspopup="true">
                                 @php
                                     $notReads = Messenger::myMessagesCount($user->id);
                                 @endphp
-                                <a href="{{ route('dashboard_messenger_index') }}">Ma messagerie</a>
-                                @if($notReads > 0)
-                                    <span class="badge bg-primary rounded-pill">{{ $notReads }}</span>
-                                @endif
+                                <a href="{{ route('dashboard_messenger_index') }}" class="d-flex justify-content-between align-items-center">
+                                    Ma messagerie
+                                    @if($notReads > 0)
+                                        <span class="badge bg-primary rounded-pill">{{ $notReads }}</span>
+                                    @else
+                                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                                    @endif
+                                </a>
                             </li>
                             @include('_partials.front.header.manage-static-page')
-                            <li aria-haspopup="true" class="d-flex justify-content-between align-items-start">
-                                <a href="{{ route('logout') }}">Déconnexion</a>
-                                {{-- <i class="fa fa-sign-out" aria-hidden="true"></i> --}}
+
+                            @if($user->isAdmin())
+                            <li aria-haspopup="true">
+                                <a href="{{ route('admin') }}" class="d-flex justify-content-between align-items-start">
+                                    Administration
+                                    <i class="fa fa-tachometer" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            @endif
+
+                            <li aria-haspopup="true">
+                                <a href="{{ route('logout') }}" class="d-flex justify-content-between align-items-start">
+                                    Déconnexion
+                                    <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                </a>
                             </li>
                         </ul>
                     </li>

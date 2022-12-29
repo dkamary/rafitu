@@ -55,12 +55,9 @@
                         <h6>Newsletter</h6>
                         <hr class="deep-purple  text-primary accent-2 mb-4 mt-0 d-inline-block mx-auto">
                         <div class="clearfix"></div>
-                        <div class="input-group w-70">
-                            <input type="text" class="form-control br-ts-3  br-bs-3 " placeholder="Email">
-                            <div class=" ">
-                                <button type="button" class="btn btn-primary br-ts-0  br-bs-0"> Souscrire </button>
-                            </div>
-                        </div>
+
+                        @include('_partials.front.forms.newsletter', ['isInline' => true])
+
                         <h6 class="mb-0 mt-5">Paiements</h6>
                         <hr class="deep-purple  text-primary accent-2 mb-2 mt-3 d-inline-block mx-auto">
                         <div class="clearfix"></div>

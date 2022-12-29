@@ -56,4 +56,8 @@ class NotificationManager {
         //
     }
 
+    public static function adminCancelReservation(Reservation $reservation) {
+        //
+    }
+
 }

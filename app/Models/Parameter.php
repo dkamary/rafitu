@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Parameter extends Model
 {
+    const COMMISSION_LONG_TRAJET = 'Long Trajet';
+    const COMMISSION_TRAJET_QUOTIDIEN = 'Trajet Quotidien';
+
     protected $table = 'parameters';
     protected $primaryKey = 'id';
     protected $fillable = [

@@ -13,6 +13,7 @@ use App\Http\Controllers\DriverController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaypalController;
@@ -236,6 +237,12 @@ Route::prefix('transactions')->group(function(){
     Route::get('/mode-de-paiements', [AdminTransactionController::class, 'modePaiements'])->name('transaction_mode_de_paiements');
     Route::post('/mode-de-paiements/cinetpay', [AdminTransactionController::class, 'updateCinetPay'])->name('transaction_mode_de_paiements_cinetpay');
     Route::post('/mode-de-paiements/paypal', [AdminTransactionController::class, 'updatePaypal'])->name('transaction_mode_de_paiements_paypal');
+});
+
+// NEWSLETTER
+Route::prefix('newsletter')->group(function(){
+    Route::post('/soumettre', [NewsletterController::class, 'submit'])->name('newsletter_submit');
+    Route::get('/email-ajoutee', [NewsletterController::class, 'result'])->name('newsletter_email_added');
 });
 
 // FRONT OFFICE PAGE

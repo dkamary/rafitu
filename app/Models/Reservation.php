@@ -7,17 +7,26 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reservation extends Model
 {
+    const STATUS_CANCEL = 'cancel';
+    const STATUS_UNPAID = 'unpaid';
+    const STATUS_PAID = 'paid';
+
     protected $table = 'reservation';
     protected $primaryKey = 'id';
     protected $fillable = [
         'ride_id', 'user_id', 'passenger', 'price', 'is_paid', 'reservation_date', 'payment_date',
         'transaction_id',
+        'commission', 'commission_type', 'status',
     ];
     public $timestamps = false;
 
     protected $ride;
     protected $user;
     protected $order;
+
+    public function getAmount() : float {
+        return (float)$this->price * (float)$this->passenger;
+    }
 
     public function __toString() : string
     {
@@ -50,7 +59,7 @@ class Reservation extends Model
     }
 
     public function isPaid() : bool {
-        return ($this->is_paid == 1);
+        return ($this->status == self::STATUS_PAID) || ($this->is_paid == 1);
     }
 
     public function getReservationDate(?string $format = null) {
@@ -79,5 +88,40 @@ class Reservation extends Model
 
     public function paymentDone() : bool {
         return $this->getStatus() == 'COMPLETED';
+    }
+
+    public function cancel() : self {
+        $this->status = self::STATUS_CANCEL;
+        $this->is_paid = 2;
+
+        return $this;
+    }
+
+    public function isCancelled() : bool {
+        return $this->status == self::STATUS_CANCEL;
+    }
+
+    public function paid() : self {
+        $this->status = self::STATUS_PAID;
+        $this->is_paid = 1;
+
+        return $this;
+    }
+
+    public function unpaid() : self {
+        $this->status = self::STATUS_PAID;
+        $this->is_paid = 0;
+
+        return $this;
+    }
+
+    public function isUnpaid() : bool {
+        return is_null($this->status) || $this->status == self::STATUS_UNPAID;
+    }
+
+    public function changeStatus(string $status) : self {
+        $this->status = $status;
+
+        return $this;
     }
 }

@@ -25,7 +25,13 @@ class ShortCodeManager {
     }
 
     public static function newsletter(ShortcodeInterface $s) : string {
-        return 'My Newsletter forms';
+
+        return view('_partials.front.forms.newsletter', [
+            'isInline' => false,
+            'container_class' => 'col-12 col-sm-6 col-md-4 pt-4',
+            'newsletter_title' => 'Souscrivez à notre newsletter',
+            'button_classes' => 'btn btn-primary btn-block mt-2 mb-4',
+        ])->render();
     }
 
     public static function contact(ShortcodeInterface $s) : string {

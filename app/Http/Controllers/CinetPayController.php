@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Managers\NotificationManager;
 use App\Models\Order;
 use App\Models\Payments\CinetPay\CinetPay;
 use App\Models\Reservation;
@@ -92,11 +93,12 @@ class CinetPayController extends Controller
 
         if($cinetpay->chk_code == '00') {
             $reservation->transaction_id = $transactionId;
-            $reservation->is_paid = 1;
             $reservation->payment_date = date('Y-m-d H:i:s');
             $order->status = 'PAID';
 
-            $reservation->save();
+            $reservation
+                ->paid()
+                ->save();
             $order->save();
 
             return response()->json([
@@ -133,11 +135,12 @@ class CinetPayController extends Controller
             }
 
             $reservation->transaction_id = $transactionId;
-            $reservation->is_paid = 1;
             $reservation->payment_date = date('Y-m-d H:i:s');
             $order->status = 'PAID';
 
-            $reservation->save();
+            $reservation
+                ->paid()
+                ->save();
             $order->save();
 
             session()->flash('success', 'La réservation a été payé');
@@ -153,6 +156,20 @@ class CinetPayController extends Controller
     public function cancel(Request $request) {
         $token = $request->input('token');
         $reservation = Reservation::where('transaction_id', 'LIKE', $token)->first();
+
+        if(!$reservation) {
+
+            return view('pages.payment.cancel', [
+                'reservation' => $reservation,
+                'result' => new Result(Result::STATUS_WARNING, 'Le processus de paiement n\'a pas aboutie'),
+            ]);
+        }
+
+        $reservation
+            ->cancel()
+            ->save();
+
+        // NotificationManager::adminNewPaiement();
 
         return view('pages.payment.cancel', [
             'reservation' => $reservation,

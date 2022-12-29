@@ -211,6 +211,14 @@
         font-size: 18px;
         margin-bottom: .5rem;
     }
+
+    .rafitu-body .horizontalMenu > .horizontalMenu-list > li > ul.sub-menu > li > a {
+        transition: .5s;
+    }
+
+    .rafitu-body .horizontalMenu > .horizontalMenu-list > li > ul.sub-menu > li:hover > a {
+        background-color: #4c6dff;
+    }
 </style>
 
 <style id="icon-payment-styles">

@@ -199,4 +199,8 @@ class Ride extends Model
 
         return $display;
     }
+
+    public function isRecurrent() : bool {
+        return $this->has_recurrence == 1;
+    }
 }
