@@ -69,20 +69,18 @@
             <li><a href="{{ route('transaction_paiements') }}" class="slide-item">Paiements</a></li>
             <li><a href="{{ route('transaction_commissions') }}" class="slide-item">Commissions</a></li>
             <li><a href="{{ route('transaction_remboursements') }}" class="slide-item">Remboursement</a></li>
-            <li><a href="{{ route('transaction_mode_de_paiements') }}" class="slide-item">Modes de paiement</a></li>
+
         </ul>
     </li>
-    {{-- <li class="slide">
+    <li class="slide">
         <a class="side-menu__item" data-bs-toggle="slide" href="#">
             <i class="side-menu__icon fa fa-table"></i>
             <span class="side-menu__label">Paramètres</span>
             <i class="angle fa fa-angle-right"></i>
         </a>
         <ul class="slide-menu">
-            <li><a href="tables.html" class="slide-item">Véhicules</a></li>
-            <li><a href="datatable.html" class="slide-item">Villes</a></li>
-            <li><a href="datatable.html" class="slide-item">Pays</a></li>
-            <li><a href="datatable.html" class="slide-item">Langues</a></li>
+            <li><a href="{{ route('transaction_mode_de_paiements') }}" class="slide-item">Modes de paiement</a></li>
+            <li><a href="{{ route('admin_brand_index') }}" class="slide-item">Marque des véhicules</a></li>
         </ul>
-    </li> --}}
+    </li>
 </ul>

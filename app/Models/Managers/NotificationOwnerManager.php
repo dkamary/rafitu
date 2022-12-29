@@ -7,21 +7,14 @@ use App\Models\NotificationParameter;
 use App\Models\Reservation;
 use App\Models\Ride;
 
-class NotificationAdminManager implements NotificationInterface {
-
-    public static function getAdminEmail() : string {
-        $parameter = NotificationParameter::where('id', '=', 1)->first();
-        if(!$parameter) {
-            $parameter = NotificationParameter::getDefault();
-        }
-
-        return $parameter->admin_email;
-    }
+class NotificationOwnerManager implements NotificationInterface {
 
     public static function newRide(Ride $ride) {
-        $email = self::getAdminEmail();
+        $owner = $ride->getOwner();
+        $email = $owner->email;
+
         $subject = 'Nouveau trajet ajouté';
-        $content = view('templates.emails.admin.ride-new', [
+        $content = view('templates.emails.admin-ride-new', [
             'ride' => $ride,
         ])->render();
 
@@ -29,9 +22,12 @@ class NotificationAdminManager implements NotificationInterface {
     }
 
     public static function newReservation(Reservation $reservation) {
-        $email = self::getAdminEmail();
+        $ride = $reservation->getRide();
+        $owner = $ride->getOwner();
+        $email = $owner->email;
+
         $subject = 'Nouvelle réservation';
-        $content = view('templates.emails.admin.reservation-new', [
+        $content = view('templates.emails.admin-reservation-new', [
             'reservation' => $reservation,
         ])->render();
 
@@ -39,9 +35,12 @@ class NotificationAdminManager implements NotificationInterface {
     }
 
     public static function cancelReservation(Reservation $reservation) {
-        $email = self::getAdminEmail();
+        $ride = $reservation->getRide();
+        $owner = $ride->getOwner();
+        $email = $owner->email;
+
         $subject = 'Nouvelle réservation';
-        $content = view('templates.emails.admin.reservation-cancel', [
+        $content = view('templates.emails.admin-reservation-new', [
             'reservation' => $reservation,
         ])->render();
 
@@ -49,9 +48,12 @@ class NotificationAdminManager implements NotificationInterface {
     }
 
     public static function payReservation(Reservation $reservation) {
-        $email = self::getAdminEmail();
+        $ride = $reservation->getRide();
+        $owner = $ride->getOwner();
+        $email = $owner->email;
+
         $subject = 'Nouvelle réservation';
-        $content = view('templates.emails.admin.reservation-pay', [
+        $content = view('templates.emails.admin-reservation-new', [
             'reservation' => $reservation,
         ])->render();
 

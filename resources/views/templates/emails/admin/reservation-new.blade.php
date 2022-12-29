@@ -16,7 +16,7 @@
         Une nouvelle réservation a été faite par <strong>{{ $user->getFullname() }}</strong>.
     </p>
     <div style="margin-top: 15px auto;">
-        @include('templates._partials.ride-details', ['ride' => $ride])
+        @include('templates._partials.ride-details', ['ride' => $ride, 'isAdmin' => true,])
     </div>
 
 @endsection

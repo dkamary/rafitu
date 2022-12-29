@@ -15,7 +15,7 @@
         Un nouveau trajet a été ajouter par <strong>{{ $owner->getFullname() }}</strong>.
     </p>
     <div style="margin-top: 15px auto;">
-        @include('templates._partials.ride-details', ['ride' => $ride])
+        @include('templates._partials.ride-details', ['ride' => $ride, 'isAdmin' => true])
     </div>
 
 @endsection

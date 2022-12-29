@@ -39,7 +39,7 @@
                 Distance
             </th>
             <td style="font-weight: normal;">
-                {{ $ride->getDistance() }} Km
+                {{ $ride->getDistance() }}
             </td>
         </tr>
         <tr>
@@ -86,5 +86,9 @@
 </table>
 
 <p style="margin-top: 20px; margin-bottom: 20px;">
-    Pour voir les détails, <a href="#">cliquez ici</a>
+    @if($isAdmin)
+    Pour voir les détails, <a href="{{ route('dashboard_reservation_show') }}" style="color: #a22402;">cliquez ici</a>
+    @else
+    Pour voir les détails, <a href="{{ route('dashboard_reservation_show') }}" style="color: #0a0a81;">cliquez ici</a>
+    @endif
 </p>

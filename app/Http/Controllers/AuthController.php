@@ -45,12 +45,9 @@ class AuthController extends Controller
         if($userType->isAdmin()) {
 
             return response()->redirectToIntended(route('admin'));
-            // return response()->redirectToRoute('admin');
         }
 
         return response()->redirectToIntended(route('home'));
-
-        // return response()->redirectToRoute('home');
     }
 
     public function oauthSuccess(): Response

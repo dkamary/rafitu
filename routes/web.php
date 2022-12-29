@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminTransactionController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\BrandAdminController;
 use App\Http\Controllers\CinetPayController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\ContactController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\DriverController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ModelAdminController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PaymentController;
@@ -22,6 +24,7 @@ use App\Http\Controllers\RideController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SuggestionController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VehiculeAdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -82,6 +85,7 @@ Route::prefix('google')->group(function () {
     Route::get('/directions', [GoogleController::class, 'directions'])->name('google_directions');
 });
 
+// BACK OFFICE
 Route::prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin');
 
@@ -124,11 +128,51 @@ Route::prefix('admin')->group(function () {
         Route::get('/remove/{faq}', [FaqController::class, 'remove'])->name('admin_faq_remove');
     });
 
+    // CHAUFFEUR
     Route::prefix('drivers')->group(function(){
         Route::get('/', [DriverAdminController::class, 'index'])->name('admin_driver_index');
         Route::get('/list', [DriverAdminController::class, 'list'])->name('admin_driver_list');
         Route::get('/{driver}', [DriverAdminController::class, 'show'])->name('admin_driver_show');
         Route::get('/validate/{driver}', [DriverAdminController::class, 'validateDriver'])->name('admin_driver_validate');
+    });
+
+    // VEHICULE
+    Route::prefix('vehicule')->group(function(){
+        Route::get('/', [VehiculeAdminController::class, 'index'])->name('admin_vehicule_index');
+        Route::get('/nouveau', [VehiculeAdminController::class, 'nouveau'])->name('admin_vehicule_new');
+        Route::post('/sauvegarder', [VehiculeAdminController::class, 'sauvegarder'])->name('admin_vehicule_save');
+        Route::post('/effacer', [VehiculeAdminController::class, 'effacer'])->name('admin_vehicule_delete');
+        Route::get('/editer/{vehicule}', [VehiculeAdminController::class, 'editer'])->name('admin_vehicule_editer');
+
+        // MARQUES
+        Route::prefix('marque')->group(function(){
+            Route::get('/', [BrandAdminController::class, 'index'])->name('admin_brand_index');
+            Route::get('/nouveau', [BrandAdminController::class, 'nouveau'])->name('admin_brand_nouveau');
+            Route::post('/sauvegarder', [BrandAdminController::class, 'sauvegarder'])->name('admin_brand_sauvegarder');
+            Route::post('/effacer', [BrandAdminController::class, 'effacer'])->name('admin_brand_effacer');
+            Route::match(['get', 'post'], '/editer/{brand}', [BrandAdminController::class, 'editer'])
+                ->name('admin_brand_editer')
+                ->where('brand', '[0-9]+');
+
+            // MODELE
+            Route::prefix('modele')->group(function(){
+                Route::get('/{brand}', [ModelAdminController::class, 'index'])
+                    ->name('admin_model_index')
+                    ->where('brand', '[0-9]+');
+                Route::get('/{brand}/nouveau', [ModelAdminController::class, 'nouveau'])
+                    ->name('admin_model_nouveau')
+                    ->where('brand', '[0-9]+');
+                Route::post('/{brand}/sauvegarder', [ModelAdminController::class, 'sauvegarder'])
+                    ->name('admin_model_sauvegarder')
+                    ->where('brand', '[0-9]+');
+                Route::post('/{brand}/effacer', [ModelAdminController::class, 'effacer'])
+                    ->name('admin_model_effacer')
+                    ->where('brand', '[0-9]+');
+                Route::get('/{brand}/editer/{model}', [ModelAdminController::class, 'editer'])
+                    ->name('admin_model_editer')
+                    ->where('brand', '[0-9]+');
+            });
+        });
     });
 });
 
@@ -169,19 +213,7 @@ Route::prefix('espace-client')->group(function(){
     });
 });
 
-// PAYEMENT
-// Route::prefix('paiement')->group(function(){
-//     Route::post('/', [PaymentController::class, 'payReservation'])->name('pay_reservation');
-//     Route::match(['get', 'post'], '/accepte', [PaymentController::class, 'paySuccess'])->name('pay_success');
-//     Route::match(['get', 'post'], '/annule', [PaymentController::class, 'payCancel'])->name('pay_cancel');
-//     Route::match(['get', 'post'], '/notification', [PaymentController::class, 'payNotification'])->name('pay_notification');
-
-//     Route::prefix('/cinetpay')->group(function(){
-//         Route::post('/', [PaymentController::class, 'cinetpay'])->name('pay_cinetpay');
-//         Route::match(['get', 'post'], 'accepte', [PaymentController::class, '']);
-//     });
-// });
-
+// PAIEMENT
 Route::prefix('paiement')->group(function(){
 
     Route::match(['get', 'post'], '/paypal/pay', [PaypalController::class, 'pay'])->name('paypal_pay');
