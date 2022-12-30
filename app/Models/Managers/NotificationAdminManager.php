@@ -15,7 +15,7 @@ class NotificationAdminManager implements NotificationInterface {
             $parameter = NotificationParameter::getDefault();
         }
 
-        return $parameter->admin_email;
+        return $parameter->reservation_email ?? $parameter->admin_email ?? config('rafitu.admin');
     }
 
     public static function newRide(Ride $ride) {
