@@ -24,14 +24,18 @@
                                 Votre profil est en cours de validation. Vous pouvez continuer vers la publication de votre trajet.
                             </p>
                             <p class="text-center mb-5">
-                                Cependant, veuillez noter que le trajet que vous allez soumettre ne sera pas visible tant que votre profil n'a pas été valider.<br>
+                                Cependant, veuillez noter que le trajet que vous allez soumettre ne sera pas visible tant que votre profil n'a pas été valider
+                            </p>
+                            <p class="text-center mb-5">
                                 Merci de votre compréhension.
                             </p>
 
-                            {{-- <a class="btn btn-orange ad-post " href="{{ route('ride_add') }}">
-                                <i class="fa fa-plus-circle" aria-hidden="true" style="color: #fff"></i>&nbsp;
-                                Publier un trajet
-                            </a> --}}
+                            <div class="text-center my-5">
+                                <a class="btn btn-orange ad-post " href="{{ route('ride_add') }}">
+                                    <i class="fa fa-plus-circle" aria-hidden="true" style="color: #fff"></i>&nbsp;
+                                    Prochaine étape : <strong>Publier un trajet</strong>
+                                </a>
+                            </div>
 
                         </div>
                     </div>

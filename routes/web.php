@@ -7,6 +7,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\BrandAdminController;
 use App\Http\Controllers\CinetPayController;
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\ContactAdminController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DriverAdminController;
@@ -79,6 +80,7 @@ Route::prefix('trajet')->group(function () {
     Route::get('/chauffeur/{ride}', [RideController::class, 'detailsChauffeur'])->name('ride_driver');
 
     Route::get('/{ride}', [RideController::class, 'show'])->name('ride_show');
+
 });
 
 Route::prefix('google')->group(function () {
@@ -173,6 +175,11 @@ Route::prefix('admin')->group(function () {
                     ->where('brand', '[0-9]+');
             });
         });
+    });
+
+    // CONTACT
+    Route::prefix('contact')->group(function(){
+        Route::match(['get', 'post'], '/', [ContactAdminController::class, 'index'])->name('admin_contact_index');
     });
 });
 

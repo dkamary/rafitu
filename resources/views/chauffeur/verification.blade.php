@@ -18,7 +18,7 @@
 <div class="container {{ $classList ?? '' }}">
     <div class="row">
         <div class="col-12 py-5 bg-white">
-            <p class="text-center fs-4 mb-1">
+            <p class="text-center text-danger fs-4 mb-2">
                 Avant de pouvoir publier un trajet nous devons procéder à quelques vérification.
             </p>
             <p class="text-center fs-4 mb-5">

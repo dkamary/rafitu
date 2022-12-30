@@ -81,6 +81,7 @@
         <ul class="slide-menu">
             <li><a href="{{ route('transaction_mode_de_paiements') }}" class="slide-item">Modes de paiement</a></li>
             <li><a href="{{ route('admin_brand_index') }}" class="slide-item">Marque des véhicules</a></li>
+            <li><a href="{{ route('admin_contact_index') }}" class="slide-item">Contacts</a></li>
         </ul>
     </li>
 </ul>

@@ -12,6 +12,8 @@
 
 @section('dashboard_content')
 
+    @include('_partials.back.notifications.flash-message')
+
     @forelse ($reservations as $reservation)
 
         @php

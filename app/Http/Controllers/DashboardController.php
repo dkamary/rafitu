@@ -9,6 +9,7 @@ use App\Models\Reservation;
 use App\Models\Ride;
 use App\Models\User;
 use App\Models\Vehicule;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -91,7 +92,19 @@ class DashboardController extends Controller
 
     public function reservations() : View {
         $user = Auth::user();
-        $reservations = Reservation::where('user_id', '=', (int)$user->id)
+
+        $result = DB::table('reservation')
+            ->select(['id'])
+            ->where('user_id', '=', (int)$user->id)
+            ->whereRaw('(`status` IS NULL OR `status` not like ?)', [Reservation::STATUS_CANCEL])
+            ->get();
+
+        $ids = [];
+        foreach($result as $r) {
+            $ids[] = (int)$r->id;
+        }
+
+        $reservations = Reservation::whereIn('id', $ids)
             ->orderBy('reservation_date', 'DESC')
             ->get();
 

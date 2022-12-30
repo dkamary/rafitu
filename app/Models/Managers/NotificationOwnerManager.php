@@ -14,7 +14,7 @@ class NotificationOwnerManager implements NotificationInterface {
         $email = $owner->email;
 
         $subject = 'Nouveau trajet ajouté';
-        $content = view('templates.emails.admin-ride-new', [
+        $content = view('templates.emails.owner.ride-new', [
             'ride' => $ride,
         ])->render();
 
@@ -27,7 +27,7 @@ class NotificationOwnerManager implements NotificationInterface {
         $email = $owner->email;
 
         $subject = 'Nouvelle réservation';
-        $content = view('templates.emails.admin-reservation-new', [
+        $content = view('templates.emails.owner.reservation-new', [
             'reservation' => $reservation,
         ])->render();
 
@@ -40,7 +40,7 @@ class NotificationOwnerManager implements NotificationInterface {
         $email = $owner->email;
 
         $subject = 'Nouvelle réservation';
-        $content = view('templates.emails.admin-reservation-new', [
+        $content = view('templates.emails.owner.reservation-cancel', [
             'reservation' => $reservation,
         ])->render();
 
@@ -53,7 +53,7 @@ class NotificationOwnerManager implements NotificationInterface {
         $email = $owner->email;
 
         $subject = 'Nouvelle réservation';
-        $content = view('templates.emails.admin-reservation-new', [
+        $content = view('templates.emails.owner.reservation-pay', [
             'reservation' => $reservation,
         ])->render();
 

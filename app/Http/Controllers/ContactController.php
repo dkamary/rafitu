@@ -25,6 +25,6 @@ class ContactController extends Controller
     }
 
     public function confirmation() : View {
-        return view('pages.contact-confirmation');
+        return view('pages.contact.contact-confirmation');
     }
 }

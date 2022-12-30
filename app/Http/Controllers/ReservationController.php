@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Managers\NotificationAdminManager;
 use App\Models\Managers\NotificationManager;
 use App\Models\Managers\ReservationManager;
 use App\Models\Reservation;
@@ -45,7 +46,8 @@ class ReservationController extends Controller {
         if(!$reservation) {
             Session::flash('error', "La réservation est introuvable!");
 
-            return response()->redirectToRoute('reservation_canceled', ['reservation' => $reservation]);
+            return response()->redirectToRoute('dashboard_reservations');
+            // return response()->redirectToRoute('reservation_canceled', ['reservation' => $reservation]);
         }
 
         $reservation
@@ -55,21 +57,27 @@ class ReservationController extends Controller {
         $order = $reservation->getOrder();
         if(!$order) {
             Session::flash('warning', "Une erreur est survenue dans l'annulation!");
+            NotificationAdminManager::cancelReservation($reservation);
 
-            return response()->redirectToRoute('reservation_canceled', ['reservation' => $reservation]);
+            return response()->redirectToRoute('dashboard_reservations');
+            // return response()->redirectToRoute('reservation_canceled', ['reservation' => $reservation]);
         }
 
         if($order->intent == 'ORDER') {
             $order->status = 'CANCEL';
             $order->save();
             Session::flash('success', "La réservation a bien été annulée !");
+            NotificationAdminManager::cancelReservation($reservation);
 
-            return response()->redirectToRoute('reservation_canceled', ['reservation' => $reservation]);
+            return response()->redirectToRoute('dashboard_reservations');
+            // return response()->redirectToRoute('reservation_canceled', ['reservation' => $reservation]);
         }
 
         Session::flash('success', "La réservation a été annulée !");
+        NotificationAdminManager::cancelReservation($reservation);
 
-        return response()->redirectToRoute('reservation_canceled', ['reservation' => $reservation]);
+        return response()->redirectToRoute('dashboard_reservations');
+        // return response()->redirectToRoute('reservation_canceled', ['reservation' => $reservation]);
     }
 
     public function canceled(Reservation $reservation) : View {

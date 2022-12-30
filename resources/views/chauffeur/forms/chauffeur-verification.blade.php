@@ -9,7 +9,7 @@
             <img src="{{ asset('images/identity-card.png') }}" alt="" id="piece-preview" class="img-fluid">
             <div class="row">
                 <div class="col-12 text-center">
-                    <button class="btn btn-outline-primary" onclick="document.querySelector('#identification_scan').click();">
+                    <button class="btn btn-outline-primary my-3" onclick="document.querySelector('#identification_scan').click();">
                         <i class="fa fa-upload" aria-hidden="true"></i>&nbsp;
                         Sélectionner fichier
                     </button>
@@ -70,7 +70,7 @@
             <img src="{{ asset('images/driver-license.png') }}" alt="" id="permis-preview" class="img-fluid">
             <div class="row">
                 <div class="col-12 text-center">
-                    <button class="btn btn-outline-primary" onclick="document.querySelector('#licence_scan').click();">
+                    <button class="btn btn-outline-primary my-3" onclick="document.querySelector('#licence_scan').click();">
                         <i class="fa fa-upload" aria-hidden="true"></i>&nbsp;
                         Sélectionner fichier
                     </button>
@@ -99,7 +99,7 @@
             <img src="{{ asset('images/checklist.png') }}" alt="" id="technical-preview" class="img-fluid">
             <div class="row">
                 <div class="col-12 text-center">
-                    <button class="btn btn-outline-primary" onclick="document.querySelector('#technical_check_scan').click();">
+                    <button class="btn btn-outline-primary my-3" onclick="document.querySelector('#technical_check_scan').click();">
                         <i class="fa fa-upload" aria-hidden="true"></i>&nbsp;
                         Sélectionner fichier
                     </button>
@@ -113,7 +113,7 @@
             <img src="{{ asset('images/insurance.png') }}" alt="" id="insurrance-preview" class="img-fluid">
             <div class="row">
                 <div class="col-12 text-center">
-                    <button class="btn btn-outline-primary" onclick="document.querySelector('#insurrance_scan').click();">
+                    <button class="btn btn-outline-primary my-3" onclick="document.querySelector('#insurrance_scan').click();">
                         <i class="fa fa-upload" aria-hidden="true"></i>&nbsp;
                         Sélectionner fichier
                     </button>
@@ -127,7 +127,7 @@
             <img src="{{ asset('images/parking.png') }}" alt="" id="gray-card-preview" class="img-fluid">
             <div class="row">
                 <div class="col-12">
-                    <button class="btn btn-outline-primary" onclick="document.querySelector('#gray_card_scan').click();">
+                    <button class="btn btn-outline-primary my-3" onclick="document.querySelector('#gray_card_scan').click();">
                         <i class="fa fa-upload" aria-hidden="true"></i>&nbsp;
                         Sélectionner fichier
                     </button>
