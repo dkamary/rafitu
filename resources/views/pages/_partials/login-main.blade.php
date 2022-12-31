@@ -8,7 +8,7 @@
                 <div class="col-lg-5 col-xl-4 col-md-6 d-block mx-auto">
                     <div class="wrapper wrapper2">
 
-                        @include('_partials.front.forms.login-form')
+                        @include('_partials.front.forms.login-form', ['ajaxLogin' => $ajaxLogin ?? false])
 
                         @include('_partials.front.section.oauth')
 

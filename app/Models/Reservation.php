@@ -10,6 +10,7 @@ class Reservation extends Model
     const STATUS_CANCEL = 'cancel';
     const STATUS_UNPAID = 'unpaid';
     const STATUS_PAID = 'paid';
+    const STATUS_DONE = 'done';
 
     protected $table = 'reservation';
     protected $primaryKey = 'id';
@@ -90,6 +91,12 @@ class Reservation extends Model
         return $this->getStatus() == 'COMPLETED';
     }
 
+    public function changeStatus(string $status) : self {
+        $this->status = $status;
+
+        return $this;
+    }
+
     public function cancel() : self {
         $this->status = self::STATUS_CANCEL;
         $this->is_paid = 2;
@@ -119,9 +126,13 @@ class Reservation extends Model
         return is_null($this->status) || $this->status == self::STATUS_UNPAID;
     }
 
-    public function changeStatus(string $status) : self {
-        $this->status = $status;
+    public function done() : self {
+        $this->status = self::STATUS_DONE;
 
         return $this;
+    }
+
+    public function isDone() : bool {
+        return $this->status == self::STATUS_DONE;
     }
 }

@@ -491,3 +491,9 @@
         });
     };
 </script>
+
+{{-- @include('_partials.front.messagerie') --}}
+
+<script id="chat-script">
+    @include('message._partials.chat-script')
+</script>

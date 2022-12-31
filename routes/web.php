@@ -15,6 +15,7 @@ use App\Http\Controllers\DriverController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ModelAdminController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PageController;
@@ -197,6 +198,13 @@ Route::prefix('reservation')->group(function(){
     Route::get('/annulee/{reservation}', [ReservationController::class, 'canceled'])->name('reservation_canceled');
 
     Route::get('/{reservation}', [ReservationController::class, 'show'])->name('reservation_show');
+});
+
+// MESSAGE
+Route::prefix('message')->group(function(){
+    Route::post('/send', [MessageController::class, 'send'])->name('message_send');
+    Route::get('/last-message', [MessageController::class, 'lastMessage'])->name('message_last');
+    Route::get('/conversation', [MessageController::class, 'conversation'])->name('message_conversation');
 });
 
 // ESPACE CLIENT

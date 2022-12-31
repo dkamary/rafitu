@@ -1,6 +1,7 @@
 {{-- Driver display --}}
 
 @php
+    $user = Auth::user();
     $driver = $ride->getDriver();
     $avatar = $driver->getAvatar();
     $driverAvatar = $avatar;
@@ -45,13 +46,22 @@
     <div class="col-12">
         <div class="row">
             <div class="col-auto">
-                <a href="#" id="messenger" class="btn btn-outline-info my-3 d-flex justify-content-center align-items-center">
+
+                @include('message._partials.start-chat', [
+                    'btn_chat_classes' => 'btn btn-outline-info my-3 d-flex justify-content-center align-items-center',
+                    'btn_chat_text' => 'Contacter ' . ($driver ? $driver->getFullname() : ''),
+                    'sender' => $user,
+                    'receiver' => $driver,
+                ])
+
+                {{-- <a href="#" id="messenger" class="btn btn-outline-info my-3 d-flex justify-content-center align-items-center">
                     <i class="fa fa-envelope fa-2x" aria-hidden="true"></i>
                     <span class="ml-2">
                         &nbsp;
                         Contacter {{ $driver ? $driver->getFullname() : '' }}
                     </span>
-                </a>
+                </a> --}}
+
             </div>
         </div>
     </div>

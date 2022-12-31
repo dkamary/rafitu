@@ -29,5 +29,7 @@
 		@yield('javascripts', view('_partials.front.javascripts'))
 
         @stack('footer')
+
+        @include('message._partials.chat')
 	</body>
 </html>

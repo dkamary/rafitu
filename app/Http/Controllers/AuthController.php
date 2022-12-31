@@ -18,7 +18,7 @@ class AuthController extends Controller
         return view('pages.security.login');
     }
 
-    public function authNormal(Request $request): RedirectResponse
+    public function authNormal(Request $request)
     {
         $email = trim($request->input('email'));
         $password = $request->input('password');
@@ -30,6 +30,13 @@ class AuthController extends Controller
         }
 
         if(!Auth::attempt(['email' => $email, 'password' => $password])) {
+            if($request->hasHeader('x-login-source')) {
+
+                return response()->json([
+                    'authentified' => false,
+                ]);
+            }
+
             return back()
                 ->with('error', 'Le mot de passe est incorrect')
                 ->withInput();
@@ -37,6 +44,13 @@ class AuthController extends Controller
 
         $user = Auth::user();
         Auth::login($user);
+
+        if($request->hasHeader('x-login-source')) {
+
+            return response()->json([
+                'authentified' => true,
+            ]);
+        }
 
         /**
          * @var User $user

@@ -124,10 +124,13 @@
 
         <script>
             window.addEventListener("DOMContentLoaded", event => {
-                document.querySelector('#messenger').addEventListener("click", e => {
-                    e.preventDefault();
-                    alert("Fonctionalité de messagerie bientôt disponible!");
-                });
+                const messenger = document.querySelector('#messenger');
+                if(messenger) {
+                    messenger.addEventListener("click", e => {
+                        e.preventDefault();
+                        alert("Fonctionalité de messagerie bientôt disponible!");
+                    });
+                }
 
                 const passager = document.querySelector("#passenger");
                 if(passager) {

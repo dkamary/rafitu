@@ -236,3 +236,5 @@
         width: auto;
     }
 </style>
+
+@include('message._partials.chat-style')

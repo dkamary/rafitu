@@ -1,6 +1,7 @@
 {{-- Info chauffeur minimal --}}
 
 @php
+    $user = Auth::user();
     $driver = $ride->getDriver();
     $avatar = $driver->getAvatar();
     $driverAvatar = $avatar;
@@ -44,8 +45,15 @@
 
                 <div class="row">
                     <div class="col-12 pt-4 pb-1">
-                        <img src="{{ asset('images/comments.png') }}" alt="" style="height: 2rem; width: auto">&nbsp;
-                        <a href="#" class="fs-5">Contacter {{ $driver->firstname }}</a>
+                        {{-- <img src="{{ asset('images/comments.png') }}" alt="" style="height: 2rem; width: auto">&nbsp; --}}
+                        {{-- <a href="#" class="fs-5">Contacter {{ $driver->firstname }}</a> --}}
+                        @include('message._partials.start-chat', [
+                            'sender' => $user,
+                            'receiver' => $driver,
+                            'btn_chat_icon' => sprintf('<img src="%s" alt="" style="height: 2rem; width: auto">', asset('images/comments.png')),
+                            'btn_chat_classes' => 'btn btn-xs btn-outline-primary fs-5',
+                            'btn_chat_text' => 'Contacter ' . $driver->firstname,
+                        ])
                     </div>
                 </div>
             </div>
