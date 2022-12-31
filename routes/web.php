@@ -216,7 +216,7 @@ Route::prefix('espace-client')->group(function(){
     Route::get('/trajet/{reservation}', [DashboardController::class, 'reservationShow'])->name('dashboard_reservation_show');
     Route::prefix('messenger')->group(function(){
         Route::get('/', [DashboardController::class, 'messengerIndex'])->name('dashboard_messenger_index');
-        Route::get('/{message}', [DashboardController::class, 'messengerShow'])->name('dashboard_messenger_show');
+        Route::get('/{token}', [DashboardController::class, 'messengerShow'])->name('dashboard_messenger_show');
         Route::get('/new-message/{lastId}', [DashboardController::class, 'messengerLast'])->name('dashboard_messenger_last');
         Route::post('/send-message', [DashboardController::class, 'messengerSend'])->name('dashboard_messenger_send');
     });

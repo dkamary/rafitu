@@ -1,6 +1,6 @@
 {{-- Alert / Toast --}}
 
-<div class="toast-container position-fixed p-3 bottom-0 end-0">
+<div class="toast-container position-fixed p-3 bottom-0" style="left: 50%; transform: translateX(-50%);">
 
     @if (session('success'))
         <div class="toast fade show text-white bg-success" role="alert" aria-live="assertive" aria-atomic="true">

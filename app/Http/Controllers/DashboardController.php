@@ -124,8 +124,16 @@ class DashboardController extends Controller
     }
 
     public function messengerIndex(){
+        /**
+         * @var User $user
+         */
         $user = Auth::user();
-        $messages = MessengerManager::myMessages($user->id);
+
+        if($user->isAdmin()) {
+            return $this->messengerAdminIndex();
+        }
+
+        $messages = MessengerManager::myMessagesPreview($user->id);
 
         return view('dashboard.message.index', [
             'messages' => $messages,
@@ -133,10 +141,40 @@ class DashboardController extends Controller
     }
 
     public function messengerShow(string $token){
-        $messages = MessengerManager::myMessagesByToken($token);
+        /**
+         * @var User $user
+         */
+        $user = Auth::user();
 
-        return view('', [
+        if($user->isAdmin()) {
+            return $this->messengerAdminShow($token);
+        }
+
+        $messages = MessengerManager::myMessagesByToken($token);
+        $last = $messages->last();
+
+        return view('dashboard.message.show', [
             'messages' => $messages,
+            'last' => $last,
+        ]);
+    }
+
+    public function messengerAdminIndex(){
+
+        $messages = MessengerManager::myAdminMessagesPreview();
+
+        return view('dashboard.admin-message.index', [
+            'messages' => $messages,
+        ]);
+    }
+
+    public function messengerAdminShow(string $token){
+        $messages = MessengerManager::myMessagesByToken($token);
+        $last = $messages->last();
+
+        return view('dashboard.admin-message.show', [
+            'messages' => $messages,
+            'last' => $last,
         ]);
     }
 

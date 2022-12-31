@@ -33,9 +33,9 @@
         <a href="{{ route('dashboard_messenger_index') }}">
             <img src="{{ asset('images/messages.png') }}" alt="" style="height: 1.2rem; width: auto;">&nbsp;
             Mes messages
-            @if($notReads > 0)
+            {{-- @if($notReads > 0)
             <span class="badge bg-primary rounded-pill">{{ $notReads }}</span>
-            @endif
+            @endif --}}
         </a>
     </li>
 </ul>

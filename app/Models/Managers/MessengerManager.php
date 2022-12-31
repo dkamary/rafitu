@@ -36,6 +36,40 @@ class MessengerManager
         return $notRead;
     }
 
+    public static function myMessagesPreview(int $userId) : array {
+        $messages = [];
+
+        $tokens = DB::table('message')
+            ->selectRaw('DISTINCT token')
+            ->where('client_id', '=', $userId)
+            ->limit(10)
+            ->get();
+
+        foreach($tokens as $msgToken) {
+
+            $messages[$msgToken->token] = self::lastMessageByToken($msgToken->token);
+        }
+
+        return $messages;
+    }
+
+    public static function myAdminMessagesPreview() : array {
+        $messages = [];
+
+        $tokens = DB::table('message')
+            ->selectRaw('DISTINCT token')
+            ->whereRaw('user_id IS NULL')
+            ->limit(10)
+            ->get();
+
+        foreach($tokens as $msgToken) {
+
+            $messages[$msgToken->token] = self::lastMessageByToken($msgToken->token);
+        }
+
+        return $messages;
+    }
+
     public static function myMessages(int $userId) : array {
         $messages = [];
 
@@ -54,7 +88,7 @@ class MessengerManager
 
     public static function myMessagesByToken(string $token, int $count = 20) : ?Collection {
         return Message::where('token', 'LIKE', $token)
-            ->orderBy('date_sent', 'DESC')
+            // ->orderBy('date_sent', 'DESC')
             ->limit($count)
             ->get();
     }

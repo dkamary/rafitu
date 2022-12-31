@@ -1,3 +1,7 @@
+@php
+    $discussionBalloon = $discussionBalloon ?? true;
+@endphp
+
 <!doctype html>
 
 <html class="no-js" lang="fr">
@@ -30,6 +34,11 @@
 
         @stack('footer')
 
-        @include('message._partials.chat')
+        @if($discussionBalloon)
+            @include('message._partials.chat')
+            <script id="chat-script">
+                @include('message._partials.chat-script')
+            </script>
+        @endif
 	</body>
 </html>

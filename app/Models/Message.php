@@ -11,6 +11,9 @@ class Message extends Model
     protected $fillable = ['token', 'user_id', 'client_id', 'sender', 'date_sent', 'content', 'is_seen', 'is_new'];
     public $timestamps = false;
 
+    protected $user;
+    protected $client;
+
     public function isSeen() : bool {
         return ($this->is_seen == 1);
     }
@@ -30,5 +33,22 @@ class Message extends Model
             'is_seen' => $this->is_seen,
             'is_new' => $this->is_new,
         ];
+    }
+
+    public function getUser(bool $default = true) : ?User {
+        if($this->user) return $this->user;
+
+        $this->user = User::where('id', '=', (int)$this->user_id)->first();
+        if(!$this->user && $default) {
+            return new User([
+                'firstname' => 'RAFITU',
+            ]);
+        }
+
+        return $this->user;
+    }
+
+    public function getClient() : User {
+        return $this->client ?: $this->client = User::where('id', '=', (int)$this->client_id)->first();
     }
 }

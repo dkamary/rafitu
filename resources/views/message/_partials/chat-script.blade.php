@@ -49,7 +49,8 @@ Support : hi@vatanay.com
                             msg.sender == null ? 'Rafitu' : userName,
                             msg.sender == null ? 'you' : 'me',
                             msg.date_sent,
-                            msg.content
+                            msg.content,
+                            msg.id
                         );
                     });
                 }
@@ -82,12 +83,18 @@ Support : hi@vatanay.com
                     console.debug("RAFITU message is the last");
                     const msg = response.message;
 
+                    if(document.querySelector('#message-' + msg.id)) {
+                        console.debug("MSG Déjà présent");
+                        return;
+                    }
+
                     responsiveChatPush(
                         element,
                         !msg.sender ? 'Rafitu' : userName,
                         !msg.sender ? 'you' : 'me',
                         msg.date_sent,
-                        msg.content
+                        msg.content,
+                        msg.id
                     );
                 } else {
                     console.debug("Client message is the last or No new message");
@@ -140,7 +147,7 @@ Support : hi@vatanay.com
                         }
 
                         $(element + ' div.messages').append(
-                            '<div class="message"><div class="myMessage"><p>' +
+                            '<div class="message" id="message-' + response.message.id + '"><div class="myMessage"><p>' +
                             message +
                             "</p><date>" +
                             response.message.date_sent +
@@ -161,14 +168,14 @@ Support : hi@vatanay.com
             }, 3000);
         }
 
-        function responsiveChatPush(element, sender, origin, date, message) {
+        function responsiveChatPush(element, sender, origin, date, message, id) {
             var originClass;
             if (origin == 'me') {
                 originClass = 'myMessage';
             } else {
                 originClass = 'fromThem';
             }
-            $(element + ' .messages').append('<div class="message"><div class="' + originClass + '"><p>' + message + '</p><date><b>' + sender + '</b> ' + date + '</date></div></div>');
+            $(element + ' .messages').append('<div class="message" id="message-' + id + '"><div class="' + originClass + '"><p>' + message + '</p><date><b>' + sender + '</b> ' + date + '</date></div></div>');
         }
 
         /* Activating chatbox on element */
@@ -179,7 +186,7 @@ Support : hi@vatanay.com
         // responsiveChatPush('.chat', 'John Doe', 'you', '08.03.2016 14:31:22', 'It looks like the iPhone message box.');
         // responsiveChatPush('.chat', 'Kate', 'me', '08.03.2016 14:33:32', 'Yep, is this design responsive?');
         // responsiveChatPush('.chat', 'Kate', 'me', '08.03.2016 14:36:4', 'By the way when I hover on my message it shows date.');
-        responsiveChatPush('.chat', '{{ isset($driver) ? $driver->firstname : "Rafitu" }}', 'you', '{{ date("d/m/Y H:i:s") }}', 'Que pouvons-nous faire pour vous ?');
+        responsiveChatPush('.chat', '{{ isset($driver) ? $driver->firstname : "Rafitu" }}', 'you', '{{ date("d/m/Y H:i:s") }}', 'Que pouvons-nous faire pour vous ?', 0);
 
         /* DEMO */
         if (parent == top) {

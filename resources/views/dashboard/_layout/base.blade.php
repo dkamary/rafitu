@@ -1,5 +1,9 @@
 {{-- Espace client --}}
 
+@php
+    $discussionBalloon = false;
+@endphp
+
 @extends('_layouts.front')
 
 @section('main')
@@ -25,3 +29,13 @@
         </div>
     </div>
 @endsection
+
+@once
+    @push('head')
+        <style>
+            .chat-container {
+                display: none
+            }
+        </style>
+    @endpush
+@endonce

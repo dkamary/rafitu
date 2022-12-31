@@ -30,7 +30,7 @@ class MessageController extends Controller
     public function lastMessage() : JsonResponse {
         $token = request()->input('token');
         $message =  Message::where('token', 'like', $token)
-            ->where('is_new', '=', 1)
+            // ->where('is_new', '=', 1)
             ->orderBy('date_sent', 'desc')->first();
         if($message) {
             $message->is_new = 0;
