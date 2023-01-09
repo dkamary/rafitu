@@ -8,25 +8,25 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-define('id', 0);
-define('name', 1);
-define('ascii_name', 2);
-define('alternatenames', 3);
-define('latitude', 4);
-define('longitude', 5);
-define('feature_class', 6);
-define('feature_code', 7);
-define('country_code', 8);
-define('cc2', 9);
-define('admin1_code', 10);
-define('admin2_code', 11);
-define('admin3_code', 12);
-define('admin4_code', 13);
-define('population', 14);
-define('elevation', 15);
-define('dem', 16);
-define('timezone', 17);
-define('modification_date', 18);
+// define('id', 0);
+// define('name', 1);
+// define('ascii_name', 2);
+// define('alternatenames', 3);
+// define('latitude', 4);
+// define('longitude', 5);
+// define('feature_class', 6);
+// define('feature_code', 7);
+// define('country_code', 8);
+// define('cc2', 9);
+// define('admin1_code', 10);
+// define('admin2_code', 11);
+// define('admin3_code', 12);
+// define('admin4_code', 13);
+// define('population', 14);
+// define('elevation', 15);
+// define('dem', 16);
+// define('timezone', 17);
+// define('modification_date', 18);
 
 class CityController extends Controller
 {
@@ -66,31 +66,31 @@ class CityController extends Controller
         ]);
     }
 
-    public function searchInText(string $search, int $count = 10) : JsonResponse {
-        $bd = fopen(public_path('allCountries.txt'), 'r');
-        if(!$bd) {
-            throw new Exception('Unable to open database');
-        }
+    // public function searchInText(string $search, int $count = 10) : JsonResponse {
+    //     $bd = fopen(public_path('allCountries.txt'), 'r');
+    //     if(!$bd) {
+    //         throw new Exception('Unable to open database');
+    //     }
 
-        $foundCount = 0;
-        $results = [];
-        $rowCount = 0;
-        while(($row = fgets($bd)) && ($foundCount <= $count)) {
-            $rowData = explode("\t", $row);
-            // dd([
-            //     'row' => $row,
-            //     'parsed' => $rowData,
-            // ]);
-            if(strpos($rowData[name], $search) !== false) {
-                $results[] = $rowData;
-                ++$foundCount;
-            }
-            // if(++$rowCount > 100) break;
-        }
-        fclose($bd);
+    //     $foundCount = 0;
+    //     $results = [];
+    //     $rowCount = 0;
+    //     while(($row = fgets($bd)) && ($foundCount <= $count)) {
+    //         $rowData = explode("\t", $row);
+    //         // dd([
+    //         //     'row' => $row,
+    //         //     'parsed' => $rowData,
+    //         // ]);
+    //         if(strpos($rowData[name], $search) !== false) {
+    //             $results[] = $rowData;
+    //             ++$foundCount;
+    //         }
+    //         // if(++$rowCount > 100) break;
+    //     }
+    //     fclose($bd);
 
-        dd($results);
+    //     dd($results);
 
-        return response()->json($results);
-    }
+    //     return response()->json($results);
+    // }
 }

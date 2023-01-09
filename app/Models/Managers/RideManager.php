@@ -25,14 +25,18 @@ class RideManager
         Position $arrival,
         ?string $date = null,
         ?int $passager = null,
-        int $distance = 10
+        int $distance = 5,
+        bool $extend = false,
+        bool $strict = false
     ): array {
         $rideIds = [];
         $searchDone = false;
         $sql = [];
         $results = [];
 
-        if(($origin || $departure->isset()) && ($destination || $arrival->isset())) {
+        if($strict) {
+            // Recherche par position et par label
+        } elseif(($origin || $departure->isset()) && ($destination || $arrival->isset())) {
             $searchDone = true;
             $positionSearch = self::searchByPositionByOriginDestination($departure, $arrival, $distance);
             $labelSearch = self::searchByLabelByOriginDestination($origin, $destination);
@@ -49,8 +53,7 @@ class RideManager
             $sql['position_search_departure'] = $postionSearch['sql'];
             $results['position_search_departure'] = $postionSearch['results'];
 
-            // $labelSearch = self::searchByDepartureLabel($origin);
-            $labelSearch = self::searchByLabel('departure_label', 'departure_date', $origin);
+            $labelSearch = self::searchByLabel('departure_label', 'departure_date', $origin, $extend);
             $sql['label_search_departure'] = $labelSearch['sql'];
             $results['label_search_departure'] = $labelSearch['results'];
 
@@ -62,8 +65,7 @@ class RideManager
             $sql['arrival'] = $postionSearch['sql'];
             $results['arrival'] = $postionSearch['results'];
 
-            // $labelSearch = self::searchByArrivalLabel($destination);
-            $labelSearch = self::searchByLabel('arrival_label', 'arrival_date', $destination);
+            $labelSearch = self::searchByLabel('arrival_label', 'arrival_date', $destination, $extend);
             $sql['label_search_arrival'] = $labelSearch['sql'];
             $results['label_search_arrival'] = $labelSearch['results'];
 
@@ -300,7 +302,7 @@ class RideManager
         ];
     }
 
-    private static function searchByLabel(string $fieldSearch, string $fieldDate, ?string $label = null) : array {
+    private static function searchByLabel(string $fieldSearch, string $fieldDate, ?string $label = null, bool $extend = false) : array {
         $ids = [];
         if (!$label || strlen(trim($label)) == 0) {
             return [
@@ -319,17 +321,21 @@ class RideManager
             . " OR `$fieldSearch` LIKE '%$label%'";
 
         $words = explode(' ', $label);
-        if(count($words) > 1) {
-            foreach($words as $w) {
-                if(strlen($w) < 3) continue;
-            }
 
-            $sql .= " OR `$fieldSearch` LIKE '%$w%'";
+        if($extend) {
+            if(count($words) > 1) {
+                foreach($words as $w) {
+                    if(strlen($w) < 3) continue;
+                }
+
+                $sql .= " OR `$fieldSearch` LIKE '%$w%'";
+            }
         }
 
         $sql .= " )";
         $sql .= " AND `$fieldDate` >= NOW()"
             . " ORDER BY `score` DESC";
+
         $results = DB::select(DB::raw($sql));
         foreach ($results as $row) {
             if (isset($ids[$row->id])) continue;

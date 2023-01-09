@@ -129,6 +129,18 @@ class PageController extends Controller
         ]);
     }
 
+    public function mentionsLegales() : View {
+        $user = auth()->user();
+        $slug = 'mentions-legales';
+        $page = Page::where('slug', 'LIKE', $slug)->first();
+
+        return view('admin.pages.edit-text', [
+            'user' => $user,
+            'page' => $page,
+            'route' => 'pages_mentions_legales',
+        ]);
+    }
+
     public function editBySlug(string $slug): View
     {
         $page = Page::where('slug', 'LIKE', $slug)->first();

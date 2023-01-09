@@ -4,6 +4,19 @@
     $user = Auth::user();
     $now = new \DateTime();
     $other = $last->getClient();
+    $lastMsg = null;
+
+    $avatar = $other ? $other->getAvatar() : null;
+    $driverAvatar = $avatar;
+    if($avatar) {
+        if(strpos($avatar, 'http') !== false) {
+            $driverAvatar = $avatar;
+        } else {
+            $driverAvatar = asset('avatars/' . $avatar);
+        }
+    } else {
+        $driverAvatar = asset('avatars/user-01.svg');
+    }
 @endphp
 
 @extends('dashboard._layout.base')
@@ -26,7 +39,24 @@
         <div class="row message-history">
             <div class="col-12 d-flex flex-column px-0">
                 @foreach ($messages as $msg)
-                    <div class="message-item my-3 {{ is_null($msg->sender) ? 'me' : 'you' }}" id="message-{{ $msg->id }}">{{ $msg->content }}</div>
+                    <div id="message-{{ $msg->id }}" @class(['message-wrapper', 'me' => is_null($msg->sender), 'you' => !is_null($msg->sender)])>
+                        @if($msg->sender != $user->id)
+                            <div class="message-user">
+                                <a href="#" class="avatar" onclick="return false;">
+                                    <img src="{{ $driverAvatar }}" alt="{{ $other->getFullname() }}">
+                                </a>
+                                <span class="state"></span>
+                            </div>
+                        @endif
+                        <div class="message-item">{{ $msg->content }}</div>
+                        <div class="message-info">
+                            <span class="date">{{ $msg->displayDate() }}</span>
+                        </div>
+                    </div>
+                    {{-- <div class="message-item my-3 {{ is_null($msg->sender) ? 'me' : 'you' }}" id="message-{{ $msg->id }}">{{ $msg->content }}</div> --}}
+                    @php
+                        $lastMsg = $msg;
+                    @endphp
                 @endforeach
             </div>
         </div>
@@ -52,40 +82,7 @@
 @once
 
     @push('head')
-        <style>
-            .message-container {
-
-            }
-
-            .message-history {
-                height: 80%;
-            }
-
-            .message-send-form {
-                height: 20%;
-            }
-
-            .message-item {
-                padding: .5rem 1.5rem;
-                border-radius: 5px;
-            }
-
-            .message-item.me {
-                background-color: #4c6dff;
-                color: #fff;
-                border: solid 1px #3a59e5;
-                align-self: flex-end;
-                text-align: right;
-            }
-
-            .message-item.you {
-                background-color: #c3c3c3;
-                color: #fff;
-                border: solid 1px #acacac;
-                align-self: flex-start;
-                text-align: left;
-            }
-        </style>
+        @include('dashboard.message._partials.style')
     @endpush
 
     @push('footer')
@@ -107,14 +104,12 @@
                                 data: {
                                     token: '{{ $last->token }}',
                                     message: message.value.trim(),
-                                    user_id: null,
+                                    user_id: {{ $last->user_id ?? 'null' }},
                                     client_id: {{ (int)$other->id }},
-                                    sender: null
+                                    sender: {{ $last->user_id ?? 'null' }}
                                 }
                             }).done(response => {
-                                const msg = document.createElement("div");
-                                msg.classList.add("message-item", "my-3", "me");
-                                msg.innerHTML = response.message.content;
+                                const msg = appendMessage({ message: response.message, me: true });
                                 history.appendChild(msg);
                             }).fail(xhr => {
                                 alert(xhr.status + ' - ' + xhr.statusText);
@@ -137,6 +132,22 @@
                                 token: '{{ $last->token }}',
                             }
                         }).done(response => {
+
+                            const all = document.querySelectorAll('.message-item.you');
+                            if(response.isConnected) {
+                                if(all && all.length) {
+                                    all.forEach(elt => {
+                                        elt.classList.add('connected');
+                                    });
+                                }
+                            } else {
+                                if(all && all.length) {
+                                    all.forEach(elt => {
+                                        elt.classList.remove('connected');
+                                    });
+                                }
+                            }
+
                             if(!response.message.id) {
                                 console.debug("Message vide");
                                 return;
@@ -147,14 +158,9 @@
                                 return;
                             }
 
-                            let msg = document.querySelector('#message-' + response.message.id);
+                            let msg = appendMessage({ message: response.message, me: false });
 
                             if(msg) return;
-
-                            msg = document.createElement("div");
-                            msg.classList.add("message-item", "my-3", "you");
-                            msg.innerHTML = response.message.content;
-                            msg.id = "message-" + response.message.id;
 
                             const history = document.querySelector(".message-history > .col-12");
                             history.appendChild(msg);
@@ -168,6 +174,56 @@
                     }
                 }, 30000);
             });
+
+            const appendMessage = ({ message, me }) => {
+                let msg = document.querySelector('#message-' + message.id);
+
+                if(msg) return null;
+
+                msg = document.createElement("div");
+                msg.classList.add("message-wrapper", (me ? "me" : "you"));
+                msg.id = "message-" + message.id;
+
+                const user = document.createElement("div");
+                const link = document.createElement("a");
+                const img = document.createElement("img");
+                const state = document.createElement("span");
+                const item = document.createElement("div");
+                const info = document.createElement("div");
+                const date = document.createElement("span");
+
+                user.classList.add("message-user");
+
+                link.classList.add("avatar");
+                link.addEventListener("click", e => { e.preventDefault() });
+
+                if(!me) {
+                    img.src = "{{ $driverAvatar }}";
+                    img.alt = "{{ $other->getFullname() }}";
+
+                    link.appendChild(img);
+
+                    state.classList.add("state");
+                    user.appendChild(link);
+                    user.appendChild(state);
+
+                    msg.appendChild(user);
+                }
+
+                item.classList.add("message-item");
+                item.innerHTML = message.content;
+
+                msg.appendChild(item);
+
+                date.classList.add("date");
+                date.innerHTML = message.date_sent;
+
+                info.classList.add("message-info");
+                info.appendChild(date);
+                msg.append(info);
+
+                return msg;
+            };
         </script>
     @endpush
 

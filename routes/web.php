@@ -103,6 +103,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/qui-sommes-nous', [PageController::class, 'quiSommesNous'])->name('pages_qui_sommes_nous');
         Route::get('/reglement-trajet', [PageController::class, 'reglementTrajet'])->name('pages_reglement_trajet');
         Route::get('/faq', [PageController::class, 'faq'])->name('pages_faq');
+        Route::get('/mentions-legales', [PageController::class, 'mentionsLegales'])->name('pages_mentions_legales');
 
         Route::post('/enregistrer/{slug}', [PageController::class, 'saveBySlug'])->name('pages_save_by_slug');
     });
@@ -205,6 +206,8 @@ Route::prefix('message')->group(function(){
     Route::post('/send', [MessageController::class, 'send'])->name('message_send');
     Route::get('/last-message', [MessageController::class, 'lastMessage'])->name('message_last');
     Route::get('/conversation', [MessageController::class, 'conversation'])->name('message_conversation');
+    Route::post('/start/{driver}', [MessageController::class, 'startChatWith'])->name('message_start_chat');
+    Route::post('/seen', [MessageController::class, 'seen'])->name('message_seen');
 });
 
 // ESPACE CLIENT
@@ -249,7 +252,7 @@ Route::prefix('paiement')->group(function(){
 Route::prefix('ville')->group(function(){
     Route::get('/list/{page?}/{count?}', [CityController::class, 'index'])->name('city_list');
     Route::get('/search/{search}/{count?}', [CityController::class, 'search0'])->name('city_search0');
-    Route::get('/search2/{search}/{count?}', [CityController::class, 'searchInText'])->name('city_search2');
+    // Route::get('/search2/{search}/{count?}', [CityController::class, 'searchInText'])->name('city_search2');
 
     Route::post('/search', [CityController::class, 'search'])->name('city_search');
     Route::post('/search-ride', [CityController::class, 'searchRide'])->name('city_search_ride');

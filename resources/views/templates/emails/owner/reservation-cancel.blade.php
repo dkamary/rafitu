@@ -9,7 +9,7 @@
 
 @section('email_content')
     <h1>
-        Votre réservation a été annulée
+        La réservation suivante a été annulée
     </h1>
 
     <div style="margin-top: 15px auto;">

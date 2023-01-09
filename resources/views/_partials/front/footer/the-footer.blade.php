@@ -37,9 +37,9 @@
                             <li>
                                 <a href="{{ route('static_pages', ['slug' => 'qui-sommes-nous']) }}">Qui sommes-nous</a>
                             </li>
-                            <li>
+                            {{-- <li>
                                 <a href="{{ route('static_pages', ['slug' => 'contact']) }}">Contact</a>
-                            </li>
+                            </li> --}}
                             <li>
                                 <a href="{{ route('static_pages', ['slug' => 'newsletter']) }}">Newsletter</a>
                             </li>

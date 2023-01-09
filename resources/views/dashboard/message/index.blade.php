@@ -31,8 +31,8 @@
                 <tr>
                     <td @class(['fw-bold' => $last->is_new == 1 ])>
                         <a href="{{ route('dashboard_messenger_show', ['token' => $last->token]) }}">
-                            {{ $last->sender == $user->id ? 'Vous' : ( $last->sender == null ? 'RAFITU' : '' ) }} &nbsp;-&nbsp;
-                            {{ $last->content }}
+                            {{ $last->sender == $user->id ? 'Vous' : ( $last->sender == null ? 'RAFITU' : Messenger::getUserName($last->sender, 'N/A') ) }} &nbsp;-&nbsp;
+                            <span @class(['fw-bold' => ($last->is_seen == 0)])>{{ $last->content }}</span>
                         </a>
                     </td>
                     <td>{{ (new \DateTime($last->date_sent))->format('d/m/Y') }}</td>

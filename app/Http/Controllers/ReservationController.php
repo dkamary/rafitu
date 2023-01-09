@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Managers\NotificationAdminManager;
+use App\Models\Managers\NotificationClientManager;
 use App\Models\Managers\NotificationManager;
+use App\Models\Managers\NotificationOwnerManager;
 use App\Models\Managers\ReservationManager;
 use App\Models\Reservation;
 use Illuminate\Http\RedirectResponse;
@@ -22,8 +24,9 @@ class ReservationController extends Controller {
         $data = ReservationManager::getDataFromRequest($request);
         $reservation = Reservation::create($data);
 
-        NotificationManager::adminNewReservation($reservation);
-        NotificationManager::ownerNewReservation($reservation);
+        NotificationAdminManager::newReservation($reservation);
+        NotificationOwnerManager::newReservation($reservation);
+        NotificationClientManager::newReservation($reservation);
 
         return response()->redirectToRoute('reservation_result', [
             'reservation' => $reservation,
@@ -67,17 +70,21 @@ class ReservationController extends Controller {
             $order->status = 'CANCEL';
             $order->save();
             Session::flash('success', "La réservation a bien été annulée !");
+
             NotificationAdminManager::cancelReservation($reservation);
+            NotificationOwnerManager::cancelReservation($reservation);
+            NotificationClientManager::cancelReservation($reservation);
 
             return response()->redirectToRoute('dashboard_reservations');
-            // return response()->redirectToRoute('reservation_canceled', ['reservation' => $reservation]);
         }
 
         Session::flash('success', "La réservation a été annulée !");
+
         NotificationAdminManager::cancelReservation($reservation);
+        NotificationOwnerManager::cancelReservation($reservation);
+        NotificationClientManager::cancelReservation($reservation);
 
         return response()->redirectToRoute('dashboard_reservations');
-        // return response()->redirectToRoute('reservation_canceled', ['reservation' => $reservation]);
     }
 
     public function canceled(Reservation $reservation) : View {

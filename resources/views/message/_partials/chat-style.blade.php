@@ -41,7 +41,7 @@
         top: 0;
         left: 0;
         right: 0;
-        z-index: 4
+        z-index: 10004
     }
 
     form.chat .messages {
@@ -59,7 +59,7 @@
         width: 3px;
         height: 1px;
         transition: all .5s;
-        z-index: 10;
+        z-index: 100010;
     }
 
     form.chat ::-webkit-scrollbar-track {
@@ -123,7 +123,7 @@
     form.chat .myMessage:before {
         content: "";
         position: absolute;
-        z-index: 1;
+        z-index: 10001;
         bottom: -2px;
         right: -8px;
         height: 19px;
@@ -138,7 +138,7 @@
     form.chat .myMessage:after {
         content: "";
         position: absolute;
-        z-index: 1;
+        z-index: 10001;
         bottom: -2px;
         right: -42px;
         width: 12px;
@@ -160,7 +160,7 @@
     form.chat .fromThem:before {
         content: "";
         position: absolute;
-        z-index: 2;
+        z-index: 10002;
         bottom: -2px;
         left: -7px;
         height: 19px;
@@ -175,7 +175,7 @@
     form.chat .fromThem:after {
         content: "";
         position: absolute;
-        z-index: 3;
+        z-index: 10003;
         bottom: -2px;
         left: 4px;
         width: 26px;
@@ -194,7 +194,7 @@
         vertical-align: middle;
         color: #8b8b90;
         opacity: 0;
-        z-index: 4;
+        z-index: 10004;
     }
 
     form.chat .myMessage date {
@@ -317,6 +317,7 @@
         border-radius: 5px 5px 0px 0px;
         transition: .8s;
         overflow: hidden;
+        z-index: 99999;
     }
 
     .chat-container.show {

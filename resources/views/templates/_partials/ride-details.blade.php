@@ -1,5 +1,9 @@
 {{-- Détails du trajet --}}
 
+@php
+    $isAdmin = $isAdmin ?? false;
+@endphp
+
 <table style="width: 100%; border-collapse: collapse" border="0">
     <tbody>
         <tr>
@@ -85,10 +89,14 @@
     </tbody>
 </table>
 
-<p style="margin-top: 20px; margin-bottom: 20px;">
-    @if($isAdmin)
-    Pour voir les détails, <a href="{{ route('dashboard_reservation_show') }}" style="color: #a22402;">cliquez ici</a>
-    @else
-    Pour voir les détails, <a href="{{ route('dashboard_reservation_show') }}" style="color: #0a0a81;">cliquez ici</a>
-    @endif
-</p>
+@isset($reservation)
+
+    <p style="margin-top: 20px; margin-bottom: 20px;">
+        @if($isAdmin)
+        Pour voir les détails, <a href="{{ route('dashboard_reservation_show', ['reservation' => $reservation]) }}" style="color: #a22402;">cliquez ici</a>
+        @else
+        Pour voir les détails, <a href="{{ route('dashboard_reservation_show', ['reservation' => $reservation]) }}" style="color: #0a0a81;">cliquez ici</a>
+        @endif
+    </p>
+
+@endisset

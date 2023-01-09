@@ -56,10 +56,10 @@ class AuthController extends Controller
          * @var User $user
          */
         $userType = $user->getUserType();
-        if($userType->isAdmin()) {
+        // if($userType->isAdmin()) {
 
-            return response()->redirectToIntended(route('admin'));
-        }
+        //     return response()->redirectToIntended(route('admin'));
+        // }
 
         return response()->redirectToIntended(route('home'));
     }

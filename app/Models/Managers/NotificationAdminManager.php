@@ -3,6 +3,7 @@
 namespace App\Models\Managers;
 
 use App\Models\Managers\Interfaces\NotificationInterface;
+use App\Models\Message;
 use App\Models\NotificationParameter;
 use App\Models\Reservation;
 use App\Models\Ride;
@@ -53,6 +54,20 @@ class NotificationAdminManager implements NotificationInterface {
         $subject = 'Nouvelle réservation';
         $content = view('templates.emails.admin.reservation-pay', [
             'reservation' => $reservation,
+        ])->render();
+
+        NotificationManager::sendEmail($email, $subject, $content);
+    }
+
+    public static function newMessageToAdmin(Message $message) {
+        $parameter = NotificationParameter::where('id', '=', 1)->first();
+        if(!$parameter) {
+            $parameter = NotificationParameter::getDefault();
+        }
+        $email = $parameter->contact_email;
+        $subject = 'RAFITU - Nouveau message';
+        $content = view('templates.emails.admin.message-new', [
+            'message' => $message,
         ])->render();
 
         NotificationManager::sendEmail($email, $subject, $content);

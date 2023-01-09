@@ -115,6 +115,18 @@
 
     </script>
 
+    <script id="search-form-ui">
+
+        (function($, window, document){
+
+            $(function(){
+                $('#search_date').datepicker();
+            });
+
+        }(window.jQuery, window, window.document));
+
+    </script>
+
     @endprepend
 
     @push('footer')

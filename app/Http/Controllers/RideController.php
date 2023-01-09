@@ -95,22 +95,6 @@ class RideController extends Controller
         $arrivalDate->modify('+' . $request->input('duration') . ' seconds');
         $data['arrival_date'] = $arrivalDate->format('Y-m-d H:i:s');
 
-        // dump([
-        //     'post' => $_POST,
-        //     'request' => $request,
-        //     'data' => $data,
-        //     'recurrence' => [
-        //         'recurrence' => $request->post('recurrence'),
-        //         'lundi' => $request->input('lundi-check') == 'on',
-        //         'mardi' => $request->input('mardi-check') == 'on',
-        //         'mercredi' => $request->input('mercredi-check') == 'on',
-        //         'jeudi' => $request->input('jeudi-check') == 'on',
-        //         'vendredi' => $request->input('vendredi-check') == 'on',
-        //         'samedi' => $request->input('samedi-check') == 'on',
-        //         'dimanche' => $request->input('dimanche-check') == 'on',
-        //     ],
-        // ]);
-
         $ride = Ride::create($data);
         $rideID = (int)$ride->id;
 
@@ -148,8 +132,6 @@ class RideController extends Controller
 
         NotificationManager::adminNewRide($ride);
 
-        // dd('Redirection!');
-
         return response()->redirectToRoute('ride_complete', ['ride' => $ride]);
     }
 
@@ -159,10 +141,6 @@ class RideController extends Controller
         return view('trajet.creation-termine', [
             'ride' => $ride,
         ]);
-
-        // return view('pages.ride.added', [
-        //     'ride' => $ride,
-        // ]);
     }
 
     public function list() : View {
@@ -173,10 +151,6 @@ class RideController extends Controller
         return view('trajet.liste', [
             'rides' => $rides
         ]);
-
-        // return view('pages.ride.list', [
-        //     'rides' => $rides,
-        // ]);
     }
 
     public function show(Ride $ride) : View {

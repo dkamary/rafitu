@@ -16,7 +16,7 @@
         La réservation a été faite par <strong>{{ $user->getFullname() }}</strong> a été annulée.
     </p>
     <div style="margin-top: 15px auto;">
-        @include('templates._partials.ride-details', ['ride' => $ride, 'isAdmin' => true])
+        @include('templates._partials.ride-details', ['ride' => $ride, 'isAdmin' => true, 'reservation' => $reservation])
     </div>
 
 @endsection

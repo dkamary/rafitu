@@ -1,4 +1,4 @@
-{{-- Nouvelle Réservation --}}
+{{-- Annulation de réservation --}}
 
 @extends('templates._layouts.email-base')
 
@@ -9,7 +9,7 @@
 
 @section('email_content')
     <h1>
-        Une réservation a été faite par <strong>{{ $user->getFullname() }}</strong>
+        Votre réservation a été réglée
     </h1>
 
     <div style="margin-top: 15px auto;">

@@ -203,6 +203,7 @@ class CinetPay
             throw new Exception("Vous devez activer curl ou allow_url_fopen pour utiliser CinetPay");
         }
     }
+
     //getData
     public function getData()
     {
@@ -231,6 +232,7 @@ class CinetPay
         );
         return $dataArray;
     }
+
     //get payStatus
     public function getPayStatus($id_transaction, $site_id)
     {
@@ -262,6 +264,7 @@ class CinetPay
         $this->chk_description = $StatusPayment['data']['description'];
         $this->chk_metadata = $StatusPayment['data']['metadata'];
     }
+
     private function getPayStatusArray($id_transaction, $site_id)
     {
         return $dataArray = array(
@@ -270,6 +273,7 @@ class CinetPay
             'transaction_id' => $id_transaction
         );
     }
+
     //generate transId
     /**
      * @return int
@@ -283,6 +287,7 @@ class CinetPay
 
         return $id;
     }
+
     /**
      * @param $id
      * @return $this

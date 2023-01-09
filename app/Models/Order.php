@@ -13,9 +13,14 @@ class Order extends Model {
     const STATUS_COMPLETED = 'COMPLETED';
     const STATUS_PAYER_ACTION_REQUIRED = 'PAYER_ACTION_REQUIRED';
 
+    const STATUS_PAID = 'PAID';
+
+    const CINETPAY = 'cinetpay';
+    const PAYPAL = 'paypal';
+
     protected $table = 'order';
     protected $primaryKey = 'id';
-    protected $fillable = ['id', 'intent', 'status', 'create_time', 'reservation_id', 'payer_id'];
+    protected $fillable = ['id', 'intent', 'status', 'create_time', 'reservation_id', 'payer_id', 'source',];
     public $timestamps = false;
 
     protected $reservation;

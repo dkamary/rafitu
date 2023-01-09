@@ -4,6 +4,8 @@ namespace App\Models\Managers;
 
 use App\Models\ContactMessage;
 use App\Models\Message;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -29,8 +31,10 @@ class MessengerManager
 
     public static function myMessagesCount(int $userId): int
     {
-        $notRead = Message::where('is_seen', '=', 0)
-            ->where('client_id', '=', $userId)
+        $notRead = DB::table('message')
+            ->selectRaw('DISTINCT `token`')
+            ->whereRaw('`is_seen` = 0')
+            ->whereRaw('(`user_id` = ? OR `client_id` = ? OR `sender` = ?)', [$userId, $userId, $userId])
             ->count();
 
         return $notRead;
@@ -39,26 +43,35 @@ class MessengerManager
     public static function myMessagesPreview(int $userId) : array {
         $messages = [];
 
-        $tokens = DB::table('message')
+        $builder = DB::table('message')
             ->selectRaw('DISTINCT token')
-            ->where('client_id', '=', $userId)
+            ->whereRaw('(`user_id` = ? OR `client_id` = ? OR `sender` = ?)', [$userId, $userId, $userId], 'or');
+
+        /**
+         * @var User $user
+         */
+        $user = auth()->user();
+        if($user && $user->isAdmin()) {
+            $builder->whereRaw('(user_id IS NULL OR user_id = ?)', [$userId], 'or');
+        }
+
+        $tokens = $builder
             ->limit(10)
             ->get();
 
         foreach($tokens as $msgToken) {
-
             $messages[$msgToken->token] = self::lastMessageByToken($msgToken->token);
         }
 
         return $messages;
     }
 
-    public static function myAdminMessagesPreview() : array {
+    public static function myAdminMessagesPreview(int $userId) : array {
         $messages = [];
 
         $tokens = DB::table('message')
             ->selectRaw('DISTINCT token')
-            ->whereRaw('user_id IS NULL')
+            ->whereRaw('(user_id IS NULL OR user_id = ?)', [$userId])
             ->limit(10)
             ->get();
 
@@ -88,8 +101,8 @@ class MessengerManager
 
     public static function myMessagesByToken(string $token, int $count = 20) : ?Collection {
         return Message::where('token', 'LIKE', $token)
-            // ->orderBy('date_sent', 'DESC')
-            ->limit($count)
+            ->orderBy('date_sent', 'ASC')
+            // ->limit($count)
             ->get();
     }
 
@@ -139,5 +152,14 @@ class MessengerManager
         if(!$message) return new Message();
 
         return $message;
+    }
+
+    public static function getUserName(?int $userId, string $default = 'n/a') : string {
+        if(!$userId) return $default;
+
+        $user = User::where('id', '=', $userId)->first();
+        if(!$user) return $default;
+
+        return $user->firstname;
     }
 }

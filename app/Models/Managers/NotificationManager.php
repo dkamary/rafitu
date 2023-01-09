@@ -19,12 +19,13 @@ class NotificationManager {
             mail($to, $subject, $content, $headers);
         } catch(Throwable $th) {
             Log::warning(sprintf('Une erreur est survenue lors l\'envoie de mail: %s', $th->getMessage()));
+            throw $th;
         }
     }
 
     public static function adminNewRide(Ride $ride) {
         $subject = 'Nouveau trajet ajouté';
-        $content = view('templates.emails.admin-ride-new', [
+        $content = view('templates.emails.admin.ride-new', [
             'ride' => $ride,
         ])->render();
 
@@ -33,7 +34,7 @@ class NotificationManager {
 
     public static function adminNewReservation(Reservation $reservation) {
         $subject = 'Nouvelle réservation';
-        $content = view('templates.emails.admin-reservation-new', [
+        $content = view('templates.emails.admin.reservation-new', [
             'reservation' => $reservation,
         ])->render();
 

@@ -15,13 +15,14 @@
             <i class="angle fa fa-angle-right"></i>
         </a>
         <ul class="slide-menu">
+            <li><a class="slide-item" href="{{ route('pages_mentions_legales') }}">Mentions légales</a></li>
             <li><a class="slide-item" href="{{ route('pages_condition_utilisation') }}">Conditions d'utilisation</a></li>
             <li><a class="slide-item" href="{{ route('pages_charte_cookie') }}">Chartes de confidentialité et cookies</a></li>
+            <li><a class="slide-item" href="{{ route('pages_reglement_trajet') }}">Règlement des trajets</a></li>
             <li><a class="slide-item" href="{{ route('pages_contact') }}">Contact</a></li>
             <li><a class="slide-item" href="{{ route('pages_newsletter') }}">Newsletter</a></li>
             <li><a class="slide-item" href="{{ route('pages_nosValeurs') }}">Nos Valeurs</a></li>
             <li><a class="slide-item" href="{{ route('pages_qui_sommes_nous') }}">Qui sommes-nous</a></li>
-            <li><a class="slide-item" href="{{ route('pages_reglement_trajet') }}">Règlement des trajets</a></li>
             <li><a class="slide-item" href="{{ route('pages_faq') }}">Foire aux questions</a></li>
         </ul>
     </li>

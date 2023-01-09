@@ -25,7 +25,7 @@
 @once
 
     @push('head')
-        {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/css/autoComplete.min.css"> --}}
+
         <style>
             .ride-map {
                 width: 100%;
@@ -54,12 +54,6 @@
             }
         </style>
     @endpush
-
-    @prepend('footer')
-
-        <script src="{{ asset('assets/plugins/EasyAutocomplete/jquery.easy-autocomplete.min.js') }}"></script>
-
-    @endprepend
 
     @push('footer')
 

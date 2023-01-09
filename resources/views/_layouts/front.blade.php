@@ -36,9 +36,8 @@
 
         @if($discussionBalloon)
             @include('message._partials.chat')
-            <script id="chat-script">
-                @include('message._partials.chat-script')
-            </script>
+
+            @include('message._partials.chat-script')
         @endif
 	</body>
 </html>

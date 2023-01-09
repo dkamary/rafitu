@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\IamConnected;
 use App\Models\Managers\MessengerManager;
+use App\Models\Managers\NotificationAdminManager;
+use App\Models\Managers\UserManager;
 use App\Models\Message;
+use App\Models\User;
+use App\Models\UserConnected;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class MessageController extends Controller
@@ -17,6 +23,10 @@ class MessageController extends Controller
             $message = MessengerManager::createChat((int)$request->input('user_id'), (int)$request->input('client_id'), $request->input('sender'), (string)$request->input('message'));
         } else {
             $message = MessengerManager::sendChat($token, (int)$request->input('user_id'), (int)$request->input('client_id'), $request->input('sender'), (string)$request->input('message'));
+        }
+
+        if(!$message->user_id) {
+            NotificationAdminManager::newMessageToAdmin($message);
         }
 
         return response()->json([
@@ -37,10 +47,19 @@ class MessageController extends Controller
             $message->save();
         }
 
+        UserManager::IamConnected();
+
+        $isConnected = false;
+        if($message) {
+            $userId = (auth()->id() == $message->client_id) ? $message->user_id : $message->client_id;
+            $isConnected = UserManager::isConnected((int)$userId);
+        }
+
         return response()->json([
             'done' => true,
             'error' => false,
             'message' => $message ? $message->toArray() : [],
+            'isConnected' => $isConnected,
         ]);
     }
 
@@ -59,6 +78,39 @@ class MessageController extends Controller
             'done' => true,
             'error' => false,
             'conversation' => $conversation,
+        ]);
+    }
+
+    public function startChatWith(User $driver) : RedirectResponse {
+        $user = auth()->user();
+
+        $message = MessengerManager::createChat($driver->id, $user->id, $user->id, request()->input('content'));
+
+        return response()->redirectToRoute('dashboard_messenger_show', [
+            'token' => $message->token,
+        ]);
+    }
+
+
+    public function seen() : JsonResponse {
+        $message = Message::where('id', '=', (int)request()->input('id'))->first();
+        if(!$message) {
+
+            return response()->json([
+                'done' => false,
+                'error' => true,
+                'message' => 'Message not found!',
+            ]);
+        }
+
+        $message
+            ->seen()
+            ->save();
+
+        return response()->json([
+            'done' => true,
+            'error' => false,
+            'message' => $message->toArray(),
         ]);
     }
 }

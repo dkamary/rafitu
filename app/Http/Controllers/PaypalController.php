@@ -33,6 +33,8 @@ class PaypalController extends Controller
                 'status' => $createOrderResponse->getStatus(),
                 'create_time' => date('Y-m-d H:i:s'),
                 'reservation_id' => $reservation->id,
+                'payer_id' => null,
+                'source' => Order::PAYPAL,
             ]);
         } catch(QueryException $ex) {
             if($ex->getCode() != 23000){

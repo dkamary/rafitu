@@ -14,14 +14,15 @@
     ];
     $user = Auth::user();
     $driver = $ride->getDriver();
+    $title = isset($result) ? $result->getMessage() : (isset($order) ? $order->getMessage() : 'N/A');
 @endphp
 
 @section('meta_title')
-    Paiement effectué
+    {!! $title !!}
 @endsection
 
 @section('hero')
-    @include('_partials.front.section.breadcrumbs', ['page_title' => 'Paiement effectué'])
+    @include('_partials.front.section.breadcrumbs', ['page_title' => $title])
 @endsection
 
 @section('main')
@@ -82,17 +83,31 @@
 
                 <div class="row border-top mt-3 py-3">
                     <div class="col-12">
-                        {{-- <form class="form" action="#" method="post" onsubmit="alert('Fonctionnalité bientôt disponible')">
-                            <input type="hidden" name="reservation_id" value="{{ $reservation->id }}">
-                            <input type="hidden" name="user_id" value="{{ $user ? $user->id : 0 }}">
-                            <div class="row">
-                                <div class="col-12 d-flex justify-content-center align-items-center">
-                                    <button type="submit" class="btn btn-primary" disabled>
-                                        Procéder au paiement
-                                    </button>
-                                </div>
+
+                        {{-- @dump(['result' => $result]) --}}
+
+                        @if($result->isWarning())
+
+                            <p class="py-4 text-warning fw-bold result-message">
+                                {!! $title !!}
+                            </p>
+
+                            @include('_partials.front.payment.choice', [
+                                'reservation' => $reservation,
+                            ])
+                        @elseif ($result->isSuccess())
+
+                            <p class="py-4 text-success fw-bold result-message">
+                                {!! $title !!}
+                            </p>
+
+                        @else
+
+                            <div class="py-4 text-success result-message">
+                                {!! $title !!}
                             </div>
-                        </form> --}}
+
+                        @endif
                     </div>
                 </div>
             </div>

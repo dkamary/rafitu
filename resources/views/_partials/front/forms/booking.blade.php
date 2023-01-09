@@ -18,7 +18,9 @@
     <div class="row">
         <div class="col-12 col-md-6">
             <div class="my-3">
-                <input type="number" name="passager" id="passager" class="form-control rounded-pill" placeholder="Passager" value="1" required min="1" max="6">
+                <input type="text" name="departure_address" id="departure_address" data-form="#booking-form-match" data-field="departure_label" class="form-control rounded-pill trajet-suggestion" placeholder="Adresse de départ" value="" required>
+                <input type="hidden" name="origin_lat" id="booking_origin_lat">
+                <input type="hidden" name="origin_lng" id="booking_origin_lng">
             </div>
         </div>
         <div class="col-12 col-md-6">
@@ -32,13 +34,6 @@
 
     <div class="row">
         <div class="col-12 col-md-6">
-            <div class="my-3">
-                <input type="text" name="departure_address" id="departure_address" data-form="#booking-form-match" data-field="departure_label" class="form-control rounded-pill trajet-suggestion" placeholder="Adresse de départ" value="" required>
-                <input type="hidden" name="origin_lat" id="booking_origin_lat">
-                <input type="hidden" name="origin_lng" id="booking_origin_lng">
-            </div>
-        </div>
-        <div class="col-12 col-md-6">
             <div class="my-3 input-group">
                 <input type="date" name="departure_date" id="departure_date" class="form-control rounded-pill" placeholder="Date de départ" value="">
                 <span class="input-group-text" id="departure_date_icon">
@@ -47,9 +42,6 @@
                 </span>
             </div>
         </div>
-    </div>
-
-    <div class="row">
         <div class="col-12 col-md-6">
             <div class="my-3 input-group">
                 <input type="time" name="time" id="departure_time" class="form-control rounded-pill" placeholder="Heure de départ" value=""  aria-label="Heure de départ" aria-describedby="departure_time_icon">
@@ -57,6 +49,14 @@
                     {{-- <i class="fa fa-clock-o" aria-hidden="true"></i> --}}
                     <img src="{{ asset('assets/images/icons/pending-clock-icon.svg') }}" alt="" style="height: 1.5rem; width: auto; cursor: pointer;" onclick="document.querySelector('#departure_time').showPicker();">
                 </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <div class="my-3">
+                <input type="number" name="passager" id="passager" class="form-control rounded-pill" placeholder="Passager" value="1" required min="1" max="6">
             </div>
         </div>
         <div class="col-12 col-md-6">

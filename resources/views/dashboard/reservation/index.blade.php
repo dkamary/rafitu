@@ -31,7 +31,7 @@
 
     @empty
         <div class="row my-4 border-top border-bottom">
-            <div class="col-12">
+            <div class="col-12 text-center">
                 <em>Vous n'avez pas encore fait aucune réservation pour le moment</em><br>
                 <a href="{{ route('trouver_trajet') }}" class="btn btn-primary my-4 px-3">
                     <i class="fa fa-search" aria-hidden="true"></i>&nbsp;

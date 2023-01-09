@@ -9,7 +9,7 @@
 
 @section('email_content')
     <h1>
-        Votre réservation a été réglée
+        La réservation suivante a été réglée par <strong>{{ $user->getFullname() }}</strong>
     </h1>
 
     <div style="margin-top: 15px auto;">
