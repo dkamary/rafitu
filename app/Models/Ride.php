@@ -14,7 +14,7 @@ class Ride extends Model
         'owner_id', 'vehicle_id', 'driver_id',
         'departure_label', 'departure_date', 'departure_position_long', 'departure_position_lat',
         'arrival_label', 'arrival_date', 'arrival_position_long', 'arrival_position_lat',
-        'seats_available', 'woman_only', 'price', 'smokers', 'animals',
+        'seats_available', 'woman_only', 'price', 'smokers', 'animals', 'talking', 'vaccin',
         'ride_status_id', 'distance', 'duration',
         'created_at', 'updated_at',
         'has_recurrence',
@@ -26,9 +26,19 @@ class Ride extends Model
     protected $driver = null;
     protected $itineraries = null;
     protected $reservations = null;
+    protected $seatsAvailable = null;
 
     public function __toString(): string
     {
+        return sprintf(
+            'Départ de %s à %s vers %s',
+            $this->departure_label,
+            $this->getDepartureDate(),
+            $this->arrival_label
+        );
+    }
+
+    public function toString() : string {
         return sprintf(
             'Départ de %s à %s vers %s',
             $this->departure_label,
@@ -76,13 +86,15 @@ class Ride extends Model
 
     public function getSeatsAvailable(): int
     {
+        if(!is_null($this->seatsAvailable)) return $this->seatsAvailable;
+
         $reservations = $this->getReservations();
         $count = 0;
         foreach ($reservations as $res) {
             $count += $res->passenger;
         }
 
-        return $this->seats_available - $count;
+        return $this->seatsAvailable = $this->seats_available - $count;
     }
 
     public function getItineraries()

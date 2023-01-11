@@ -432,4 +432,22 @@ class RideManager
         $data['price'] = $data['price'] ?? 0.0;
         $data['ride_status_id'] = $data['ride_status_id'] ?? null;
     }
+
+    public static function getRandomRides(int $count = 5) : ?Collection {
+        $ids = [];
+        $result = DB::table('ride')
+            ->select(['id'])
+            ->whereRaw('departure_date > NOW()')
+            ->where('ride_status_id', '=', 1)
+            ->get();
+        foreach($result as $row) {
+            $ids[] = (int)$row->id;
+        }
+
+        $randomIds = array_rand($ids, $count);
+
+        $rides = Ride::whereIn('id', $randomIds)->get();
+
+        return $rides;
+    }
 }

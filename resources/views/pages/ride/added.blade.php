@@ -60,12 +60,22 @@
                                                     <tbody class="col-lg-12 col-xl-6 p-0">
                                                         <tr>
                                                             <td><strong>Tarif :</strong></td>
-                                                            <td class="txt-rafitu">{{ $ride->price }}F CFA</td>
+                                                            <td class="txt-rafitu">{{ $ride->price }}F CFA / passager</td>
                                                         </tr>
                                                         <tr>
                                                             <td><strong>Nombre de sièges disponible:</strong></td>
                                                             <td class="txt-rafitu">{{ $ride->seats_available }}</td>
                                                         </tr>
+
+                                                        @if($ride->talking)
+                                                        <tr>
+                                                            <td colspan="2">
+                                                                <img src="{{ asset('images/conversation.svg') }}" alt="" class="indicator-icon" style="height: 3rem;"> &nbsp;
+                                                                <strong class="text-info">Discussion apprécié</strong>
+                                                            </td>
+                                                        </tr>
+                                                        @endif
+
                                                         @if($ride->woman_only)
                                                         <tr>
                                                             <td colspan="2">
@@ -73,6 +83,40 @@
                                                             </td>
                                                         </tr>
                                                         @endif
+
+                                                        <tr>
+                                                            <td colspan="2">
+                                                                @if ($ride->smokers == 1)
+                                                                    <img src="{{ asset('assets/images/icons/smoking-area-icon.svg') }}" alt="Fumeurs" class="indicator-icon" style="height: 3rem;">&nbsp;
+                                                                    Fumeurs autorisés
+                                                                @else
+                                                                    <img src="{{ asset('assets/images/icons/no-smoking-area-icon.svg') }}" alt="Non-fumeurs" class="indicator-icon" style="height: 3rem;">&nbsp;
+                                                                    Non fumeurs
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td colspan="2">
+                                                                @if ($ride->animals == 1)
+                                                                    <img src="{{ asset('assets/images/icons/pets-allowed-icon.svg') }}" alt="Animaux autorisés" class="indicator-icon" style="height: 3rem;">&nbsp;
+                                                                    Animaux autorisés
+                                                                @else
+                                                                    <img src="{{ asset('assets/images/icons/no-pets-allowed-icon.svg') }}" alt="Animaux non autorisés" class="indicator-icon" style="height: 3rem;">&nbsp;
+                                                                    Animaux non autorisés
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+
+                                                        @if ($ride->vaccing == 1)
+                                                        <tr>
+                                                            <td colspan="2">
+                                                                <img src="{{ asset('images/healthcare.svg') }}" alt="" class="indicator-icon"> &nbsp;
+                                                                Pass vaccinal peut être présenté
+                                                            </td>
+                                                        </tr>
+                                                        @endif
+
                                                     </tbody>
                                                 </table>
 
@@ -98,6 +142,16 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div class="row mt-5">
+                                            <div class="col-12 my-3">
+                                                <strong>Durée : </strong> <em>{{ $ride->getDuration(true) }}</em>
+                                            </div>
+                                            <div class="col-12 my-3">
+                                                <strong>Distance : </strong> <em>{{ $ride->getDistance() }}</em>
+                                            </div>
+                                        </div>
+
                                         <div class="row mt-5">
                                             <div class="col-12 text-center">
 

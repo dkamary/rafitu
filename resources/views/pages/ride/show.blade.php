@@ -200,7 +200,7 @@
     @endpush
 
     @push('footer')
-        <script defer>
+        <script defer id="ride-show-script">
             function displayItineraryMap() {
                 console.warn("Ride Show Handle Map!");
 
@@ -283,7 +283,7 @@
                     alert("Fonctionalité de messagerie bientôt disponible!");
                 });
 
-                const passager = document.querySelector("#passenger");
+                /*const passager = document.querySelector("#passenger");
                 if(passager) {
                     passager.addEventListener("change", e => {
                         e.preventDefault();
@@ -292,22 +292,16 @@
                             price: {{ $ride->price }}
                         });
                     });
-                }
+                }*/
 
                 const calcul = ({ count, price }) => {
                     console.debug("Calcul montant");
 
-                    const input = document.querySelector('#price');
                     const value = parseFloat(count) * parseFloat(price);
 
                     console.debug({ value });
 
-                    if(input) {
-                        input.value = value;
-                        document.querySelector('#amount').innerHTML = value;
-                    } else {
-                        console.warn("Unable to select #price!!!");
-                    }
+                    document.querySelector('#amount').innerHTML = value;
                 };
             });
         </script>

@@ -22,10 +22,12 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaypalController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\RideController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SuggestionController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\VehiculeAdminController;
 use Illuminate\Support\Facades\Route;
 
@@ -243,6 +245,7 @@ Route::prefix('paiement')->group(function(){
     Route::match(['get', 'post'], '/cinetpay/pay', [CinetPayController::class, 'pay'])->name('cinetpay_pay');
     Route::match(['get', 'post'], '/cinetpay/notification', [CinetPayController::class, 'notification'])->name('cinetpay_notification');
     Route::match(['get', 'post'], '/cinetpay/accepte', [CinetPayController::class, 'success'])->name('cinetpay_success');
+    Route::match(['get', 'post'], '/cinetpay/retour', [CinetPayController::class, 'retour'])->name('cinetpay_return');
     Route::match(['get', 'post'], '/cinetpay/annule', [CinetPayController::class, 'cancel'])->name('cinetpay_cancel');
     Route::match(['get', 'post'], '/cinetpay/echec', [CinetPayController::class, 'fail'])->name('cinetpay_fail');
 
@@ -293,6 +296,20 @@ Route::prefix('transactions')->group(function(){
 Route::prefix('newsletter')->group(function(){
     Route::post('/soumettre', [NewsletterController::class, 'submit'])->name('newsletter_submit');
     Route::get('/email-ajoutee', [NewsletterController::class, 'result'])->name('newsletter_email_added');
+});
+
+// VEHICULES
+Route::prefix('vehicule')->group(function(){
+    Route::get('/marques', [VehicleController::class, 'brands'])->name('vehicle_brands');
+    Route::get('/modeles', [VehicleController::class, 'models'])->name('vehicle_models');
+});
+
+// AVIS
+Route::prefix('avis')->group(function(){
+    Route::get('/', [ReviewController::class, 'index'])->name('review_index');
+    Route::get('/donner/{reservation}', [ReviewController::class, 'add'])->name('review_add');
+    Route::post('/soumettre', [ReviewController::class, 'submit'])->name('review_submit');
+    Route::get('/soumis/{reservation}', [ReviewController::class, 'complete'])->name('review_complete');
 });
 
 // FRONT OFFICE PAGE

@@ -42,6 +42,76 @@ class SearchController extends Controller {
     }
 
     public function match(Request $request) : RedirectResponse {
+        // dd($request);
+
+        $fullname = $request->input('fullname');
+        $email = $request->input('email');
+        $passager = (int)$request->input('passager');
+        $arrival_address = $request->input('arrival_address');
+        $departure_address = $request->input('departure_address');
+        $departure_date = $request->input('departure_date');
+        $time = $request->input('time');
+
+        $departure = new Position((float)$request->input('origin_lat'), (float)$request->input('origin_lng'));
+        $arrival = new Position((float)$request->input('destination_lat'), (float)$request->input('destination_lng'));
+
+        $date = $departure_date ? new DateTime($departure_date.' ' .$time) : null;
+
+        $builder = Ride::where('ride_status_id', '=', 1);
+        $resultatDeRecherche = $builder->where('departure_label', 'LIKE', $departure_address)
+            ->where('arrival_label', 'LIKE', $arrival_address)
+            ->orderBy('departure_date', 'ASC')
+            ->get();
+
+        if(!$resultatDeRecherche->count()) {
+            session()->put('sql', $builder->toSql());
+            session()->put('ride_match', []);
+            session()->put('trajet', null);
+            session()->put('passenger', (int)$passager);
+            session()->save();
+
+            // dump($resultatDeRecherche);
+            // dump(session()->get('ride_match'));
+
+            return response()->redirectToRoute('ride_match_result');
+        }
+
+        $trajetIdeal = null;
+        $suggestions = [];
+        $date = null;
+        if(!is_null($departure_date)) {
+            $date = new DateTime($departure_date . ($time ? ' ' . $time : ''));
+        }
+
+        foreach($resultatDeRecherche as $trajet) {
+            $disponible = $trajet->getSeatsAvailable();
+            if($disponible <= 0) continue;
+
+            if($disponible >= $passager) {
+                $trajetDepartDate = new DateTime($trajet->departure_date);
+                $diff = $date->diff($trajetDepartDate);
+                if($diff->d == 0 && $diff->h == 0 && $diff->i == 0) {
+                    $trajetIdeal = $trajet->id;
+
+                    break;
+                }
+            } else {
+                $suggestions[] = $trajet->id;
+            }
+        }
+
+        session()->put('sql', $builder->toSql());
+        session()->put('ride_match', $suggestions);
+        session()->put('trajet', $trajetIdeal);
+        session()->put('passenger', (int)$passager);
+        session()->save();
+
+        // dd(session());
+
+        return response()->redirectToRoute('ride_match_result');
+    }
+
+    public function match_old(Request $request) : RedirectResponse {
         $fullname = $request->input('fullname');
         $email = $request->input('email');
         $passager = (int)$request->input('passager');
@@ -73,8 +143,11 @@ class SearchController extends Controller {
     }
 
     public function matchResult() : View {
+        // dd(session()->get('ride_match'));
+
         $ids = session()->get('ride_match', []);
         $rides = Ride::whereIn('id', $ids)->get();
+        $theRide = Ride::where('id', '=', (int)session()->get('trajet', null))->first();
 
         // dd($rides);
 
@@ -86,6 +159,8 @@ class SearchController extends Controller {
             'title' => $title,
             'count' => $count,
             'sql' => session()->get('sql'),
+            'theRide' => $theRide,
+            'passenger' => (int)session()->get('passenger', 1),
         ]);
     }
 }

@@ -72,7 +72,7 @@ class PaypalManager
     {
         $curl = curl_init();
         $ride = $reservation->getRide();
-        $price = (float)$reservation->price;
+        $price = (float)$reservation->getAmount();
         if($price > 100) {
             $price /= 100;
         }

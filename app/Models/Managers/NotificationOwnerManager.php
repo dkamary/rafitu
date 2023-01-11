@@ -19,6 +19,7 @@ class NotificationOwnerManager implements NotificationInterface {
         ])->render();
 
         NotificationManager::sendEmail($email, $subject, $content);
+        NotificationManager::createNotificationInfo($owner->id, $subject, $ride->toString(), route('ride_show', ['ride' => $ride->id]));
     }
 
     public static function newReservation(Reservation $reservation) {
@@ -32,6 +33,7 @@ class NotificationOwnerManager implements NotificationInterface {
         ])->render();
 
         NotificationManager::sendEmail($email, $subject, $content);
+        NotificationManager::createNotificationInfo($owner->id, $subject, $reservation->toString(), route('dashboard_reservation_show', ['reservation' => $reservation->id]));
     }
 
     public static function cancelReservation(Reservation $reservation) {
@@ -45,6 +47,7 @@ class NotificationOwnerManager implements NotificationInterface {
         ])->render();
 
         NotificationManager::sendEmail($email, $subject, $content);
+        NotificationManager::createNotificationWarning($owner->id, $subject, $reservation->toString(), route('dashboard_reservation_show', ['reservation' => $reservation->id]));
     }
 
     public static function payReservation(Reservation $reservation) {
@@ -58,5 +61,6 @@ class NotificationOwnerManager implements NotificationInterface {
         ])->render();
 
         NotificationManager::sendEmail($email, $subject, $content);
+        NotificationManager::createNotificationSuccess($owner->id, $subject, $reservation->toString(), route('dashboard_reservation_show', ['reservation' => $reservation->id]));
     }
 }

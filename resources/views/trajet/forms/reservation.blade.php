@@ -6,6 +6,8 @@
     $dateDepart = $ride->getDateDeparture();
     $now = new \DateTime();
     $diff = $now->diff($dateDepart);
+    $showPassenger = $showPassenger ?? true;
+    $passenger = $passenger ?? 1;
 @endphp
 
 @if($diff->invert == 0)
@@ -23,14 +25,14 @@
                 <label class="col-6 d-flex justify-content-end align-items-center">
                     Passager(s):
                 </label>
-                <div class="col-2">
+                <div @class(["col-2", "d-none" => !$showPassenger])>
                     <input class="form-control" type="number" name="passenger" id="passenger" min="1"
-                        max="{{ $seatsAvailable }}" value="1"
+                        max="{{ $seatsAvailable }}" value="{{ $passenger }}"
                         placeholder="Il y a {{ $seatsAvailable }} place{{ $seatsAvailable > 1 ? 's' : '' }} de disponible"
                         required>
                 </div>
                 <div class="col-12 d-flex justify-content-center align-items-center fs-4 pt-2">
-                    <span id="amount" class="fw-bold">{{ $ride->price }}</span>
+                    <span id="amount" class="fw-bold">{{ $ride->price * $passenger }}</span>
                     <span id="currency">F CFA</span>
                 </div>
             </div>
@@ -38,7 +40,9 @@
                 <div class="col-12 d-flex justify-content-center align-items-center">
                     <button type="submit" class="btn btn-primary d-inline-flex justify-content-center align-items-center px-5">
                         <i class="fa fa-check-circle fa-2x" aria-hidden="true"></i>&nbsp;
-                        <span style="font-size: 1.2rem;">Réserver</span>
+                        <span style="font-size: 1.2rem;">
+                            {{ $reservation_text ?? 'Réserver' }}
+                        </span>
                     </button>
                 </div>
             </div>

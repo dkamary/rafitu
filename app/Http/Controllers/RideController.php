@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Managers\NotificationAdminManager;
 use App\Models\Managers\NotificationManager;
 use App\Models\Managers\ParamManager;
 use App\Models\Managers\RecurrenceManager;
@@ -86,6 +87,8 @@ class RideController extends Controller
             'animals' => $request->input('animals') == 'on' ? 1 : 0,
             'has_recurrence' => $request->input('recurrence') == 'yes' ? 1 : 0,
             'duration' => $request->input('duration'),
+            'talking' => $request->input('talking') == 'on' ? 1 : 0,
+            'vaccin' => $request->input('vaccing') == 'on' ? 1 : 0,
         ];
 
         $parameters = ParamManager::getParameters();
@@ -130,7 +133,7 @@ class RideController extends Controller
 
         RideItinerary::insert($dataItinerary);
 
-        NotificationManager::adminNewRide($ride);
+        NotificationAdminManager::newRide($ride);
 
         return response()->redirectToRoute('ride_complete', ['ride' => $ride]);
     }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\VehicleGallery;
+use App\Models\Vehicule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,8 +20,6 @@ class DriverController extends Controller
         if($request->isMethod(Request::METHOD_GET)) {
 
             return view('chauffeur.verification');
-
-            // return view('pages.ride.verification');
         }
 
         /**
@@ -77,6 +77,28 @@ class DriverController extends Controller
         $greyCardFile = $uniqId . '.' . $greyCard->getClientOriginalExtension();
         $greyCard->move(public_path('gray-cards/'), $greyCardFile);
         $user->gray_card_scan = $greyCardFile;
+
+        // vehicle
+        $vehicle = new Vehicule();
+        $vehicle->owner_id = (int)$user->id;
+        $vehicle->registration = uniqid();
+        $vehicle->vehicle_brand_id = (int)$request->input('vehicle_brand');
+        $vehicle->vehicle_model_id = (int)$request->input('vehicle_model');
+        $vehicle->save();
+
+        $vehicleImage = new VehicleGallery();
+        $image = $request->file('vehicle_main_image');
+        $uniqId = uniqid('vehicle-');
+        $vehicleMainImage = $uniqId . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('vehicles/'), $vehicleMainImage);
+        // 'vehicle_id', 'image_uri', 'title', 'description', 'alternate_text', 'rank'
+        $vehicleImage->vehicle_id = $vehicle->id;
+        $vehicleImage->image_uri = asset('vehicles/' . $vehicleMainImage);
+        $vehicleImage->title = "Image principale";
+        $vehicleImage->description = "";
+        $vehicleImage->alternate_text = "";
+        $vehicleImage->rank = 1;
+        $vehicleImage->save();
 
         $user->save();
 

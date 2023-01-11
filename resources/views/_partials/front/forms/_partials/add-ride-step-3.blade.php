@@ -53,6 +53,20 @@
         </div>
     </div>
 
+    <div class="control-group form-group">
+        <div class="form-group">
+            <label class="form-label text-dark">Aimez-vous discuter ?</label>
+            <input type="checkbox" name="talking" class="">
+        </div>
+    </div>
+
+    <div class="control-group form-group">
+        <div class="form-group">
+            <label class="form-label text-dark">Pouvez-vous présenter un pass vaccinal ?</label>
+            <input type="checkbox" name="vaccin" class="">
+        </div>
+    </div>
+
     <div class="form-group">
         <label class="form-label text-dark">Votre véhicule</label>
         <select name="vehicule_id" class="form-control form-select required category select2">

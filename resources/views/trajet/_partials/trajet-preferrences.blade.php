@@ -9,6 +9,15 @@
     <div class="col-12">
         <div class="row my-3 py-5 d-flex justify-content-between">
 
+            @if($ride->talking == 1)
+            <div class="col d-flex justify-content-center align-items-center">
+                <span class="text-info fw-bold">
+                    <img src="{{ asset('images/conversation.svg') }}" alt="" class="indicator-icon"> &nbsp;
+                    Aime bien discuter durant le trajet
+                </span>
+            </div>
+            @endif
+
             @if ($ride->woman_only == 1)
             <div class="col d-flex justify-content-center align-items-center">
                 <span class="text-info fw-bold">
@@ -41,6 +50,15 @@
                     @endif
                 </span>
             </div>
+
+            @if($ride->vaccing == 1)
+            <div class="col d-flex justify-content-center align-items-center">
+                <span class="text-info fw-bold">
+                    <img src="{{ asset('images/healthcare.svg') }}" alt="" class="indicator-icon"> &nbsp;
+                    Peut montrer un pass vaccinal
+                </span>
+            </div>
+            @endif
 
         </div>
     </div>

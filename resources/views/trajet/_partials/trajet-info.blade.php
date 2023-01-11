@@ -7,7 +7,7 @@
 
     $showPlaceLink = $showPlaceLink ?? true;
 
-    $reservationCount = $ride->getReservationsCount();
+    $siegeDisponibles = $ride->getSeatsAvailable();
     $titleOrigin = 'à environ ' . number_format($origin, 0, ',', ' ') . ' m de votre adresse de départ';
     $titleDestination = 'à environ ' . number_format($destination, 0, ',', ' ') . ' m de votre adresse d\'arrivée';
 @endphp
@@ -48,16 +48,6 @@
 
                 @include('trajet._partials.trajet-distance', ['distance' => $origin])
 
-                {{-- <span class="trajet__distance-evaluation bg-{{ !is_null($origin) && $origin < 1500 ? 'success' : 'light-none' }}">
-                    <img src="{{ asset('assets/img/walk-01.svg') }}" alt="">
-                </span>
-                <span class="trajet__distance-evaluation bg-{{ !is_null($origin) && $origin >= 1500 && $origin < 3000 ? 'warning' : 'light-none' }}">
-                    <img src="{{ asset('assets/img/walk-01.svg') }}" alt="">
-                </span>
-                <span class="trajet__distance-evaluation bg-{{ !is_null($origin) && $origin >= 3000 ? 'danger' : 'light-none' }}">
-                    <img src="{{ asset('assets/img/walk-01.svg') }}" alt="">
-                </span> --}}
-
             </td>
             <td class="text-end">
                 <sup class="fs-6">par passager</sup>
@@ -95,26 +85,12 @@
 
                 @include('trajet._partials.trajet-distance', ['distance' => $origin])
 
-                {{-- @if (!is_null($destination))
-
-                <span class="trajet__distance-evaluation bg-{{ !is_null($destination) && $destination < 1500 ? 'success' : 'light-none' }}">
-                    <img src="{{ asset('assets/img/walk-01.svg') }}" alt="">
-                </span>
-                <span class="trajet__distance-evaluation bg-{{ !is_null($destination) && $destination >= 1500 && $destination < 3000 ? 'warning' : 'light-none' }}">
-                    <img src="{{ asset('assets/img/walk-01.svg') }}" alt="">
-                </span>
-                <span class="trajet__distance-evaluation bg-{{ !is_null($destination) && $destination >= 3000 ? 'danger' : 'light-none' }}">
-                    <img src="{{ asset('assets/img/walk-01.svg') }}" alt="">
-                </span>
-
-                @endif --}}
-
                 <div @class([
                             'fw-bold my-3 fs-6',
-                            'text-danger' => ($ride->seats_available - $reservationCount) < 1,
-                            'text-info' => ($ride->seats_available - $reservationCount) > 0,
+                            'text-danger' => $siegeDisponibles < 1,
+                            'text-info' => $siegeDisponibles > 0,
                         ])>
-                        Siège disponible: <span class="fw-bold">{{ $ride->seats_available - $reservationCount }}</span>
+                        Siège disponible: <span class="fw-bold">{{ $siegeDisponibles }}</span>
                 </div>
             </td>
             <td>

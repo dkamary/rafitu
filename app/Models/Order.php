@@ -21,10 +21,16 @@ class Order extends Model {
     protected $table = 'order';
     protected $primaryKey = 'id';
     protected $fillable = ['id', 'intent', 'status', 'create_time', 'reservation_id', 'payer_id', 'source',];
+
     public $timestamps = false;
+    public $incrementing = false;
 
     protected $reservation;
     protected $links = null;
+
+    public function getId() : ?string {
+        return $this->id;
+    }
 
     public function getReservation() : ?Reservation {
         return ($this->reservation) ?: $this->reservation = Reservation::where('id', '=', (int)$this->reservation_id)->first();

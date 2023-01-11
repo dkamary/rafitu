@@ -122,43 +122,5 @@
         </script>
         <script defer async src="https://maps.googleapis.com/maps/api/js?key={{ Config::get('google.maps.api.key') }}&libraries=places&callback=displayItineraryMap"></script>
 
-        <script>
-            window.addEventListener("DOMContentLoaded", event => {
-                const messenger = document.querySelector('#messenger');
-                if(messenger) {
-                    messenger.addEventListener("click", e => {
-                        e.preventDefault();
-                        alert("Fonctionalité de messagerie bientôt disponible!");
-                    });
-                }
-
-                const passager = document.querySelector("#passenger");
-                if(passager) {
-                    passager.addEventListener("change", e => {
-                        e.preventDefault();
-                        calcul({
-                            count: passager.value,
-                            price: {{ $ride->price }}
-                        });
-                    });
-                }
-
-                const calcul = ({ count, price }) => {
-                    console.debug("Calcul montant");
-
-                    const input = document.querySelector('#price');
-                    const value = parseFloat(count) * parseFloat(price);
-
-                    console.debug({ value });
-
-                    if(input) {
-                        input.value = value;
-                        document.querySelector('#amount').innerHTML = value;
-                    } else {
-                        console.warn("Unable to select #price!!!");
-                    }
-                };
-            });
-        </script>
     @endpush
 @endonce

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Managers\CommissionManager;
 use App\Models\Managers\NotificationAdminManager;
 use App\Models\Managers\NotificationClientManager;
 use App\Models\Managers\NotificationManager;
@@ -14,10 +15,28 @@ use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\View\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CinetPayController extends Controller
 {
+    private function paymentEvent(Order $order, Reservation $reservation) {
+        // COMMISSION
+        $commissionPayment = CommissionManager::create($order);
+
+        // session()->flash('success', 'La réservation a été payé');
+
+        NotificationAdminManager::payReservation($reservation);
+        NotificationOwnerManager::payReservation($reservation);
+        NotificationClientManager::payReservation($reservation);
+    }
+
+    /**
+     * Paiement et Redirection vers CinetPay
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
     public function pay(Request $request) : RedirectResponse {
         $reservation = Reservation::where('id', '=', (int)$request->input('reservation_id'))->firstOrFail();
         $user = $reservation->getuser();
@@ -26,15 +45,15 @@ class CinetPayController extends Controller
         $transactionId = date('YmdHis');
         $apiKey = config('cinetpay.api_key');
         $siteId = config('cinetpay.site_id');
-        $notifyUrl = route('cinetpay_notification');
-        $returnUrl = route('cinetpay_success');
+        $notifyUrl = route('cinetpay_success');
+        $returnUrl = route('cinetpay_return');
         $cancelUrl = route('cinetpay_cancel');
         $channels = 'ALL';
 
         $params = [
             'transaction_id'=> $transactionId,
-            // 'amount'=> $reservation->price,
-            'amount'=> 100,
+            'amount'=> $reservation->getAmount(),
+            // 'amount'=> 100,
             'currency'=> config('cinetpay.currency'),
             'customer_surname'=> $user->firstname,
             'customer_name'=> $user->lastname,
@@ -83,6 +102,12 @@ class CinetPayController extends Controller
         return response()->redirectTo($result['data']['payment_url']);
     }
 
+    /**
+     * Notification de paiement
+     *
+     * @param Request $request
+     * @return void
+     */
     public function notification(Request $request) {
         $transactionId = $request->input('cpm_trans_id');
         /**
@@ -130,6 +155,8 @@ class CinetPayController extends Controller
                 ->save();
             $order->save();
 
+            $this->paymentEvent($order, $reservation);
+
             return response()->json([
                 'done' => true,
                 'error' => false,
@@ -147,9 +174,75 @@ class CinetPayController extends Controller
         }
     }
 
+    public function retour(Request $request) : View {
+        $token = $request->input('token');
+        $transactionId = $request->input('transaction_id');
+
+        if(!$transactionId) {
+
+            throw new Exception("Aucune donnée de transaction n'a été transmise de la plateforme de paiement vers notre site!");
+        }
+
+        $builder = Order::where('id', 'LIKE', $transactionId);
+        /**
+         * @var Order $order
+         */
+        $order = $builder->first();
+
+        if(!$order) {
+
+            throw new Exception("L'information de la transaction est introuvable [$transactionId]");
+        }
+
+        $reservation = $order->getReservation();
+
+        $apiKey = config('cinetpay.api_key');
+        $siteId = config('cinetpay.site_id');
+
+        $cinetpay = new CinetPay($siteId, $apiKey);
+        $cinetpay->getPayStatus($transactionId, $siteId);
+
+        if($cinetpay->chk_code == '662') {
+            NotificationClientManager::payNotDone($reservation);
+
+            return view('pages.payment.result', [
+                'reservation' => $reservation,
+                'order' => $order,
+                'result' => new Result(Result::STATUS_WARNING, "En attente de paiement. Veuillez compléter votre paiement!"),
+            ]);
+        } elseif($cinetpay->chk_code == '604') {
+            NotificationClientManager::payNotDone($reservation);
+
+            return view('pages.payment.result', [
+                'reservation' => $reservation,
+                'order' => $order,
+                'result' => new Result(Result::STATUS_WARNING, "Le code One Time Password fournis est incorrect!"),
+            ]);
+        } elseif($cinetpay->chk_code != '00') {
+            NotificationClientManager::payNotDone($reservation);
+
+            return view('pages.payment.result', [
+                'reservation' => $reservation,
+                'order' => $order,
+                'result' => new Result(Result::STATUS_WARNING, sprintf('Code: %s, Message: %s', $cinetpay->chk_code, $cinetpay->chk_message)),
+            ]);
+        }
+
+        return view('pages.payment.result', [
+            'reservation' => $reservation,
+            'order' => $order,
+            'result' => new Result(Result::STATUS_WARNING, "Nous n'avons pas pu déterminer le status du paiement que vous avez effectué!"),
+        ]);
+    }
+
     public function success(Request $request) {
         $token = $request->input('token');
         $transactionId = $request->input('transaction_id');
+
+        // dd([
+        //     'token' => $token,
+        //     'transactionID' => $transactionId,
+        // ]);
 
         if(!$transactionId) {
 
@@ -190,12 +283,21 @@ class CinetPayController extends Controller
                 'order' => $order,
                 'result' => new Result(Result::STATUS_WARNING, "En attente de paiement. Veuillez compléter votre paiement!"),
             ]);
+        }elseif($cinetpay->chk_code != '00') {
+            // dd($cinetpay);
+            // throw new Exception($cinetpay->chk_message);
+            $reservation = $order->getReservation();
+
+            NotificationClientManager::payNotDone($reservation);
+
+            return view('pages.payment.result', [
+                'reservation' => $order->getReservation(),
+                'order' => $order,
+                'result' => new Result(Result::STATUS_WARNING, $cinetpay->chk_message),
+            ]);
         }
 
-        // if($cinetpay->chk_code != '00') {
-        //     dd($cinetpay);
-        //     throw new Exception($cinetpay->chk_message);
-        // }
+        $reservation = $order->getReservation();
 
         if($order->status == Order::STATUS_CREATED) {
             $reservation = $order->getReservation();
@@ -212,11 +314,7 @@ class CinetPayController extends Controller
                 ->save();
             $order->save();
 
-            session()->flash('success', 'La réservation a été payé');
-
-            NotificationAdminManager::payReservation($reservation);
-            NotificationOwnerManager::payReservation($reservation);
-            NotificationClientManager::payReservation($reservation);
+            $this->paymentEvent($order, $reservation);
         }
 
         return view('pages.payment.result', [

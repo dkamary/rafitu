@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Managers\CommissionManager;
+use App\Models\Managers\NotificationAdminManager;
+use App\Models\Managers\NotificationClientManager;
+use App\Models\Managers\NotificationOwnerManager;
 use App\Models\Managers\PaypalManager;
 use App\Models\Order;
 use App\Models\OrderLink;
@@ -36,6 +40,22 @@ class PaypalController extends Controller
                 'payer_id' => null,
                 'source' => Order::PAYPAL,
             ]);
+
+            // dd([
+            //     'order' => $order,
+            //     'orderResponse' => $createOrderResponse,
+            //     'id' => $createOrderResponse->getId(),
+            // ]);
+
+            // COMMISSION
+            $commissionPayment = CommissionManager::create($order);
+
+            session()->flash('success', 'La réservation a été payé');
+
+            NotificationAdminManager::payReservation($reservation);
+            NotificationOwnerManager::payReservation($reservation);
+            NotificationClientManager::payReservation($reservation);
+
         } catch(QueryException $ex) {
             if($ex->getCode() != 23000){
                 dd($ex);
@@ -123,6 +143,15 @@ class PaypalController extends Controller
             $order->status = $capture->status;
         }
         $order->save();
+
+        // COMMISSION
+        $commissionPayment = CommissionManager::create($order);
+
+        session()->flash('success', 'La réservation a été payé');
+
+        NotificationAdminManager::payReservation($reservation);
+        NotificationOwnerManager::payReservation($reservation);
+        NotificationClientManager::payReservation($reservation);
 
         return view('pages.payment.result', [
             'reservation' => $reservation,

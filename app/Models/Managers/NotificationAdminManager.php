@@ -27,6 +27,7 @@ class NotificationAdminManager implements NotificationInterface {
         ])->render();
 
         NotificationManager::sendEmail($email, $subject, $content);
+        NotificationManager::createNotificationInfo(null, $subject, $ride->toString(), route('ride_show', ['ride' => $ride->id]));
     }
 
     public static function newReservation(Reservation $reservation) {
@@ -37,26 +38,29 @@ class NotificationAdminManager implements NotificationInterface {
         ])->render();
 
         NotificationManager::sendEmail($email, $subject, $content);
+        NotificationManager::createNotificationInfo(null, $subject, $reservation->toString(), route('reservation_show', ['reservation' => $reservation->id]));
     }
 
     public static function cancelReservation(Reservation $reservation) {
         $email = self::getAdminEmail();
-        $subject = 'Nouvelle réservation';
+        $subject = 'Réservation annulée';
         $content = view('templates.emails.admin.reservation-cancel', [
             'reservation' => $reservation,
         ])->render();
 
         NotificationManager::sendEmail($email, $subject, $content);
+        NotificationManager::createNotificationWarning(null, $subject, $reservation->toString(), route('reservation_show', ['reservation' => $reservation->id]));
     }
 
     public static function payReservation(Reservation $reservation) {
         $email = self::getAdminEmail();
-        $subject = 'Nouvelle réservation';
+        $subject = 'Réservation payée';
         $content = view('templates.emails.admin.reservation-pay', [
             'reservation' => $reservation,
         ])->render();
 
         NotificationManager::sendEmail($email, $subject, $content);
+        NotificationManager::createNotificationSuccess(null, $subject, $reservation->toString(), route('reservation_show', ['reservation' => $reservation->id]));
     }
 
     public static function newMessageToAdmin(Message $message) {

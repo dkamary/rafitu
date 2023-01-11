@@ -29,7 +29,7 @@
 
             <div class="row my-4">
                 <div class="col-12">
-                    @include('chauffeur.forms.chauffeur-verification')
+                    @include('chauffeur.forms.chauffeur-verification-v2')
                 </div>
             </div>
         </div>

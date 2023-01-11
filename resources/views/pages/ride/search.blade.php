@@ -39,15 +39,16 @@
     </div>
 </div>
 
-<div class="container-fluid py-5">
+{{-- <div class="container-fluid py-5">
     <div class="container">
         @include('_partials.front.section.homepage.statistiques')
     </div>
-</div>
+</div> --}}
 
 <div class="container-fluid bg-rafitu py-5">
     <div class="container">
         @include('_partials.front.section.homepage.pourquoi-nous-choisir')
     </div>
 </div>
+
 @endsection

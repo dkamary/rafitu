@@ -42,6 +42,22 @@
                         <em class="text-black-50">Aucun avis pour le moment</em>
                     </div>
                 </div>
+
+                @if($ride->vehicle_id)
+                    @php
+                        $vehicle = $ride->getVehicule();
+                    @endphp
+
+                    @if($vehicle)
+                    <div class="row my-4">
+                        <div class="col-12 d-flex justify-content-start align-items-center">
+                            <img class="me-2" src="{{ asset('images/sport-car.svg') }}" alt="voiture" style="height: 3rem">&nbsp;
+                            <strong>{{ $vehicle->getBrand()->name }}</strong><span class="mx-2">&nbsp;-&nbsp;</span><strong>{{ $vehicle->getModel()->label }}</strong>
+                        </div>
+                    </div>
+                    @endif
+
+                @endif
             </div>
         </div>
     </div>
