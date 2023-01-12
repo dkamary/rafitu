@@ -19,8 +19,8 @@
     <table class="table table-stripe">
         <thead>
             <tr>
-                <td class="col-6">Conversations</td>
-                <td class="col-2">Date</td>
+                <td class="col-5">Conversations</td>
+                <td class="col-3">Date</td>
                 <td class="col-2">Statut</td>
                 <td class="col-2">&nbsp;</td>
             </tr>
@@ -35,9 +35,10 @@
                             <span @class(['fw-bold' => ($last->is_seen == 0)])>{{ $last->content }}</span>
                         </a>
                     </td>
-                    <td>{{ (new \DateTime($last->date_sent))->format('d/m/Y') }}</td>
-                    <td>{{ $last->is_new == 1 ? 'Nouveau' : '' }}</td>
-                    <td>
+                    {{-- <td>{{ (new \DateTime($last->date_sent))->format('d/m/Y') }}</td> --}}
+                    <td class="text-center">{{ $last->displayDate('H:i') }}</td>
+                    <td class="text-center">{!! $last->is_new == 1 ? 'Nouveau' : '&hellip;' !!}</td>
+                    <td class="text-center">
                         <a href="{{ route('dashboard_messenger_show', ['token' => $last->token]) }}">Voir</a>
                     </td>
                 </tr>

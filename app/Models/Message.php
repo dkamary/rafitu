@@ -59,20 +59,20 @@ class Message extends Model
         return $this->client ?: $this->client = User::where('id', '=', (int)$this->client_id)->first();
     }
 
-    public function displayDate() : string {
+    public function displayDate(string $format = 'H:i:s') : string {
         if(!$this->date_sent) return 'n/a';
 
         $date = new DateTime($this->date_sent);
         $now = new DateTime();
         $diff = $now->diff($date);
         if($diff->d < 1) {
-            return 'Aujourd\'hui à ' . $date->format('H:i:s');
+            return 'Aujourd\'hui à ' . $date->format($format);
         } elseif($diff->d == 1) {
-            return 'Hier à ' . $date->format('H:i:s');
+            return 'Hier à ' . $date->format($format);
         } elseif($diff->d == 2) {
-            return 'Avant hier à ' . $date->format('H:i:s');
+            return 'Avant hier à ' . $date->format($format);
         } else {
-            return $date->format('d/m/Y à H:i:s');
+            return $date->format('d/m/Y à ' . $format);
         }
     }
 }

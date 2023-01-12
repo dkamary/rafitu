@@ -20,6 +20,11 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CinetPayController extends Controller
 {
+    public function __construct()
+    {
+        // $this->middleware('auth');
+    }
+
     private function paymentEvent(Order $order, Reservation $reservation) {
         // COMMISSION
         $commissionPayment = CommissionManager::create($order);
@@ -196,6 +201,11 @@ class CinetPayController extends Controller
 
         $reservation = $order->getReservation();
 
+        $user = $reservation->getuser();
+        if($user) {
+            auth()->login($user);
+        }
+
         $apiKey = config('cinetpay.api_key');
         $siteId = config('cinetpay.site_id');
 
@@ -205,7 +215,7 @@ class CinetPayController extends Controller
         if($cinetpay->chk_code == '662') {
             NotificationClientManager::payNotDone($reservation);
 
-            return view('pages.payment.result', [
+            return view('pages.payment.return', [
                 'reservation' => $reservation,
                 'order' => $order,
                 'result' => new Result(Result::STATUS_WARNING, "En attente de paiement. Veuillez compléter votre paiement!"),
@@ -213,7 +223,7 @@ class CinetPayController extends Controller
         } elseif($cinetpay->chk_code == '604') {
             NotificationClientManager::payNotDone($reservation);
 
-            return view('pages.payment.result', [
+            return view('pages.payment.return', [
                 'reservation' => $reservation,
                 'order' => $order,
                 'result' => new Result(Result::STATUS_WARNING, "Le code One Time Password fournis est incorrect!"),
@@ -221,14 +231,14 @@ class CinetPayController extends Controller
         } elseif($cinetpay->chk_code != '00') {
             NotificationClientManager::payNotDone($reservation);
 
-            return view('pages.payment.result', [
+            return view('pages.payment.return', [
                 'reservation' => $reservation,
                 'order' => $order,
                 'result' => new Result(Result::STATUS_WARNING, sprintf('Code: %s, Message: %s', $cinetpay->chk_code, $cinetpay->chk_message)),
             ]);
         }
 
-        return view('pages.payment.result', [
+        return view('pages.payment.return', [
             'reservation' => $reservation,
             'order' => $order,
             'result' => new Result(Result::STATUS_WARNING, "Nous n'avons pas pu déterminer le status du paiement que vous avez effectué!"),
@@ -320,7 +330,7 @@ class CinetPayController extends Controller
         return view('pages.payment.result', [
             'reservation' => $reservation,
             'order' => $order,
-            'result' => new Result(Result::STATUS_SUCCESS, "La réservation a été payé"),
+            'result' => new Result(Result::STATUS_SUCCESS, "La réservation a été payée"),
         ]);
     }
 

@@ -1,4 +1,4 @@
-{{-- Afficher le resultat de réservation --}}
+{{-- Retour de réservation --}}
 
 @extends('_layouts.front')
 
@@ -14,7 +14,8 @@
     ];
     $user = Auth::user();
     $driver = $ride->getDriver();
-    $title = isset($result) ? $result->getMessage() : (isset($order) ? $order->getMessage() : 'N/A');
+    // $title = isset($result) ? $result->getMessage() : (isset($order) ? $order->getMessage() : 'N/A');
+    $title = 'Le paiement n\'a pas aboutie';
 @endphp
 
 @section('meta_title')
@@ -29,12 +30,8 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-xl-8 mx-auto bg-white my-5 py-3">
-                {{-- <div class="row">
-                    <div class="col-12 text-center">
-                        <h2>Votre réservation</h2>
-                    </div>
-                </div> --}}
-                <div class="row border-top border-bottom mt-3 py-3">
+
+                <div class="row my-3 py-3">
                     <h2 @class([
                         'col-12 text-center fs-4',
                         'text-white',
@@ -47,13 +44,15 @@
                         {!! isset($result) ? $result->getMessage() : (isset($order) ? $order->getMessage() : 'N/A') !!}
                     </h2>
                 </div>
+
                 <div class="row py-3">
                     <div class="col-12">
-
                         <div class="row trajet trajet__unique">
                             <div class="col-12 py-5 bg-white">
 
-                                @include('trajet._partials.date', ['ride' => $ride])
+                                <h3 class="txt-rafitu text-center">
+                                    Réservation du {{ DateManager::dateFr($ride->getDateDeparture()) }}
+                                </h3>
 
                                 {{-- <hr>
 
@@ -69,7 +68,7 @@
 
                                 <hr>
 
-                                {{-- @include('trajet._partials.itineraire', ['ride' => $ride, 'title' => 'L\'itinéraire du trajet']) --}}
+                                @include('trajet._partials.itineraire', ['ride' => $ride, 'title' => 'L\'itinéraire du trajet'])
 
                                 <hr>
 
@@ -85,7 +84,6 @@
 
                             </div>
                         </div>
-
                     </div>
                 </div>
 
