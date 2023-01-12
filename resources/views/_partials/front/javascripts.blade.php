@@ -491,3 +491,23 @@
         });
     };
 </script>
+
+<script id="jquery-functionalities">
+    (function($){
+
+        $(function(){
+            const $document = $(document);
+            const $viewport = $('html, body');
+            $document
+                .on('click', '.scroll-to', e => {
+                    e.preventDefault();
+                    const $this = $(e.currentTarget);
+                    const $target = $($this.attr('href'));
+                    $viewport.animate({
+                        scrollTop: $target.offset().top - 32
+                    }, 1000);
+                });
+        });
+
+    }(window.jQuery));
+</script>
