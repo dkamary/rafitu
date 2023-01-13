@@ -9,6 +9,7 @@ use App\Http\Controllers\CinetPayController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\ContactAdminController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\CronController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DriverAdminController;
 use App\Http\Controllers\DriverController;
@@ -23,6 +24,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaypalController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\RideAdminController;
 use App\Http\Controllers\RideController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SuggestionController;
@@ -185,6 +187,22 @@ Route::prefix('admin')->group(function () {
     Route::prefix('contact')->group(function(){
         Route::match(['get', 'post'], '/', [ContactAdminController::class, 'index'])->name('admin_contact_index');
     });
+
+    // TRANSACTIONS
+    Route::prefix('transactions')->group(function(){
+        Route::get('/paiements', [AdminTransactionController::class, 'paiements'])->name('transaction_paiements');
+        Route::match(['get', 'post',], '/commissions', [AdminTransactionController::class, 'commissions'])->name('transaction_commissions');
+        Route::get('/remboursements', [AdminTransactionController::class, 'remboursements'])->name('transaction_remboursements');
+        Route::get('/mode-de-paiements', [AdminTransactionController::class, 'modePaiements'])->name('transaction_mode_de_paiements');
+        Route::post('/mode-de-paiements/cinetpay', [AdminTransactionController::class, 'updateCinetPay'])->name('transaction_mode_de_paiements_cinetpay');
+        Route::post('/mode-de-paiements/paypal', [AdminTransactionController::class, 'updatePaypal'])->name('transaction_mode_de_paiements_paypal');
+    });
+
+    // TRAJET
+    Route::prefix('trajet')->group(function(){
+        Route::get('/', [RideAdminController::class, 'index'])->name('admin_ride_index');
+        Route::match(['get', 'post'], '/parameters', [RideAdminController::class, 'parameters'])->name('admin_ride_parameters');
+    });
 });
 
 // CONTACT
@@ -282,16 +300,6 @@ Route::prefix('chauffeur')->group(function(){
     Route::get('/{driver}', [DriverController::class, 'show'])->name('driver_show');
 });
 
-// TRANSACTIONS
-Route::prefix('transactions')->group(function(){
-    Route::get('/paiements', [AdminTransactionController::class, 'paiements'])->name('transaction_paiements');
-    Route::match(['get', 'post',], '/commissions', [AdminTransactionController::class, 'commissions'])->name('transaction_commissions');
-    Route::get('/remboursements', [AdminTransactionController::class, 'remboursements'])->name('transaction_remboursements');
-    Route::get('/mode-de-paiements', [AdminTransactionController::class, 'modePaiements'])->name('transaction_mode_de_paiements');
-    Route::post('/mode-de-paiements/cinetpay', [AdminTransactionController::class, 'updateCinetPay'])->name('transaction_mode_de_paiements_cinetpay');
-    Route::post('/mode-de-paiements/paypal', [AdminTransactionController::class, 'updatePaypal'])->name('transaction_mode_de_paiements_paypal');
-});
-
 // NEWSLETTER
 Route::prefix('newsletter')->group(function(){
     Route::post('/soumettre', [NewsletterController::class, 'submit'])->name('newsletter_submit');
@@ -310,6 +318,12 @@ Route::prefix('avis')->group(function(){
     Route::get('/donner/{reservation}', [ReviewController::class, 'add'])->name('review_add');
     Route::post('/soumettre', [ReviewController::class, 'submit'])->name('review_submit');
     Route::get('/soumis/{reservation}', [ReviewController::class, 'complete'])->name('review_complete');
+});
+
+// CRON
+Route::prefix('cron')->group(function(){
+    Route::get('/commissions', [CronController::class, 'commissions'])->name('cron_commissions');
+    Route::get('/avis', [CronController::class, 'reviews'])->name('cron_reviews');
 });
 
 // FRONT OFFICE PAGE

@@ -28,7 +28,7 @@
 
 <!-- ECharts Plugin -->
 <script src="{{ asset('assets/plugins/echarts/echarts.js') }}"></script>
-<script src="{{ asset('assets/js/index1.js') }}"></script>
+{{-- <script src="{{ asset('assets/js/index1.js') }}"></script> --}}
 
 <!-- Custom Js-->
 <script src="{{ asset('assets/js/admin-custom.js') }}"></script>

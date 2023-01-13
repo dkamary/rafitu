@@ -2,9 +2,14 @@
 
 @php
     $formId = 'form-user-new';
-    $isNew = !isset($user) || is_null($user);
+    $isNew = !isset($user) || is_null($user) || is_null($user->id);
     $user = isset($user) ? $user : User::createEmptyUser();
-    $savingRoute = $isNew ? route('admin_user_new') : route('admin_user_edit', ['user' => $user]);
+    // dd($isNew);
+    $savingRoute = route('admin_user_new');
+    if(!$isNew) {
+        dd($isNew);
+        $savingRoute = route('admin_user_edit', ['user' => $user]);
+    }
 @endphp
 
 <form action="{{ $savingRoute }}" method="post" id="{{ $formId }}">

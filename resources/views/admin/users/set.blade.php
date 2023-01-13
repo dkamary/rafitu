@@ -15,7 +15,7 @@
 @section('main')
     @include('_partials.back.section.breadcrumbs', ['page_title' => $page_title, ['page_parents' => [['route' => 'admin_user_index', 'text' => 'Utilisateurs']]]])
 
-    <div class="row">
+    <div class="row py-6 bg-white">
         <div class="col-12">
             <div class="row">
                 <div class="col-12">

@@ -24,7 +24,7 @@
             <i class="dropdown-icon icon icon-home"></i>&nbsp;
             Site
         </a>
-        <a class="dropdown-item" href="{{ route('admin_user_edit', ['user' => $driver]) }}">
+        <a class="dropdown-item" href="{{ route('admin_user_edit', ['user' => Auth::user()]) }}">
             <i class="dropdown-icon icon icon-user"></i>&nbsp;
             Mon Profil
         </a>

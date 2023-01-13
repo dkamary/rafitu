@@ -4,9 +4,12 @@ namespace App\Models\Managers;
 
 use App\Models\Parameter;
 use App\Models\Reservation;
+use App\Models\ReviewHistory;
 use App\Models\Ride;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ReservationManager {
     public static function getDataFromRequest(Request $request) : array {
@@ -31,5 +34,34 @@ class ReservationManager {
             'commission_type' => $commissionType,
             'status' => Reservation::STATUS_UNPAID,
         ];
+    }
+
+    public static function getReservationsFinished() : Collection {
+        $results = DB::table('review_history')
+            ->select(['reservation_id'])
+            ->where('status', 'like', ReviewHistory::STATUS_SENT)
+            ->get();
+
+        $excludeReservations = [];
+        foreach($results as $r) {
+            $excludeReservations[] = (int)$r->reservation_id;
+        }
+
+        $results = DB::table('ride')
+            ->select(['id'])
+            ->where('arrival_date', '<', date('Y-m-d H:i:s'))
+            ->get();
+
+        $rideIds = [];
+        foreach($results as $r) {
+            $rideIds[] = (int)$r->id;
+        }
+
+        $finished = Reservation::whereIn('ride_id', $rideIds)
+            ->whereNotIn('id', $excludeReservations)
+            ->orderBy('reservation_date', 'asc')
+            ->get();
+
+        return $finished;
     }
 }

@@ -2,8 +2,11 @@
 
 namespace App\Console;
 
+use App\Models\Managers\CronManager;
+use Exception;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Log;
 
 class Kernel extends ConsoleKernel
 {
@@ -15,7 +18,17 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->call(function(){
+
+            $result = CronManager::commissions();
+
+            Log::info($result->getMessage(), ['data' => $result->getData()]);
+        })->hourly();
+
+        $schedule->call(function(){
+            $result = CronManager::reviews();
+            Log::info($result->getMessage(), ['data' => $result->getData()]);
+        })->hourlyAt(30);
     }
 
     /**
