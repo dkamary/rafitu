@@ -201,7 +201,7 @@ Route::prefix('admin')->group(function () {
     // TRAJET
     Route::prefix('trajet')->group(function(){
         Route::get('/', [RideAdminController::class, 'index'])->name('admin_ride_index');
-        Route::match(['get', 'post'], '/parameters', [RideAdminController::class, 'parameters'])->name('admin_ride_parameters');
+        Route::match(['get', 'post'], '/parametres', [RideAdminController::class, 'parameters'])->name('admin_ride_parameters');
     });
 });
 

@@ -125,6 +125,42 @@ class DashboardManager {
         ];
     }
 
+    public static function getDates(bool $reverse = false, ?int $year = null, ?int $month = null) : array {
+        $year = $year ?? (int)date('Y');
+        $month = $month ?? (int)date('m');
+
+        $_months = [1 => 'Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aout', 'Sept', 'Oct', 'Nov', 'Déc',];
+
+        $dates = [];
+        $m = $month;
+        for($i = 0; $i < 12; $i++) {
+            $m = $month - $i;
+            $y = $year;
+            if($m < 1) {
+                $y = $y - 1;
+                $m = ($m + 12);
+            }
+            $dates[] = (object)[
+                'month' => $_months[$m] ?? $m,
+                'm' => $m,
+                'y' => $y,
+            ];
+        }
+
+        return !$reverse ? $dates : array_reverse($dates);
+    }
+
+    public static function trajets(bool $reverse = false, ?int $year = null, ?int $month = null) : array {
+        $dates = self::getDates($reverse, $year, $month);
+
+        $trajets = [];
+        foreach($dates as $date) {
+            $trajets[] = self::trajetParMois($date->m, $date->y);
+        }
+
+        return $trajets;
+    }
+
     public static function reservationParMois(string $status, int $mois, ?int $annee = null) : int {
         if($mois < 1 || $mois > 12) return 0;
         if(!$annee) $annee = (int)date('Y');
@@ -156,5 +192,16 @@ class DashboardManager {
             self::reservationParMois($status, 11, $annee),
             self::reservationParMois($status, 12, $annee),
         ];
+    }
+
+    public static function reservations(bool $reverse = false, string $status = 'all', ?int $year = null, ?int $month = null) : array {
+        $dates = self::getDates($reverse, $year, $month);
+
+        $reservations = [];
+        foreach($dates as $date) {
+            $reservations[] = self::reservationParMois($status, $date->m, $date->y);
+        }
+
+        return $reservations;
     }
 }

@@ -2,7 +2,7 @@
 
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Evolution</h3>
+        <h3 class="card-title">Evolution des trajets et des réservations</h3>
     </div>
     <div class="card-body">
         <div class="chart-wrapper">
@@ -23,16 +23,21 @@
 
                 /* chartjs (#sales-status) */
 
+                const labels = [];
+                @foreach (DashboardManager::getDates(true) as $date)
+                labels.push("{{ $date->month . ' ' . $date->y }}");
+                @endforeach
+
                 var ctx = $('#sales-status');
                     ctx.height(310);
                     var myChart = new Chart(ctx, {
                         type: 'line',
                         data: {
-                            labels: ["jan", "fev", "mar", "avr", "mai", "juin", "juil", "aout", "sept", "oct", "nov", "dec"],
+                            labels: labels,
                             type: 'line',
                             datasets: [{
                                 label: "Trajets",
-                                data: {{ json_encode(DashboardManager::trajetParAnnee()) }},
+                                data: {{ json_encode(DashboardManager::trajets(true)) }},
                                 backgroundColor: 'transparent',
                                 borderColor: '#ec296b ',
                                 borderWidth: 3,
@@ -42,7 +47,7 @@
                                 pointBackgroundColor: '#ec296b',
                             }, {
                                 label: "Reservations",
-                                data: {{ json_encode(DashboardManager::reservationParAnnee()) }},
+                                data: {{ json_encode(DashboardManager::reservations(true)) }},
                                 backgroundColor: 'transparent',
                                 borderColor: '#4801ff',
                                 borderWidth: 3,

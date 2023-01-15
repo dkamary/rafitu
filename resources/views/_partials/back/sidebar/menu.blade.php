@@ -5,7 +5,7 @@
         <a class="side-menu__item" data-bs-toggle="slide" href="{{ route('admin') }}">
             <i class="side-menu__icon fa fa-tachometer"></i>
             <span class="side-menu__label">Tableau de bord</span>
-            <i class="angle fa fa-angle-right"></i>
+            {{-- <i class="angle fa fa-angle-right"></i> --}}
         </a>
     </li>
     <li class="slide">
@@ -83,6 +83,7 @@
             <li><a href="{{ route('transaction_mode_de_paiements') }}" class="slide-item">Modes de paiement</a></li>
             <li><a href="{{ route('admin_brand_index') }}" class="slide-item">Marque des véhicules</a></li>
             <li><a href="{{ route('admin_contact_index') }}" class="slide-item">Contacts</a></li>
+            <li><a href="{{ route('admin_ride_parameters') }}" class="slide-item">Trajets</a></li>
         </ul>
     </li>
 </ul>

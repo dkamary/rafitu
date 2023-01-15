@@ -2,8 +2,12 @@
 
 @extends('_layouts.back')
 
+@php
+    $isNew = $brand->id == 0;
+@endphp
+
 @section('meta_title')
-    @if($brand->id > 0)
+    @if(!$isNew)
     Modèle {{ $model->label }}
     @else
     Nouveau modèle pour la marque {{ $brand->name }}
@@ -23,7 +27,7 @@
             </a>
             <button id="btn-save-alias" class="btn btn-primary rounded-pill">
                 <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;
-                Enregistrer le nouveau modèle
+                Enregistrer
             </button>
         </div>
     </div>
@@ -51,7 +55,7 @@
                     <div class="col-12 text-center">
                         <button type="submit" class="btn btn-primary rounded-pill" id="btn-submit">
                             <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;
-                            Enregistrer le nouveau modèle
+                            Enregistrer
                         </button>
                     </div>
                 </div>

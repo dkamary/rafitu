@@ -21,6 +21,8 @@ class RideAdminController extends Controller
             session()->flash('success', 'Paramètre mis à jour');
         }
 
-        return view('');
+        return view('admin.ride.parameters', [
+            'parameters' => $parameters,
+        ]);
     }
 }

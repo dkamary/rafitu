@@ -1,9 +1,13 @@
 {{-- Edition de Marque de véhicule --}}
 
+@php
+    $isNew = $brand->id == 0;
+@endphp
+
 @extends('_layouts.back')
 
 @section('meta_title')
-    @if($brand->id > 0)
+    @if(!$isNew)
     Marque {{ $brand->name }}
     @else
     Nouvelle marque de véhicule
@@ -11,7 +15,7 @@
 @endsection
 
 @section('main')
-    @include('_partials.back.section.breadcrumbs', ['page_title' => ($brand->id > 0) ? ('Marque ' . $brand->name) : 'Nouvelle marque de vehicule'])
+    @include('_partials.back.section.breadcrumbs', ['page_title' => ($isNew) ? ('Marque ' . $brand->name) : 'Nouvelle marque de vehicule'])
 
     @include('_partials.back.notifications.flash-message')
 
@@ -23,7 +27,7 @@
             </a>
             <button id="btn-save-alias" class="btn btn-primary rounded-pill">
                 <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;
-                Enregistrer la nouvelle marque
+                Enregistrer
             </button>
         </div>
     </div>
@@ -51,7 +55,7 @@
                     <div class="col-12 text-center">
                         <button type="submit" class="btn btn-primary rounded-pill" id="btn-submit">
                             <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;
-                            Enregistrer la nouvelle marque
+                            Enregistrer
                         </button>
                     </div>
                 </div>

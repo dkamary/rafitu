@@ -10,6 +10,11 @@ use Illuminate\View\View;
 
 class BrandAdminController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth.admin');
+    }
+
     public function index(Request $request) : View {
         $builder = VehiculeBrand::where('is_active', '=', 1);
         $search = $request->input('search');
