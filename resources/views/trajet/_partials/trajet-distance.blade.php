@@ -9,7 +9,7 @@
     $distance = $distance ?? 0;
 @endphp
 
-<div class="trajet__distance-container">
+<div class="trajet__distance-container mb-4">
     @if($distance == 0)
         <img src="{{ asset('images/marker-none.svg') }}" alt="">
         <img src="{{ asset('images/marker-none.svg') }}" alt="">

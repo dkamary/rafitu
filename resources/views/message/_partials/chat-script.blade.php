@@ -114,6 +114,10 @@
             }
 
             function responsiveChat(element) {
+                @guest
+                console.debug("Visiteur n'est pas connecté! Pas de système de messagerie!");
+                return;
+                @endguest
                 $(element).html('<form class="chat"><span></span><div class="messages"></div><div class="d-flex p-2 w-100 justify-content-between align-items-center bg-rafitu"><input type="text" class="" placeholder="Votre message"><button type="submit" class=""><i class="fa fa-paper-plane" aria-hidden="true"></i></button></div></form>');
 
                 if(localStorage.getItem('message_token')) {

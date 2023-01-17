@@ -1,5 +1,9 @@
 {{-- Login --}}
 
+@php
+    $discussionBalloon = false;
+@endphp
+
 @extends('_layouts.front')
 
 @section('meta_title')

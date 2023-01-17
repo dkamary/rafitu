@@ -307,14 +307,12 @@
         min-width: 300px;
         max-width: 100vw;
         max-height: 100vh;
-        height: 3rem;
-        background-color: #ffffff;
+        height: 5rem;
+
         margin: 0 auto;
         position: fixed;
-        right: 2%;
+        right: 1%;
         bottom: 0%;
-        border: solid 2px #cfcfcf;
-        border-radius: 5px 5px 0px 0px;
         transition: .8s;
         overflow: hidden;
         z-index: 99999;
@@ -323,6 +321,9 @@
     .chat-container.show {
         height: 300px;
         min-height: 300px;
+        background-color: #ffffff;
+        border: solid 2px #cfcfcf;
+        border-radius: 5px 5px 0px 0px;
     }
 
     .chat-container.show .border {
@@ -351,5 +352,43 @@
         padding: 10px 20px;
         border-radius: 25px;
         font: 400 15px 'Open Sans', sans-serif;
+    }
+
+    #discussion-toggle {
+        border-radius: 50%;
+        text-align: center;
+        box-shadow: 0px 0px 5px 5px rgba(255, 255, 255, .3);
+        margin-top: 10px;
+        transition: .5s;
+    }
+
+    #discussion-toggle i.fa {
+        font-size: 2rem;
+    }
+
+    #discussion-toggle .text {
+        display: none;
+        opacity: 0;
+        transition: .5s;
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 5px;
+        z-index: 100000;
+    }
+
+    .chat-container.show #discussion-toggle .text {
+        display: inline-block;
+        opacity: 1;
+    }
+
+    .chat-container.show #discussion-toggle {
+        border-radius: 5px 5px 0px 0px;
+        box-shadow: unset;
+        margin-top: 0px;
+        width: 100%;
     }
 </style>

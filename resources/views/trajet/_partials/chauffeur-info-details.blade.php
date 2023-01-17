@@ -58,18 +58,6 @@
                     @endif
 
                 @endif
-
-                <div class="row">
-                    <div class="col-12 pt-4 pb-1">
-                        @include('message._partials.start-chat', [
-                            'sender' => $user,
-                            'receiver' => $driver,
-                            'btn_chat_icon' => sprintf('<img src="%s" alt="" style="height: 2rem; width: auto">', asset('images/comments.png')),
-                            'btn_chat_classes' => 'btn btn-xs btn-outline-primary fs-5',
-                            'btn_chat_text' => 'Contacter ' . $driver->firstname,
-                        ])
-                    </div>
-                </div>
             </div>
             <div class="col-4">
                 <div class="d-flex justify-content-end align-items-center">
@@ -81,6 +69,17 @@
                         <i class="fa fa-chevron-right fa-2x" aria-hidden="true"></i>
                     </a>
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 pt-4 pb-1">
+                @include('message._partials.start-chat', [
+                    'sender' => $user,
+                    'receiver' => $driver,
+                    'btn_chat_icon' => sprintf('<img src="%s" alt="" style="height: 2rem; width: auto">', asset('images/comments.png')),
+                    'btn_chat_classes' => 'btn btn-xs btn-outline-primary fs-5',
+                    'btn_chat_text' => 'Contacter ' . $driver->firstname,
+                ])
             </div>
         </div>
     </div>
