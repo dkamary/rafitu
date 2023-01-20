@@ -219,6 +219,15 @@
     .rafitu-body .horizontalMenu > .horizontalMenu-list > li > ul.sub-menu > li:hover > a {
         background-color: #4c6dff;
     }
+
+    .rafitu-body .btn-primary:not(:disabled):not(.disabled):active,
+    .rafitu-body .btn-primary:not(:disabled):not(.disabled).active,
+    .rafitu-body .btn-check:focus + .btn-primary,
+    .rafitu-body .btn-primary:focus {
+        border-color: #ff8c00;
+        background-color: #ff8c00;
+        color: #ffffff;
+    }
 </style>
 
 <style id="icon-payment-styles">

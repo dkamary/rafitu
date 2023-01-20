@@ -36,6 +36,7 @@
             <button type="submit" class="btn btn-lg btn-block btn-primary br-ts-md-0 br-bs-md-0">
                 <span>
                     <i class="fa fa-search" aria-hidden="true"></i>
+                    {!! $search_button_text ?? '' !!}
                     {{-- <img src="{{ asset('assets/images/icons/search-location.svg') }}" alt="" style="height: 1.5rem; width: auto;"> --}}
                 </span>
             </button>

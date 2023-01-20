@@ -6,17 +6,20 @@
     $other = $last->getUser();
     $client = $last->getClient();
 
-    $avatar = $other ? $other->getAvatar() : null;
-    $driverAvatar = $avatar;
-    if($avatar) {
-        if(strpos($avatar, 'http') !== false) {
-            $driverAvatar = $avatar;
-        } else {
-            $driverAvatar = asset('avatars/' . $avatar);
-        }
-    } else {
-        $driverAvatar = asset('avatars/user-01.svg');
-    }
+    // $avatar = $other ? $other->getAvatar() : null;
+    // $driverAvatar = $avatar;
+    // if($avatar) {
+    //     if(strpos($avatar, 'http') !== false) {
+    //         $driverAvatar = $avatar;
+    //     } else {
+    //         $driverAvatar = asset('avatars/' . $avatar);
+    //     }
+    // } else {
+    //     $driverAvatar = asset('avatars/user-01.svg');
+    // }
+
+    $avatar = get_avatar($conversation['receiver']);
+    $firstname = isset($conversation['receiver']) && !is_null($conversation['receiver']) ? $conversation['receiver']->firstname : 'RAFITU';
 @endphp
 
 @extends('dashboard._layout.base')
@@ -33,11 +36,15 @@
     <div class="row mb-4 bg-rafitu text-white">
         <div class="col-12">
             {{-- @dump([
-                'last' => $last,
-                'other' => $other,
-                'client' => $client
+                // 'last' => $last,
+                // 'other' => $other,
+                // 'client' => $client,
+                'conversation' => [
+                    'receiver' => $conversation['receiver']->email,
+                    'sender' => $conversation['sender']->email
+                ],
             ]) --}}
-            <h2 class="fw-bold fs-3 my-4">{{ $other->id != $user->id ? $other->firstname : ($client ? $client->firstname : 'Conversation') }}</h2>
+            <h2 class="fw-bold fs-3 my-4">{{ $firstname }}</h2>
         </div>
     </div>
     <div class="message-container">
@@ -45,19 +52,22 @@
             <div class="col-12 d-flex flex-column px-0">
                 @foreach ($messages as $msg)
                     @php
-                        $isMe = $msg->sender == $user->id;
+                        $isMe = ($msg->sender == $user->id || is_null($msg->sender));
                     @endphp
                 <div id="message-{{ $msg->id }}"
+                    data-user_id="{{ $msg->user_id }}"
+                    data-client_id="{{ $msg->client_id }}"
+                    data-sender_id="{{ $msg->sender }}"
                     @class([
                         'message-wrapper',
                         'me' => $isMe,
-                        'you' => !$isMe]
-                    )
+                        'you' => !$isMe,
+                        ])
                 >
-                    @if($msg->sender != $user->id)
+                    @if(!$isMe)
                         <div class="message-user">
                             <a href="#" class="avatar" onclick="return false;">
-                                <img src="{{ $driverAvatar }}" alt="{{ $other->getFullname() }}">
+                                <img src="{{ $avatar }}" alt="{{ $other->getFullname() }}">
                             </a>
                             <span class="state"></span>
                         </div>
@@ -65,6 +75,7 @@
                     <div class="message-item">{{ $msg->content }}</div>
                     <div class="message-info {{ $msg->is_seen ? 'seen' : '' }}">
                         <span class="date">{{ $msg->displayDate() }}</span>
+                        <a href="#" class="remove-message" data-id="{{ $msg->id }}">&times;</a>
                     </div>
                 </div>
                 @endforeach
@@ -79,7 +90,8 @@
                         </div>
                         <div class="col-2">
                             <button type="submit" class="btn btn-secondary btn-block">
-                                Envoyer
+                                <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                                <span class="d-none d-md-inline">&nbsp;Envoyer</span>
                             </button>
                         </div>
                     </div>
@@ -137,6 +149,13 @@
                         } else {
                             console.error("Pas de jQuery T_T");
                         }
+                    });
+                }
+
+                const messageRemover = document.querySelectorAll(".remove-message");
+                if(messageRemover && messageRemover.length > 0) {
+                    messageRemover.forEach(remover => {
+                        remover.addEventListener("click", removeMessage);
                     });
                 }
 
@@ -204,6 +223,7 @@
             });
 
             const appendMessage = ({ message, me }) => {
+                console.debug("AppendMessage");
                 let msg = document.querySelector('#message-' + message.id);
 
                 if(msg) return null;
@@ -219,6 +239,7 @@
                 const item = document.createElement("div");
                 const info = document.createElement("div");
                 const date = document.createElement("span");
+                const remove = document.createElement("a");
 
                 user.classList.add("message-user");
 
@@ -226,7 +247,7 @@
                 link.addEventListener("click", e => { e.preventDefault() });
 
                 if(!me) {
-                    img.src = "{{ $driverAvatar }}";
+                    img.src = "{{ $avatar }}";
                     img.alt = "{{ $other->getFullname() }}";
 
                     link.appendChild(img);
@@ -245,6 +266,12 @@
 
                 date.classList.add("date");
                 date.innerHTML = message.date_sent;
+
+                remove.dataset.id = message.id;
+                remove.classList.add('remove-message');
+                remove.innerHTML = '&times;';
+                remove.addEventListener('click', removeMessage);
+                info.appendChild(remove); console.debug("Append Info!");
 
                 info.classList.add("message-info");
                 info.appendChild(date);
@@ -305,6 +332,31 @@
                 })
                 .fail(xhr => {})
                 .always(() => {});
+            };
+
+            const removeMessage = e => {
+                e.preventDefault();
+                if(!confirm("Voulez-vous effacer ce message ?")) return;
+
+                const target = e.currentTarget;
+                const id = target.dataset.id;
+                const $ = window.jQuery;
+
+                $.ajax({
+                    type: 'post',
+                    url: '{{ route('message_remove') }}',
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        id: id
+                    }
+                }).done(response => {
+                    if(response.done) {
+                        $('#message-' + response.message.id).hide('fast');
+                    } else {
+                        alert(response.message);
+                    }
+                })
+                .fail(xhr => alert(`${xhr.status} - ${xhr.statusText}`));
             };
         </script>
     @endpush

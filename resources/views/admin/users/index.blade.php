@@ -23,9 +23,9 @@
                         <th width="30%">
                             <div class="d-flex justify-content-between">
                                 <span>Actions</span>
-                                <a href="{{ route('admin_blog_new') }}">
+                                <a href="{{ route('admin_user_new') }}">
                                     <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
-                                    Ajouter un article
+                                    Ajouter un utilisateur
                                 </a>
                             </div>
 

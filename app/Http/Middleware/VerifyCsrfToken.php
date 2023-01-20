@@ -15,5 +15,6 @@ class VerifyCsrfToken extends Middleware
         '/paiement/*',
         '/message/send*',
         '/cinetpay/accepte',
+        '/admin/trajet/valider',
     ];
 }

@@ -51,6 +51,17 @@
     </li>
     <li class="slide">
         <a class="side-menu__item" data-bs-toggle="slide" href="#">
+            <i class="side-menu__icon fa fa-car" aria-hidden="true"></i>
+            <span class="side-menu__label">Trajets</span>
+            <i class="angle fa fa-angle-right"></i>
+        </a>
+        <ul class="slide-menu">
+            <li><a href="{{ route('admin_ride_validation') }}" class="slide-item">A valider</a></li>
+            <li><a href="{{ route('admin_ride_index') }}" class="slide-item">Liste</a></li>
+        </ul>
+    </li>
+    <li class="slide">
+        <a class="side-menu__item" data-bs-toggle="slide" href="#">
             <i class="side-menu__icon fa fa-id-card" aria-hidden="true"></i>
             <span class="side-menu__label">Chauffeur</span>
             <i class="angle fa fa-angle-right"></i>

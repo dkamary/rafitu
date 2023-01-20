@@ -155,6 +155,7 @@ class DashboardController extends Controller
             return view('dashboard.message.show', [
                 'messages' => $messages,
                 'last' => $last,
+                'conversation' => MessengerManager::getConversationInfo($token, $user),
             ]);
         }
 
@@ -168,6 +169,7 @@ class DashboardController extends Controller
         return view('dashboard.message.show', [
             'messages' => $messages,
             'last' => $last,
+            'conversation' => MessengerManager::getConversationInfo($token, $user),
         ]);
     }
 
@@ -183,6 +185,7 @@ class DashboardController extends Controller
     public function messengerAdminShow(string $token){
         $messages = MessengerManager::myMessagesByToken($token);
         $last = $messages->last();
+        dd([]);
 
         return view('dashboard.admin-message.show', [
             'messages' => $messages,

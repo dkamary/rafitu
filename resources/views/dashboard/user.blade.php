@@ -16,7 +16,7 @@
         <div class="col-12 text-end pb-5">
             <a href="{{ route('driver_verification') }}" class="btn btn-outline-primary fs-6">
                 <img src="{{ asset('assets/images/icons/certified-icon.svg') }}" alt="" style="height: 1.3rem; width: auto">&nbsp;
-                Faire vérifier mon profil en tant que Chauffeur
+                Faire vérifier mon profil
             </a>
         </div>
     </div>

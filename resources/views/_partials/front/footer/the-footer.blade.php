@@ -26,7 +26,7 @@
                                     d'utilisation</a></li>
                             <li><a href="{{ route('static_pages', ['slug' => 'mentions-legales']) }}">Mentions
                                     légales</a></li>
-                            <li><a href="{{ route('static_pages', ['slug' => 'faq']) }}">Page FAQ</a></li>
+                            <li><a href="{{ route('static_pages', ['slug' => 'faq']) }}">FAQ</a></li>
                         </ul>
                     </div>
 

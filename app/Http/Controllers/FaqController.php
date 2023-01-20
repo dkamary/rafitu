@@ -63,4 +63,23 @@ class FaqController extends Controller
 
         return response()->redirectToRoute('pages_faq');
     }
+
+    public function info(Request $request) : JsonResponse {
+        $faq = Faq::where('id', '=', (int)$request->input('id'))->first();
+        if(!$faq) {
+
+            return response()->json([
+                'done' => false,
+                'message' => sprintf('FAQ #%d introuvable', (int)$request->input('id')),
+                'faq' => $faq,
+            ]);
+        }
+
+        return response()->json([
+            'done' => true,
+            'message' => 'FAQ récupéré',
+            'faq' => $faq->toArray(),
+            'token' => csrf_token(),
+        ]);
+    }
 }

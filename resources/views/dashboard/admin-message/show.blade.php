@@ -69,7 +69,8 @@
                         </div>
                         <div class="col-2">
                             <button type="submit" class="btn btn-secondary btn-block">
-                                Envoyer
+                                <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                                <span class="d-none d-md-inline">&nbsp;Envoyer</span>
                             </button>
                         </div>
                     </div>

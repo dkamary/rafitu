@@ -17,4 +17,16 @@ class Faq extends Model
             'is_active' => 1,
         ]);
     }
+
+    public function toArray() : array
+    {
+
+        return [
+            'id' => (int)$this->id,
+            'question' => $this->question,
+            'answer' => $this->answer,
+            'rank' => (int)$this->rank,
+            'is_active' => $this->is_active == 1,
+        ];
+    }
 }

@@ -40,7 +40,7 @@ class MessageController extends Controller
     public function lastMessage() : JsonResponse {
         $token = request()->input('token');
         $message =  Message::where('token', 'like', $token)
-            // ->where('is_new', '=', 1)
+            ->where('is_deleted', '=', 0)
             ->orderBy('date_sent', 'desc')->first();
         if($message) {
             $message->is_new = 0;
@@ -66,6 +66,7 @@ class MessageController extends Controller
     public function conversation() : JsonResponse {
         $token = request()->input('token');
         $results = Message::where('token', 'like', $token)
+            ->where('is_deleted', '=', 0)
             ->orderBy('date_sent', 'asc')
             ->limit(20)
             ->get();
@@ -106,6 +107,27 @@ class MessageController extends Controller
         $message
             ->seen()
             ->save();
+
+        return response()->json([
+            'done' => true,
+            'error' => false,
+            'message' => $message->toArray(),
+        ]);
+    }
+
+    public function remove(Request $request) : JsonResponse {
+        $message = Message::where('id', '=', (int)$request->input('id'))->first();
+        if(!$message) {
+
+            return response()->json([
+                'done' => false,
+                'error' => true,
+                'message' => 'Message not found!',
+            ]);
+        }
+
+        $message->is_deleted = 1;
+        $message->save();
 
         return response()->json([
             'done' => true,

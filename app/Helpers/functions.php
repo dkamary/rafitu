@@ -2,17 +2,22 @@
 
 // Functions
 
+use App\Models\RideStatus;
 use App\Models\User;
 
 if(!function_exists('get_avatar')) {
     /**
      * User Avatar
      *
-     * @param User|null $user
+     * @param int|User|null $user
      * @return string
      */
-    function get_avatar(?User $user) {
+    function get_avatar($user) {
         if(!$user) return asset('avatars/user-01.svg');
+        if(is_numeric($user)) {
+            $user = User::where('id', '=', (int)$user)->first();
+            if(!$user) return asset('avatars/user-01.svg');
+        }
 
         $avatar = $user->getAvatar();
         $userAvatar = $avatar;
@@ -67,4 +72,26 @@ if(!function_exists('show_date')) {
 
         return $date->format($format);
     }
+}
+
+if(!function_exists('is_mobile')) {
+
+    function is_mobile() : bool {
+
+        return preg_match(
+            "/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i",
+            $_SERVER["HTTP_USER_AGENT"]
+        );
+    }
+
+}
+
+
+if(!function_exists('ride_status')) {
+
+    function ride_status(int $status, string $default = 'n/a') : string {
+
+        return RideStatus::getStatus($status, $default);
+    }
+
 }

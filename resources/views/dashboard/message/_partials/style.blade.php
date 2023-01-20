@@ -108,5 +108,37 @@
 
     .message-wrapper.me .message-info {
         text-align: right;
+        position: relative;
+    }
+
+    .you .message-info {
+        padding-left: 4.5rem;
+    }
+
+    .you .message-info .remove-message {
+        display: none;
+    }
+
+    .remove-message {
+        display: flex;
+        /* padding: 7px; */
+        border-radius: 50%;
+        background-color: #d91709;
+        color: #fff;
+        font-weight: bold;
+        text-align: center;
+        position: absolute;
+        top: -1.2rem;
+        right: -0.3rem;
+        font-size: 1.1rem;
+        width: 1.3rem;
+        height: 1.3rem;
+        justify-content: center;
+        align-items: center;
+        transition: .5s;
+    }
+
+    .remove-message:hover {
+        color: #f1f7ff;
     }
 </style>

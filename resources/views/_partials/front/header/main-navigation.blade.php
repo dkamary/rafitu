@@ -63,7 +63,8 @@
                             </li>
                             <li aria-haspopup="true">
                                 @php
-                                    $notReads = Messenger::myMessagesCount($user->id);
+                                    // $notReads = Messenger::myMessagesCount($user->id);
+                                    $notReads = 0;
                                 @endphp
                                 <a href="{{ route('dashboard_messenger_index') }}" class="d-flex justify-content-between align-items-center">
                                     Ma messagerie

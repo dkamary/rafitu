@@ -55,6 +55,32 @@
                 font-size: 24px;
             }
 
+            @media screen and (max-width: 576px) {
+                .page-static h1, .page-static .h1 {
+                    font-size: 32px;
+                }
+
+                .page-static h2, .page-static .h2 {
+                    font-size: 24px;
+                }
+
+                .page-static h3, .page-static .h3 {
+                    font-size: 20px;
+                }
+
+                .page-static h4, .page-static .h4 {
+                    font-size: 18px;
+                }
+
+                .page-static h5, .page-static .h5 {
+                    font-size: 16px;
+                }
+
+                .page-static h6, .page-static .h6 {
+                    font-size: 14px;
+                }
+            }
+
         </style>
     @endpush
 @endonce

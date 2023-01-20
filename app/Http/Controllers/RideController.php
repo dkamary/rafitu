@@ -57,12 +57,10 @@ class RideController extends Controller
 
     public function save(Request $request) : RedirectResponse {
         $user = Auth::user();
-        $status = RideStatus::where('id', '=', 1)->first();
+        $status = RideStatus::where('id', '=', 5)->first();
         if(!$status) {
-            $status = RideStatus::create([
-                'label' => 'Planifié',
-                'is_active' => 1,
-            ]);
+            $status = new Ride();
+            $status->id = 5;
         }
 
         $data = [

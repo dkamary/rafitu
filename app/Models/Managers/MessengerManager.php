@@ -7,6 +7,7 @@ use App\Models\Message;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use stdClass;
@@ -45,6 +46,7 @@ class MessengerManager
 
         $builder = DB::table('message')
             ->selectRaw('DISTINCT token')
+            ->where('is_deleted', '=', 0)
             ->whereRaw('(`user_id` = ? OR `client_id` = ? OR `sender` = ?)', [$userId, $userId, $userId], 'or');
 
         /**
@@ -72,6 +74,7 @@ class MessengerManager
         $tokens = DB::table('message')
             ->selectRaw('DISTINCT token')
             ->whereRaw('(user_id IS NULL OR user_id = ?)', [$userId])
+            ->where('is_deleted', '=', 0)
             ->limit(10)
             ->get();
 
@@ -89,6 +92,7 @@ class MessengerManager
         $tokens = DB::table('message')
             ->selectRaw('DISTINCT token')
             ->where('client_id', '=', $userId)
+            ->where('is_deleted', '=', 0)
             ->limit(10)
             ->get();
 
@@ -101,6 +105,7 @@ class MessengerManager
 
     public static function myMessagesByToken(string $token, int $count = 20) : ?Collection {
         return Message::where('token', 'LIKE', $token)
+            ->where('is_deleted', '=', 0)
             ->orderBy('date_sent', 'ASC')
             // ->limit($count)
             ->get();
@@ -147,7 +152,10 @@ class MessengerManager
     }
 
     public static function lastMessageByToken(string $token) : Message {
-        $message =  Message::where('token', 'like', $token)->orderBy('date_sent', 'desc')->first();
+        $message =  Message::where('token', 'like', $token)
+            ->where('is_deleted', '=', 0)
+            ->orderBy('date_sent', 'desc')
+            ->first();
 
         if(!$message) return new Message();
 
@@ -161,5 +169,43 @@ class MessengerManager
         if(!$user) return $default;
 
         return $user->firstname;
+    }
+
+    /**
+     * Information de la conversation
+     *
+     * @param string $token
+     * @param User|null $currentUser
+     * @return array
+     */
+    public static function getConversationInfo(string $token, ?User $currentUser = null) : array {
+        /**
+         * @var User $user
+         */
+        $user = $currentUser ?: Auth::user();
+        $conversation = DB::table('message')
+            ->select(['user_id', 'client_id'])
+            ->where('token', 'like', $token)
+            // ->whereRaw('(`user_id` = ? OR `client_id` = ?)', [$user->id, $user->id])
+            ->groupBy('user_id', 'client_id')
+            ->first();
+
+        $sender = $user;
+        $receiver = null;
+
+        if($user->id == $conversation->user_id) {
+            $receiver = User::where('id', '=', $conversation->client_id)->first();
+        } elseif($user->id == $conversation->client_id) {
+            $receiver = User::where('id', '=', $conversation->user_id)->first();
+        } else {
+            $receiver = $user->isAdmin() ?
+                User::where('id', '=', $conversation->client_id)->first() :
+                User::where('email', 'like', NotificationAdminManager::getAdminEmail())->first();
+        }
+
+        return [
+            'sender' => $sender,
+            'receiver' => $receiver,
+        ];
     }
 }

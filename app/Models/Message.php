@@ -9,7 +9,7 @@ class Message extends Model
 {
     protected $table = 'message';
     protected $primaryKey = 'id';
-    protected $fillable = ['token', 'user_id', 'client_id', 'sender', 'date_sent', 'content', 'is_seen', 'is_new'];
+    protected $fillable = ['token', 'user_id', 'client_id', 'sender', 'date_sent', 'content', 'is_seen', 'is_new', 'is_deleted',];
     public $timestamps = false;
 
     protected $user;
@@ -25,6 +25,14 @@ class Message extends Model
         return ($this->is_seen == 1);
     }
 
+    public function isNew() : bool {
+        return ($this->is_new == 1);
+    }
+
+    public function isDeleted() : bool {
+        return ($this->is_deleted == 1);
+    }
+
     public function toArray()
     {
         $dateSent = new \DateTime($this->date_sent);
@@ -37,8 +45,9 @@ class Message extends Model
             'sender' => $this->sender,
             'date_sent' => $this->displayDate(),
             'content' => $this->content,
-            'is_seen' => $this->is_seen,
-            'is_new' => $this->is_new,
+            'is_seen' => (int)$this->is_seen,
+            'is_new' => (int)$this->is_new,
+            'is_deleted' => (int)$this->is_deleted,
         ];
     }
 

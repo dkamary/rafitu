@@ -8,7 +8,7 @@
 
 <section class="sptb position-relative ">
     <div class="container">
-    <h2 class="mb-4 font-weight-semibold text-dark">Nos offres de covoiturage</h2>
+    <h2 class="mb-4 font-weight-semibold text-dark text-md-left text-center">Nos offres de covoiturage</h2>
         <div class="row">
             @foreach ($randomRides as $ride)
 

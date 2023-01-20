@@ -215,4 +215,12 @@ class Ride extends Model
     public function isRecurrent() : bool {
         return $this->has_recurrence == 1;
     }
+
+    public function isValidate() : bool {
+        return $this->ride_status_id == 1;
+    }
+
+    public function isToValidate() : bool {
+        return ($this->ride_status_id == 5);
+    }
 }

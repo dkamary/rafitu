@@ -134,6 +134,7 @@ Route::prefix('admin')->group(function () {
         Route::post('/save', [FaqController::class, 'save'])->name('admin_faq_save');
         Route::post('/refresh', [FaqController::class, 'refresh'])->name('admin_faq_refresh');
         Route::get('/remove/{faq}', [FaqController::class, 'remove'])->name('admin_faq_remove');
+        Route::post('/info', [FaqController::class, 'info'])->name('admin_faq_info');
     });
 
     // CHAUFFEUR
@@ -201,6 +202,10 @@ Route::prefix('admin')->group(function () {
     // TRAJET
     Route::prefix('trajet')->group(function(){
         Route::get('/', [RideAdminController::class, 'index'])->name('admin_ride_index');
+        Route::get('/a-valider', [RideAdminController::class, 'toValidate'])->name('admin_ride_validation');
+        Route::post('valider', [RideAdminController::class, 'validation'])->name('admin_ride_validate');
+        Route::get('/afficher/{ride}', [RideAdminController::class, 'show'])->name('admin_ride_show');
+        Route::post('/sauvegarder', [RideAdminController::class, 'save'])->name('admin_ride_save'); // JSON
         Route::match(['get', 'post'], '/parametres', [RideAdminController::class, 'parameters'])->name('admin_ride_parameters');
     });
 });
@@ -228,6 +233,7 @@ Route::prefix('message')->group(function(){
     Route::get('/conversation', [MessageController::class, 'conversation'])->name('message_conversation');
     Route::post('/start/{driver}', [MessageController::class, 'startChatWith'])->name('message_start_chat');
     Route::post('/seen', [MessageController::class, 'seen'])->name('message_seen');
+    Route::post('/remove', [MessageController::class, 'remove'])->name('message_remove');
 });
 
 // ESPACE CLIENT
