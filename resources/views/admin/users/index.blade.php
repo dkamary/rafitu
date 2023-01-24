@@ -11,71 +11,87 @@
 
     @include('_partials.back.notifications.flash-message')
 
-    <div class="row">
+    <div class="row bg-white py-5">
         <div class="col-12">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th width="20%">Prénom</th>
-                        <th width="20%">Nom</th>
-                        <th width="20%">E-mail</th>
-                        <th width="10%">Type</th>
-                        <th width="30%">
-                            <div class="d-flex justify-content-between">
-                                <span>Actions</span>
-                                <a href="{{ route('admin_user_new') }}">
-                                    <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
-                                    Ajouter un utilisateur
-                                </a>
+
+            <section class="list__container">
+                <header class="list__header row bg-secondary text-white mx-0 py-3 mt-3 d-none d-md-flex">
+                    <div class="col-6 col-md-2 title">Prénom</div>
+                    <div class="col-6 col-md-3 title">Nom</div>
+                    <div class="col-4 col-md-3 fw-bold title">E-mail</div>
+                    <div class="col-4 col-md-1 fw-bold title">Type</div>
+                    <div class="col-4 col-md-3 fw-bold title">
+                        <a href="{{ route('admin_user_new') }}" class="btn btn-dark">
+                            <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+                            Ajouter un utilisateur
+                        </a>
+                    </div>
+                </header>
+                <main class="list__main">
+                    @forelse ($users as $user)
+                        <div @class([
+                            'row', 'border-bottom', 'py-3', 'mx-0',
+                            'my-3', 'my-md-1',
+                            'bg-light' => $loop->even,
+                        ])>
+                            <div class="col-12 col-md-2">
+                                <u class="fw-bold d-inline-block d-md-none me-1">Prénom: </u>{{ $user->firstname }}
                             </div>
-
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    @forelse ($users as $u)
-                        <tr>
-                            <td>
-                                {{ $u->firstname }}
-                            </td>
-                            <td>
-                                {{ $u->lastname }}
-                            </td>
-                            <td>
-                                {{ $u->email }}
-                            </td>
-                            <td>
-                                {{ $u->getUserTypeName() }}
-                            </td>
-                            <td>
-                                <a href="{{ route('admin_user_edit', ['user' => $u->id]) }}">
+                            <div class="col-12 col-md-3">
+                                <u class="fw-bold d-inline-block d-md-none me-1">Nom: </u>{{ $user->lastname }}
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <u class="fw-bold d-inline-block d-md-none me-1">E-mail: </u>{{ $user->email }}
+                            </div>
+                            <div class="col-12 col-md-1">
+                                <u class="fw-bold d-inline-block d-md-none me-1">Type: </u>{{ $user->getUserTypeName() }}
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <a href="{{ route('admin_user_edit', ['user' => $user->id]) }}" class="btn btn-outline-info">
                                     <i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;
                                     &Eacute;diter
                                 </a>
                                 &nbsp;
-                                <a href="{{ route('admin_user_deactivate', ['user' => $u->id]) }}">
+                                <a href="{{ route('admin_user_deactivate', ['user' => $user->id]) }}" class="btn btn-outline-danger">
                                     <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
                                     Désactiver
                                 </a>
-                            </td>
-                        </tr>
+                            </div>
+                        </div>
                     @empty
-                        <tr>
-                            <td colspan="2">
-                                Il n'y a pas encore d'utilisateur.
-                            </td>
-                        </tr>
+                        <div class="row mx-0">
+                            <div class="col-12">
+                                <em>Aucun utilisateur trouvé</em>
+                            </div>
+                        </div>
                     @endforelse
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="2">
-                            {!! $users->links() !!}
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
+                </main>
+                <footer class="list__footer row mx-0"></footer>
+            </section>
+
         </div>
     </div>
 @endsection
+
+
+@once
+    @push('head')
+    <style>
+        .list__container .title {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            font-weight: bold;
+            font-size:  1.2rem;
+        }
+
+        .list__main .row > div {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin-top: .5rem;
+            margin-bottom: .5rem;
+        }
+    </style>
+    @endpush
+@endonce

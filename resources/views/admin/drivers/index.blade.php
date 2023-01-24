@@ -44,10 +44,22 @@
                                 {{ $u->user_status_id != 5 ? 'Non vérifié' : 'Vérifié' }}
                             </td>
                             <td>
-                                <a href="{{ route('admin_driver_show', ['driver' => $u->id]) }}">
-                                    <i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;
-                                    &Eacute;diter
-                                </a>
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <a href="{{ route('admin_driver_show', ['driver' => $u->id]) }}" class="btn btn-outline-info m-1">
+                                        <i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;
+                                        &Eacute;diter
+                                    </a>
+
+                                    <form action="{{ route('admin_driver_remove') }}" method="POST" class="m-1 driver-remove-form">
+                                        <button type="submit" class="btn btn-outline-danger">
+                                            <i class="fa fa-times" aria-hidden="true"></i>&nbsp;
+                                            Effacer
+                                        </button>
+                                        <input type="hidden" name="id" value="{{ $u->id }}">
+                                        <input type="hidden" name="intent" value="{{ $intent ?? 'admin_ride_list' }}">
+                                        @csrf
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                     @empty
@@ -69,3 +81,28 @@
         </div>
     </div>
 @endsection
+
+@once
+
+    @push('footer')
+        <script id="driver-index-script">
+
+            window.addEventListener("DOMContentLoaded", event => {
+                const removeForms = document.querySelectorAll(".driver-remove-form");
+                if(removeForms && removeForms.length > 0) {
+                    removeForms.forEach(form => {
+                        form.addEventListener("submit", e => {
+                            if(!confirm("Voulez-vous effacer ce chauffeur ?")) {
+                                e.preventDefault();
+
+                                return;
+                            }
+                        });
+                    });
+                }
+            });
+
+        </script>
+    @endpush
+
+@endonce

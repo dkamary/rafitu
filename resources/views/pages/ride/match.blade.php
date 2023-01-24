@@ -156,7 +156,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col-12 py-5">
 
                         @php
@@ -168,7 +168,7 @@
                         @endforeach
 
                     </div>
-                </div>
+                </div> --}}
 
                 <br>
 

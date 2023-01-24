@@ -22,6 +22,7 @@ use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaypalController;
+use App\Http\Controllers\PreReservationAdminController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\RideAdminController;
@@ -143,6 +144,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/list', [DriverAdminController::class, 'list'])->name('admin_driver_list');
         Route::get('/{driver}', [DriverAdminController::class, 'show'])->name('admin_driver_show');
         Route::get('/validate/{driver}', [DriverAdminController::class, 'validateDriver'])->name('admin_driver_validate');
+        Route::post('/effacer', [DriverAdminController::class, 'remove'])->name('admin_driver_remove');
     });
 
     // VEHICULE
@@ -206,7 +208,15 @@ Route::prefix('admin')->group(function () {
         Route::post('valider', [RideAdminController::class, 'validation'])->name('admin_ride_validate');
         Route::get('/afficher/{ride}', [RideAdminController::class, 'show'])->name('admin_ride_show');
         Route::post('/sauvegarder', [RideAdminController::class, 'save'])->name('admin_ride_save'); // JSON
+        Route::post('/effacer', [RideAdminController::class, 'remove'])->name('admin_ride_remove'); // JSON
         Route::match(['get', 'post'], '/parametres', [RideAdminController::class, 'parameters'])->name('admin_ride_parameters');
+    });
+
+    // PRERESERVATION
+    Route::prefix('prereservation')->group(function(){
+        Route::get('/', [PreReservationAdminController::class, 'index'])->name('admin_prereservation_index');
+        Route::get('/edit/{prereservation}', [PreReservationAdminController::class, 'edit'])->name('admin_prereservation_edit');
+        Route::post('/save/{prereservation}', [PreReservationAdminController::class, 'save'])->name('admin_prereservation_save');
     });
 });
 
@@ -248,6 +258,7 @@ Route::prefix('espace-client')->group(function(){
         Route::get('/{token}', [DashboardController::class, 'messengerShow'])->name('dashboard_messenger_show');
         Route::get('/new-message/{lastId}', [DashboardController::class, 'messengerLast'])->name('dashboard_messenger_last');
         Route::post('/send-message', [DashboardController::class, 'messengerSend'])->name('dashboard_messenger_send');
+        Route::post('/effacer-conversation', [DashboardController::class, 'messengerRemove'])->name('dashboard_messenger_remove');
     });
     Route::prefix('/voiture')->group(function(){
         Route::get('/', [DashboardController::class, 'vehicleIndex'])->name('dashboard_vehicle_index');
