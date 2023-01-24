@@ -26,17 +26,6 @@
             <li><a class="slide-item" href="{{ route('pages_faq') }}">Foire aux questions</a></li>
         </ul>
     </li>
-    {{-- <li class="slide">
-        <a class="side-menu__item" data-bs-toggle="slide" href="#">
-            <i class="side-menu__icon fa fa-rocket"></i>
-            <span class="side-menu__label">Blog</span>
-            <i class="angle fa fa-angle-right"></i>
-        </a>
-        <ul class="slide-menu">
-            <li><a href="{{ route('admin_blog_index') }}" class="slide-item">Liste</a></li>
-            <li><a href="{{ route('admin_blog_new') }}" class="slide-item">Ajouter</a></li>
-        </ul>
-    </li> --}}
     <li class="slide">
         <a class="side-menu__item" data-bs-toggle="slide" href="#">
             <i class="side-menu__icon fa fa-user"></i>
@@ -46,7 +35,6 @@
         <ul class="slide-menu">
             <li><a href="{{ route('admin_user_index') }}" class="slide-item">Liste</a></li>
             <li><a href="{{ route('admin_user_new') }}" class="slide-item">Ajouter</a></li>
-            {{-- <li><a href="{{ route('admin_user_new') }}" class="slide-item">Vérification d'identité</a></li> --}}
         </ul>
     </li>
     <li class="slide">
@@ -80,7 +68,6 @@
         <ul class="slide-menu">
             <li><a href="{{ route('transaction_paiements') }}" class="slide-item">Paiements</a></li>
             <li><a href="{{ route('transaction_commissions') }}" class="slide-item">Commissions</a></li>
-            {{-- <li><a href="{{ route('transaction_remboursements') }}" class="slide-item">Remboursement</a></li> --}}
 
         </ul>
     </li>
@@ -101,7 +88,6 @@
         <a class="side-menu__item" data-bs-toggle="slide" href="{{ route('admin_prereservation_index') }}">
             <i class="side-menu__icon fa fa-calendar-check-o"></i>
             <span class="side-menu__label">Pré-Réservations</span>
-            {{-- <i class="angle fa fa-angle-right"></i> --}}
         </a>
     </li>
 </ul>
