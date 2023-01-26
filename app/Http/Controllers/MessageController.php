@@ -9,6 +9,7 @@ use App\Models\Managers\UserManager;
 use App\Models\Message;
 use App\Models\User;
 use App\Models\UserConnected;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -65,8 +66,19 @@ class MessageController extends Controller
 
     public function conversation() : JsonResponse {
         $token = request()->input('token');
-        $results = Message::where('token', 'like', $token)
-            ->where('is_deleted', '=', 0)
+        /**
+         * @var Builder $builder
+         */
+        $builder = Message::where('token', 'like', $token)
+            ->where('is_deleted', '=', 0);
+        $offset = 0;
+        $count = $builder->count();
+        if($count > 20) {
+            $offset = $count - 20;
+            $builder->offset($offset);
+        }
+        // dd($builder->toSql());
+        $results = $builder
             ->orderBy('date_sent', 'asc')
             ->limit(20)
             ->get();

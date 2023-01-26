@@ -67,7 +67,7 @@
                 <div class="modal-body">
                     <div class="row mb-4">
                         <label for="com_longtrajet" class="col-4 text-end align-items-center d-flex justify-content-end mb-0 fw-bold">Trajet long</label>
-                        <div class="col-4">
+                        <div class="col-8 col-md-4">
                             <div class="input-group">
                                 <input type="number" class="form-control text-end" name="com_longtrajet" id="com_longtrajet" value="{{ $parameter->com_longtrajet }}"
                                     aria-label="Pourcentage pour la commission des longs trajets" min="1" max="99" step="any">
@@ -77,7 +77,7 @@
                     </div>
                     <div class="row mb-4">
                         <label for="com_quotidien" class="col-4 text-end align-items-center d-flex justify-content-end mb-0 fw-bold">Trajet quotidien</label>
-                        <div class="col-4">
+                        <div class="col-8 col-md-4">
                             <div class="input-group">
                                 <input type="number" class="form-control text-end" name="com_quotidien" id="com_quotidien" value="{{ $parameter->com_quotidien }}"
                                     aria-label="Pourcentage pour la commission des trajets quotidiens" min="1" max="99" step="any">
@@ -87,7 +87,7 @@
                     </div>
                     <div class="row mb-4">
                         <label for="heure_execution" class="col-4 text-end align-items-center d-flex justify-content-end mb-0 fw-bold">Trajet quotidien</label>
-                        <div class="col-4">
+                        <div class="col-8 col-md-4">
                             <div class="input-group">
                                 <input type="number" class="form-control text-end" name="heure_execution" id="heure_execution" value="{{ $parameter->heure_execution }}"
                                     aria-label="Pourcentage pour la commission des trajets quotidiens" min="1">

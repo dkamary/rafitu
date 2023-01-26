@@ -34,63 +34,56 @@
 
     <div class="row my-4 py-3 bg-white">
         <div class="col-12">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th width="60%">Marques</th>
-                        <th width="20%" class="text-center">Modèles</th>
-                        <th width="20%">
-                            &nbsp;
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
 
+            <section class="list__container">
+                <header class="row d-none d-md-flex bg-secondary text-white my-3 py-3">
+                    <div class="col-6 fs-6 fw-bold">Marques</div>
+                    <div class="col-3 fs-6 fw-bold">Modèles</div>
+                    <div class="col-3 fs-6 fw-bold">&nbsp;</div>
+                </header>
+                <main>
                     @forelse ($brands as $brand)
-                        <tr>
-                            <td>
-                                {{ $brand->name }}
-                            </td>
-                            <td class="text-center">
-                                <a href="{{ route('admin_model_index', ['brand' => $brand]) }}" class="btn btn-link btn-outline-secondary" title="Voir les {{ $brand->getModelCount() }} modèles de la marque">
-                                    {{ $brand->getModelCount() }}
-                                </a>
-                            </td>
-                            <td>
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <a href="{{ route('admin_brand_editer', ['brand' => $brand]) }}" class="btn btn-info me-2">
-                                        <i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;
-                                        &Eacute;diter
-                                    </a>
-                                    <form action="{{ route('admin_brand_effacer') }}" method="post" class="brand-remove-form">
-                                        <button type="submit" class="btn btn-danger">
-                                            <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
-                                            Supprimer
-                                        </button>
-                                        <input type="hidden" name="id" value="{{ $brand->id }}">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
+                    <div @class([
+                        'bg-light' => $loop->even,
+                        'py-5', 'my-2',
+                        'row',
+                        'border-bottom',
+                    ])>
+                        <div class="col-12 col-md-6 mb-3 mb-md-0">
+                            <u class="d-inline-block d-md-none me-1"><strong>Marque:</strong></u>
+                            {{ $brand->name }}
+                        </div>
+                        <div class="col-12 col-md-3 mb-3 mb-md-0">
+                            <u class="d-inline-block d-md-none me-1"><strong>Modèles:</strong></u>
+                            <a href="{{ route('admin_model_index', ['brand' => $brand]) }}" class="btn btn-link btn-outline-secondary" title="Voir les {{ $brand->getModelCount() }} modèles de la marque">
+                                {{ $brand->getModelCount() }}
+                            </a>
+                        </div>
+                        <div class="col-12 col-md-3 mb-3 mb-md-0 d-flex justify-content-center align-items-center">
+                            <a href="{{ route('admin_brand_editer', ['brand' => $brand]) }}" class="btn btn-info me-2">
+                                <i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;
+                                &Eacute;diter
+                            </a>
+                            <form action="{{ route('admin_brand_effacer') }}" method="post" class="brand-remove-form">
+                                <button type="submit" class="btn btn-danger">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
+                                    Supprimer
+                                </button>
+                                <input type="hidden" name="id" value="{{ $brand->id }}">
+                                @csrf
+                            </form>
+                        </div>
+                    </div>
                     @empty
-                        <tr>
-                            <td colspan="3">
-                                Il n'y a pas encore de marque enregistré.
-                            </td>
-                        </tr>
-                    @endforelse
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="2">
-                            <div class="d-flex justify-content-center align-items-center my-3">
-                                {!! $brands->links() !!}
-                            </div>
+                    <div class="row my-3 py-3">
+                        <td colspan="3">
+                            Il n'y a pas encore de marque enregistré.
                         </td>
-                    </tr>
-                </tfoot>
-            </table>
+                    </div>
+                    @endforelse
+                </main>
+            </section>
+
         </div>
     </div>
 @endsection

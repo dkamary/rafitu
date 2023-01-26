@@ -150,6 +150,7 @@
                 <div class="row bg-white my-5 p-4">
                     <div class="col-12 text-center fw-bold">
                         <h3 class="fs-4 text-warning">
+                            <strong>Votre réservation a bien été pris en compte</strong>.<br>
                             Votre trajet n'est pas disponible pour le moment.<br>
                             Cependant voici quelques trajets qui pourrait vous intéressez.
                         </h3>

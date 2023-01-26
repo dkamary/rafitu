@@ -26,20 +26,28 @@
                         </div>
                     </div>
 
-                    <table class="table table-stripe">
-                        <thead>
-                            <tr>
-                                <th width="20%">Code</th>
-                                <th width="50%">Nom du modèle</th>
-                                <th width="30%">&nbsp</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <section class="list__container">
+                        <header class="row d-none d-md-flex bg-secondary text-white py-3 my-3">
+                            <div class="col-3 fw-bold fs-6">Code</div>
+                            <div class="col-5 fw-bold fs-6">Nom du modèle</div>
+                            <div class="col-4">&nbsp;</div>
+                        </header>
+                        <main>
                             @forelse ($models as $model)
-                                <tr>
-                                    <td>{{ $model->code }}</td>
-                                    <td>{{ $model->label }}</td>
-                                    <td>
+                                <div @class([
+                                    'row', 'py-5',
+                                    'bg-light' => $loop->even,
+                                    'border-bottom',
+                                ])>
+                                    <div class="col-5 col-md-3 mb-3 mb-md-0">
+                                        <u class="d-inline-block d-md-none me-1"><strong>Code:</strong></u><br>
+                                        {{ $model->code }}
+                                    </div>
+                                    <div class="col-7 col-md-5 mb-3 mb-md-0">
+                                        <u class="d-inline-block d-md-none me-1"><strong>Nom du modèle:</strong></u><br>
+                                        {{ $model->label }}
+                                    </div>
+                                    <div class="col-12 col-md-4 mb-3 mb-md-0">
                                         <div class="d-flex justify-content-center align-items-center">
                                             <a href="{{ route('admin_model_editer', ['brand' => $brand, 'model' => $model]) }}" class="btn btn-info me-2">
                                                 <i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;
@@ -54,23 +62,24 @@
                                                 @csrf
                                             </form>
                                         </div>
-                                    </td>
-                                </tr>
+                                    </div>
+                                </div>
                             @empty
-                                <tr>
-                                    <td colspan="3" class="text-center">
+                                <div class="row py-5 my-2">
+                                    <div class="col-md-12" class="text-center">
                                         <p class="my-3">
                                             Il n'y a pas encore de modèle pour cette marque
                                         </p>
-                                        <a href="{{ route('admin_model_nouveau', ['brand' => $brand]) }}" class="btn btn-secondary">
+                                        <a href="{{ route('admin_model_nouveau', ['brand' => $brand]) }}" class="btn btn-secondary my-4">
                                             <i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;
                                             Ajouter une nouveau modèle
                                         </a>
-                                    </td>
+                                    </div>
                                 </tr>
                             @endforelse
-                        </tbody>
-                    </table>
+                        </main>
+                    </section>
+
                 </div>
             </div>
         </div>

@@ -15,69 +15,55 @@
 
     @include('_partials.back.notifications.flash-message')
 
-    <div class="row">
+    <div class="row bg-white py-5">
         <div class="col-12">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th width="20%">Prénom</th>
-                        <th width="20%">Nom</th>
-                        <th width="30%">Statut</th>
-                        <th width="30%">
-                            <div class="d-flex justify-content-between">
-                                <span>Actions</span>
-                            </div>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
 
+            <section class="list">
+                <header class="row d-none d-md-flex bg-secondary text-white py-3 my-3">
+                    <div class="col-6 fs-6 fw-bold">Nom</div>
+                    <div class="col-3 fs-6 fw-bold">Statut</div>
+                    <div class="col-3 fs-6 fw-bold text-center">Actions</div>
+                </header>
+                <main>
                     @forelse ($drivers as $u)
-                        <tr>
-                            <td>
-                                {{ $u->firstname }}
-                            </td>
-                            <td>
-                                {{ $u->lastname }}
-                            </td>
-                            <td>
-                                {{ $u->user_status_id != 5 ? 'Non vérifié' : 'Vérifié' }}
-                            </td>
-                            <td>
-                                <div class="d-flex justify-content-start align-items-center">
-                                    <a href="{{ route('admin_driver_show', ['driver' => $u->id]) }}" class="btn btn-outline-info m-1">
-                                        <i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;
-                                        &Eacute;diter
-                                    </a>
+                        <div @class([
+                            'bg-light' => $loop->even,
+                            'row', 'border-bottom', 'border-black',
+                            'py-2', 'my-2'
+                        ])>
+                            <div class="col-7 col-md-6 fst-italic fw-bold">
+                                {{ $u->firstname }} {{ $u->lastname }}
+                            </div>
+                            <div class="col-5 col-md-3">
+                                {!! $u->user_status_id != 5 ? '<span>Non vérifié</span>' : 'Vérifié' !!}
+                            </div>
+                            <div class="col-12 col-md-3 d-flex justify-content-center justify-content-md-start align-items-center my-2 my-md-0">
+                                <a href="{{ route('admin_driver_show', ['driver' => $u->id]) }}" class="btn btn-outline-info m-1">
+                                    <i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;
+                                    &Eacute;diter
+                                </a>
 
-                                    <form action="{{ route('admin_driver_remove') }}" method="POST" class="m-1 driver-remove-form">
-                                        <button type="submit" class="btn btn-outline-danger">
-                                            <i class="fa fa-times" aria-hidden="true"></i>&nbsp;
-                                            Effacer
-                                        </button>
-                                        <input type="hidden" name="id" value="{{ $u->id }}">
-                                        <input type="hidden" name="intent" value="{{ $intent ?? 'admin_ride_list' }}">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
+                                <form action="{{ route('admin_driver_remove') }}" method="POST" class="m-1 driver-remove-form">
+                                    <button type="submit" class="btn btn-outline-danger">
+                                        <i class="fa fa-times" aria-hidden="true"></i>&nbsp;
+                                        Effacer
+                                    </button>
+                                    <input type="hidden" name="id" value="{{ $u->id }}">
+                                    <input type="hidden" name="intent" value="{{ $intent ?? 'admin_ride_list' }}">
+                                    @csrf
+                                </form>
+                            </div>
+                        </div>
                     @empty
-                        <tr>
-                            <td colspan="4">
+                        <div class="row">
+                            <div class="col-12 py-3">
                                 Il n'y a pas encore de chauffeur à valider.
-                            </td>
-                        </tr>
+                            </div>
+                        </div>
                     @endforelse
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="4">
-                            &nbsp;
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
+                </main>
+            </section>
+
         </div>
     </div>
 @endsection

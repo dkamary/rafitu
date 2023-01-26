@@ -58,12 +58,12 @@ class MessengerManager
         }
 
         $tokens = $builder
-            ->limit(10)
+            // ->limit(10)
             ->get();
 
         foreach($tokens as $msgToken) {
             $lastMsg = self::lastMessageByToken($msgToken->token);
-            if(strlen($lastMsg->token) > 3) $messages[$msgToken->token] = self::lastMessageByToken($msgToken->token);
+            if(strlen($lastMsg->token) > 3) $messages[$msgToken->token] = $lastMsg;
         }
 
         return $messages;

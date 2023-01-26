@@ -16,58 +16,71 @@
 @endsection
 
 @section('dashboard_content')
-    {{-- @dd($messages) --}}
-    <table class="table table-stripe">
-        <thead>
-            <tr>
-                <td class="col-4">Conversations</td>
-                <td class="col-3">Date</td>
-                {{-- <td class="col-2">Statut</td> --}}
-                <td class="col-5">&nbsp;</td>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse ($messages as $last)
 
-                <tr>
-                    <td @class(['fw-bold' => $last->is_new == 1 ])>
-                        <a href="{{ route('dashboard_messenger_show', ['token' => $last->token]) }}">
+    <section class="list__container">
+        <header class="d-none d-md-flex row py-3 my-3 bg-secondary text-white">
+            <div class="col-7 col-md-6 fs-6 fw-bold">Conversation</div>
+            <div class="col-5 col-md-3 fs-6 fw-bold">Date</div>
+            <div class="col-12 col-md-3 fs-6 fw-bold">&nbsp;</div>
+        </header>
+        <main>
+            @forelse ($messages as $last)
+                <div @class([
+                    'row',
+                    'bg-light' => $loop->even,
+                    'border-bottom', 'border-black', 'py-2',
+                ])>
+
+                    <div class="col-7 col-md-6">
+                        <a @class(['fw-bold' => $last->is_new == 1]) href="{{ route('dashboard_messenger_show', ['token' => $last->token]) }}">
                             {{ $last->sender == $user->id ? 'Vous' : ( $last->sender == null ? 'RAFITU' : Messenger::getUserName($last->sender, 'N/A') ) }} &nbsp;-&nbsp;
                             <span @class(['fw-bold' => ($last->is_seen == 0)])>{{ $last->content }}</span>
                         </a>
-                    </td>
-                    {{-- <td>{{ (new \DateTime($last->date_sent))->format('d/m/Y') }}</td> --}}
-                    <td class="text-center">{{ $last->displayDate('H:i') }}</td>
-                    {{-- <td class="text-center">{!! $last->is_new == 1 ? 'Nouveau' : '&hellip;' !!}</td> --}}
-                    <td class="text-center">
+                    </div>
+
+                    <div class="col-5 col-md-3">
+                        {{ $last->displayDate('H:i') }}
+                    </div>
+
+                    <div class="col-12 col-md-3">
+
                         <div class="d-flex justify-content-center align-items-center">
+
                             <a href="{{ route('dashboard_messenger_show', ['token' => $last->token]) }}" class="btn text-info">
                                 <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;
-                                <div class="d-none d-sm-inline-block">Voir</div>
+                                <span>Voir</span>
                             </a>
 
                             <form action="{{ route('dashboard_messenger_remove') }}" method="post" class="conversation-remove-form">
                                 <button type="submit" class="btn text-danger">
                                     <i class="fa fa-times" aria-hidden="true"></i>&nbsp;
-                                    <div class="d-none d-sm-inline-block">Effacer</div>
+                                    <span>Effacer</span>
                                 </button>
                                 <input type="hidden" name="token" value="{{ $last->token }}">
                                 @csrf
                             </form>
-                        </div>
-                    </td>
-                </tr>
 
+                        </div>
+
+                    </div>
+                </div>
             @empty
-                <tr>
-                    <td colspan="3" class="text-center">
+                <div class="row">
+
+                    <div class="col-12 text-center">
+
                         <em>Vous n'avez pas encore de message pour le moment</em><br>
-                        <a href="{{ route('trouver_trajet') }}" class="btn btn-primary my-4">Trouver votre trajet idéal</a>
-                    </td>
-                </tr>
+                        <a href="{{ route('trouver_trajet') }}" class="btn btn-primary my-4">
+                            <i class="fa fa-search" aria-hidden="true"></i>&nbsp;
+                            Trouver votre trajet idéal
+                        </a>
+
+                    </div>
+
+                </div>
             @endforelse
-        </tbody>
-    </table>
+        </main>
+    </section>
 @endsection
 
 

@@ -1,5 +1,6 @@
 @php
     $discussionBalloon = $discussionBalloon ?? true;
+    $user = Auth::user();
 @endphp
 
 <!doctype html>
@@ -34,10 +35,12 @@
 
         @stack('footer')
 
-        @if($discussionBalloon)
-            @include('message._partials.chat')
+        @if(!$user || ($user && !$user->isAdmin()))
+            @if($discussionBalloon)
+                @include('message._partials.chat')
 
-            @include('message._partials.chat-script')
+                @include('message._partials.chat-script')
+            @endif
         @endif
 	</body>
 </html>

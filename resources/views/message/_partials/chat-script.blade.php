@@ -22,9 +22,18 @@
     (function($, window, document){
         $(function(){
 
+            @guest
+            localStorage.removeItem("message_token");
+            @endguest
+
             $('#discussion-toggle').click(e => {
                 e.preventDefault();
+                @guest
+                window.location.href = "{{ route('login') }}";
+                @endguest
+                @auth
                 $('.chat-container').toggleClass('show');
+                @endauth
             });
 
             function showLatestMessage(element) {
@@ -47,8 +56,8 @@
                         response.conversation.forEach(msg => {
                             responsiveChatPush(
                                 element,
-                                msg.sender == null ? 'Rafitu' : userName,
-                                msg.sender == null ? 'you' : 'me',
+                                msg.sender == null ? 'Rafitu' : userName, // Nom a afficher
+                                msg.sender != {{ $userId }} ? 'you' : 'me', //
                                 msg.date_sent,
                                 msg.content,
                                 msg.id
@@ -80,30 +89,21 @@
                     data: { token: token }
                 }).done(response => {
 
-                    // if(response.isConnected) {
-                    //     const
-                    // }
+                    const msg = response.message;
 
-                    if(response.message.id > 0 && response.message.sender == null && response.message.content.length > 0) {
-                        console.debug("RAFITU message is the last");
-                        const msg = response.message;
-
-                        if(document.querySelector('#message-' + msg.id)) {
-                            console.debug("MSG Déjà présent");
-                            return;
-                        }
-
-                        responsiveChatPush(
-                            element,
-                            !msg.sender ? 'Rafitu' : userName,
-                            !msg.sender ? 'you' : 'me',
-                            msg.date_sent,
-                            msg.content,
-                            msg.id
-                        );
-                    } else {
-                        console.debug("Client message is the last or No new message");
+                    if(document.querySelector('#message-' + msg.id)) {
+                        console.debug(`Le message '#message-'${msg.id} est déjà présent`);
+                        return;
                     }
+
+                    responsiveChatPush(
+                        element,
+                        !msg.sender ? 'Rafitu' : userName,
+                        msg.sender != {{ $userId }} ? 'you' : 'me',
+                        msg.date_sent,
+                        msg.content,
+                        msg.id
+                    );
                 })
                 .fail(xhr => {
                     {{-- alert(xhr.status + ' - ' + xhr.statusText); --}}
@@ -114,6 +114,8 @@
             }
 
             function responsiveChat(element) {
+                console.debug("responsive chat initialisation!");
+
                 @guest
                 console.debug("Visiteur n'est pas connecté! Pas de système de messagerie!");
                 return;
@@ -203,6 +205,7 @@
             }
         });
     }(window.jQuery, window, window.document));
+
 
     var userId = {{ $userId }};
     var userName = '{{ $userName }}';

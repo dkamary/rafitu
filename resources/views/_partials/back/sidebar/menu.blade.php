@@ -66,7 +66,7 @@
             <i class="angle fa fa-angle-right"></i>
         </a>
         <ul class="slide-menu">
-            <li><a href="{{ route('transaction_paiements') }}" class="slide-item">Paiements</a></li>
+            {{-- <li><a href="{{ route('transaction_paiements') }}" class="slide-item">Paiements</a></li> --}}
             <li><a href="{{ route('transaction_commissions') }}" class="slide-item">Commissions</a></li>
 
         </ul>

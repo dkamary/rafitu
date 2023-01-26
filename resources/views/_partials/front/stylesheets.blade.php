@@ -246,4 +246,17 @@
     }
 </style>
 
+<style id="alert-style">
+    #toast-container-alert {
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10000;
+    }
+
+    #toast-container-alert .toast-header {
+        background-color: unset;
+        color: #ffffff;
+    }
+</style>
+
 @include('message._partials.chat-style')

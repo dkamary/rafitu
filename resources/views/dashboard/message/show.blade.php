@@ -202,7 +202,7 @@
                             history.appendChild(msg);
 
                             currentMessage = setInterval(() => {
-                                if(messageSeen({ message })) {
+                                if(messageSeen({ message : response.message })) {
                                     clearInterval(currentMessage);
                                 }
                             }, 1000);
