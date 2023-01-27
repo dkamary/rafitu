@@ -18,7 +18,7 @@
                     <button class="nav-link active" id="actives-tab" data-bs-toggle="tab" data-bs-target="#actives" type="button" role="tab" aria-controls="actives" aria-selected="true">Pré-réservations actives</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="inactives-tab" data-bs-toggle="tab" data-bs-target="#inactives" type="button" role="tab" aria-controls="inactives" aria-selected="false">Pré-réservations inactives</button>
+                    <button class="nav-link" id="inactives-tab" data-bs-toggle="tab" data-bs-target="#inactives" type="button" role="tab" aria-controls="inactives" aria-selected="false">Pré-réservations effacées</button>
                 </li>
 
             </ul>
@@ -27,7 +27,7 @@
                     @include('admin.prereservation.list', ['list' => $actives])
                 </div>
                 <div class="tab-pane fade" id="inactives" role="tabpanel" aria-labelledby="inactives-tab">
-                    @include('admin.prereservation.list', ['list' => $inactives])
+                    @include('admin.prereservation.list', ['list' => $inactives, 'bg_header' => 'bg-dark'])
                 </div>
             </div>
         </div>
