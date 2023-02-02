@@ -9,6 +9,11 @@ use Illuminate\View\View;
 
 class PreReservationAdminController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth.admin');
+    }
+
     public function index() : View {
         $actives = PreReservation::where('is_active', '=', 1)
             ->orderBy('created_at', 'DESC')

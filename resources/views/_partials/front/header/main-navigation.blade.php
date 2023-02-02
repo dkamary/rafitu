@@ -79,6 +79,14 @@
                         </ul>
                     </li>
                 @endauth
+                <li aria-haspopup="true" class="d-block d-md-none">
+                    <span>
+                        <a class="btn btn-orange ad-post mt-3" href="{{ route('ride_add') }}">
+                            <i class="fa fa-plus-circle" aria-hidden="true" style="color: #fff"></i>&nbsp;
+                            Publier un trajet
+                        </a>
+                    </span>
+                </li>
             </ul>
             <ul class="mb-0">
                 <li aria-haspopup="true" class="mt-5 d-none d-lg-block ">

@@ -90,4 +90,18 @@
             <span class="side-menu__label">Pré-Réservations</span>
         </a>
     </li>
+    <li class="slide">
+        <a class="side-menu__item" data-bs-toggle="slide" href="{{ route('admin_reservation_all') }}">
+            <i class="side-menu__icon fa fa-bookmark"></i>
+            <span class="side-menu__label">Réservations</span>
+            <i class="angle fa fa-angle-right"></i>
+        </a>
+        <ul class="slide-menu">
+            <li><a href="{{ route('admin_reservation_all') }}" class="slide-item">Tous les réservations</a></li>
+            <li><a href="{{ route('admin_reservation_unpaid') }}" class="slide-item">Réservations impayées</a></li>
+            <li><a href="{{ route('admin_reservation_paid') }}" class="slide-item">Réservations payées</a></li>
+            <li><a href="{{ route('admin_reservation_canceled') }}" class="slide-item">Réservations annulées</a></li>
+            <li><a href="{{ route('admin_reservation_deleted') }}" class="slide-item">Réservations effacées</a></li>
+        </ul>
+    </li>
 </ul>

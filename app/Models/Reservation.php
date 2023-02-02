@@ -47,6 +47,13 @@ class Reservation extends Model
         return sprintf('Trajet: `%s` %sConducteur: `%s`', $ride ?: 'N/A', "\n", $driver?: 'N/A');
     }
 
+    public function getUserName() : string {
+        $user = $this->getuser();
+        if(!$user) return 'N/A';
+
+        return $user->getFullname();
+    }
+
     public function getuser() : ?User {
         return ($this->user) ?: $this->user = User::where('id', '=', (int)$this->user_id)->first();
     }
@@ -57,6 +64,21 @@ class Reservation extends Model
 
     public function getRide() : ?Ride {
         return ($this->ride) ?: $this->ride = Ride::where('id', '=', (int)$this->ride_id)->first();
+    }
+
+    public function getDepartureLabel(string $default = 'N/A'): ?string {
+        $ride = $this->getRide();
+        if(!$ride) return $default;
+
+        return $ride->departure_label;
+    }
+
+    public function getArrivalLabel(string $default = 'N/A') : ?string {
+        $ride= $this->getRide();
+
+        if(!$ride) return $default;
+
+        return $ride->arrival_label;
     }
 
     public function isPaid() : bool {

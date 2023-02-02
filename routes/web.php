@@ -23,6 +23,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaypalController;
 use App\Http\Controllers\PreReservationAdminController;
+use App\Http\Controllers\ReservationAdminController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\RideAdminController;
@@ -218,6 +219,18 @@ Route::prefix('admin')->group(function () {
         Route::get('/edit/{prereservation}', [PreReservationAdminController::class, 'edit'])->name('admin_prereservation_edit');
         Route::post('/save/{prereservation}', [PreReservationAdminController::class, 'save'])->name('admin_prereservation_save');
     });
+
+    // RESERVATION
+    Route::prefix(('reservation'))->group((function() {
+        Route::get('/', [ReservationAdminController::class, 'allReservation'])->name('admin_reservation_all');
+        Route::get('/payee', [ReservationAdminController::class, 'paidReservation'])->name('admin_reservation_paid');
+        Route::get('/impayee', [ReservationAdminController::class, 'unpaidReservation'])->name('admin_reservation_unpaid');
+        Route::get('/annulee', [ReservationAdminController::class, 'canceledReservation'])->name('admin_reservation_canceled');
+        Route::get('/effacee', [ReservationAdminController::class, 'deletedReservation'])->name('admin_reservation_deleted');
+        Route::get('/details/{reservation}', [ReservationAdminController::class, 'details'])->name('admin_reservation_details');
+        Route::post('/cancel/{reservation}', [ReservationAdminController::class, 'cancel'])->name('admin_reservation_cancel');
+        Route::post('/delete/{reservation}', [ReservationAdminController::class, 'remove'])->name('admin_reservation_delete');
+    }));
 });
 
 // CONTACT
