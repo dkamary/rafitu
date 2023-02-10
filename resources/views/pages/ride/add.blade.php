@@ -6,6 +6,10 @@
     Publier un trajet
 @endsection
 
+@section('meta_description')
+    Publier sur votre trajet facilement et gratuitement sur la plateforme de RAFITU.
+@endsection
+
 @section('hero')
     @include('_partials.front.section.breadcrumbs', ['page_title' => 'Publier un trajet'])
 @endsection

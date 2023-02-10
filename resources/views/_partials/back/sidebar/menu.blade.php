@@ -82,6 +82,7 @@
             <li><a href="{{ route('admin_brand_index') }}" class="slide-item">Marque des véhicules</a></li>
             <li><a href="{{ route('admin_contact_index') }}" class="slide-item">Contacts</a></li>
             <li><a href="{{ route('admin_ride_parameters') }}" class="slide-item">Trajets</a></li>
+            <li><a href="{{ route('admin_social_network_parameter_index') }}" class="slide-item">Réseaux sociaux</a></li>
         </ul>
     </li>
     <li class="slide">

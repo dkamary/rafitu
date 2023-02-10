@@ -10,6 +10,11 @@
     Voyager en covoiturage à prix réduit
 @endsection
 
+@section('meta_description')
+    Faites des économies sur vos trajets en trouvant des conducteurs fiables et conviviaux au sein
+    de la communauté de RAFITU. Vos voyages en quelques clics.
+@endsection
+
 @section('hero')
     @include('_partials.front.section.sliders.bs-slider')
 @endsection

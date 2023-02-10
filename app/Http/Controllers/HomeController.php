@@ -48,6 +48,7 @@ class HomeController extends Controller
                 'origin' => new Position(0, 0),
                 'destination' => new Position(0, 0),
             ],
+            'meta_description' => 'Le covoiturage pour les longs trajets, c\'est l\'alternative idéale pour les voyages économiques et inoubliables. En voiture…',
         ]);
     }
 
@@ -65,6 +66,7 @@ class HomeController extends Controller
                 'origin' => new Position(0, 0),
                 'destination' => new Position(0, 0),
             ],
+            'meta_description' => 'Faire du covoiturage pour les voyages quotidiens, c\'est facile, économique et plus de longue attente',
         ]);
     }
 

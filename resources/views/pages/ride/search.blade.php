@@ -6,8 +6,12 @@
     Rechercher un trajet
 @endsection
 
+@section('meta_description')
+    Rendez vos voyages plus agréables en partageant la route avec d'autres personnes. Inscrivez-vous pour trouver des covoiturages à des petits prix.
+@endsection
+
 @section('hero')
-@include('_partials.front.section.breadcrumbs', ['page_title' => 'Rechercher un trajet'])
+    @include('_partials.front.section.breadcrumbs', ['page_title' => 'Rechercher un trajet'])
 @endsection
 
 @section('main')

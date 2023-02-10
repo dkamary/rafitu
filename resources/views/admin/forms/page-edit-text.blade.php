@@ -20,7 +20,7 @@
         <input type="text" name="slug" id="slug" class="form-control" value="{{ $page->slug }}" readonly disabled>
     </div>
     <div class="mb-3">
-        <label for="description" class="form-label">Titre</label>
+        <label for="description" class="form-label">Description</label>
         <textarea name="description" id="description" rows="3" class="form-control">{!! $page->description !!}</textarea>
     </div>
     <div class="mb-3">

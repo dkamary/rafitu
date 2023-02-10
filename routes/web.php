@@ -29,6 +29,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\RideAdminController;
 use App\Http\Controllers\RideController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\SocialNetworkParameterAdminController;
 use App\Http\Controllers\SuggestionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
@@ -221,7 +222,7 @@ Route::prefix('admin')->group(function () {
     });
 
     // RESERVATION
-    Route::prefix(('reservation'))->group((function() {
+    Route::prefix('reservation')->group((function() {
         Route::get('/', [ReservationAdminController::class, 'allReservation'])->name('admin_reservation_all');
         Route::get('/payee', [ReservationAdminController::class, 'paidReservation'])->name('admin_reservation_paid');
         Route::get('/impayee', [ReservationAdminController::class, 'unpaidReservation'])->name('admin_reservation_unpaid');
@@ -231,6 +232,12 @@ Route::prefix('admin')->group(function () {
         Route::post('/cancel/{reservation}', [ReservationAdminController::class, 'cancel'])->name('admin_reservation_cancel');
         Route::post('/delete/{reservation}', [ReservationAdminController::class, 'remove'])->name('admin_reservation_delete');
     }));
+
+    // Social network
+    Route::prefix('reseaux-sociaux')->group(function(){
+        Route::get('/', [SocialNetworkParameterAdminController::class, 'index'])->name('admin_social_network_parameter_index');
+        Route::post('/save', [SocialNetworkParameterAdminController::class, 'save'])->name('admin_social_network_parameter_save');
+    });
 });
 
 // CONTACT

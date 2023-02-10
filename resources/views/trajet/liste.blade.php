@@ -10,6 +10,10 @@
     {{ $title }}
 @endsection
 
+@section('meta_description')
+    {{ $meta_description ?? '' }}
+@endsection
+
 @section('hero')
     @include('_partials.front.section.breadcrumbs', ['page_title' => $title])
 @endsection
