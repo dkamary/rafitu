@@ -18,6 +18,6 @@ return [
         'api' => [
             'key' => env('GOOGLE_MAPS_API_KEY'),
         ],
-        'directions' => 'https://maps.googleapis.com/maps/api/directions/json?origin=%s&destination=%s&mode=driving&alternatives=true&key=AIzaSyC3x7T4SRBlh_Tx_vA-R531lPxjVNTbSlY'
+        'directions' => 'https://maps.googleapis.com/maps/api/directions/json?origin=%s&destination=%s&mode=driving&alternatives=true&key=' . env('GOOGLE_MAPS_API_KEY')
     ]
 ];
