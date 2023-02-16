@@ -24,7 +24,7 @@
                     <u class="d-inline-block d-md-none"><strong>Date:</strong></u>&nbsp;
                     {{ display_date($com->created_at) }}
                 </div>
-                <div class="col-12 col-md-4 mb-3 mb-md-0">
+                <div class="col-12 col-md-4 mb-3 mb-md-0 d-block align-items-center">
                     <u class="d-inline-block d-md-none"><strong>Trajet:</strong></u><br>
                     @if($ride)
                         <span class="me-5 d-md-none"></span><u>Départ</u>: <strong>{{ $ride->departure_label }}</strong><br>
