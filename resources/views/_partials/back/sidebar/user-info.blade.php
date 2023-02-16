@@ -2,25 +2,14 @@
 
 
 @php
-    $driver = isset($user) && !is_null($user) ? $user : Auth::user();
-    $user = $driver;
-    $avatar = $driver->getAvatar();
-    $driverAvatar = $avatar;
-    if($avatar) {
-        if(strpos($avatar, 'http') !== false) {
-            $driverAvatar = $avatar;
-        } else {
-            $driverAvatar = asset('avatars/' . $avatar);
-        }
-    } else {
-        $driverAvatar = asset('avatars/user-01.svg');
-    }
+    $user = Auth::user();
+    $avatar = get_avatar($user);
 @endphp
 
 <div class="app-sidebar__user clearfix">
     <div class="dropdown user-pro-body">
         <div>
-            <img src="{{ $driverAvatar }}" alt="user-img" class="avatar avatar-lg brround">
+            <img src="{{ $avatar }}" alt="user-img" class="avatar avatar-lg brround">
             <a href="{{ route('dashboard_user') }}" class="profile-img bg-light">
                 <span class="fa fa-pencil" aria-hidden="true"></span>
             </a>

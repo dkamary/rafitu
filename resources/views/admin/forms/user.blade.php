@@ -15,20 +15,20 @@
 <form action="{{ $savingRoute }}" method="post" id="{{ $formId }}">
     <div class="mb-3">
         <label for="firstname" class="form-label">Prénom</label>
-        <input type="text" name="firstname" id="firstname" class="form-control" value="{{ $isNew ? old('firstname') : $user->firstname }}" placeholder="Prénom">
+        <input type="text" name="firstname" id="firstname" class="form-control" value="{{ $isNew ? old('firstname') : $user->firstname }}" placeholder="Prénom" required>
     </div>
     <div class="mb-3">
         <label for="lastname" class="form-label">Nom</label>
-        <input type="text" name="lastname" id="lastname" class="form-control" value="{{ $isNew ? old('lastname') : $user->lastname }}" placeholder="Nom">
+        <input type="text" name="lastname" id="lastname" class="form-control" value="{{ $isNew ? old('lastname') : $user->lastname }}" placeholder="Nom" required>
     </div>
     <div class="mb-3">
         <label for="email" class="form-label">Email</label>
-        <input type="email" name="email" id="email" class="form-control" value="{{ $isNew ? old('email') : $user->email }}" placeholder="Adresse e-mail" {{ $isNew ? '' : 'readonly disabled' }}>
+        <input type="email" name="email" id="email" class="form-control" value="{{ $isNew ? old('email') : $user->email }}" placeholder="Adresse e-mail" {{ $isNew ? '' : 'readonly disabled' }} required>
     </div>
     @if($isNew)
         <div class="mb-3">
             <label for="password" class="form-label">Mot de passe</label>
-            <input type="password" name="password" id="password" class="form-control" value="" placeholder="Votre mot de passe">
+            <input type="password" name="password" id="password" class="form-control" value="" placeholder="Votre mot de passe" required>
         </div>
     @else
         <div class="mb-3">
@@ -148,7 +148,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="password" name="password" id="password" placeholder="Votre nouveau mot de passe" class="form-control">
+                    <input type="password" name="password" id="password" placeholder="Votre nouveau mot de passe" class="form-control" required>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>

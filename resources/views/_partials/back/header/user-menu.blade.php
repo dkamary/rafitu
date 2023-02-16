@@ -1,18 +1,8 @@
 {{-- User Menu --}}
 
 @php
-    $driver = isset($user) && !is_null($user) ? $user : Auth::user();
-    $avatar = $driver->getAvatar();
-    $driverAvatar = $avatar;
-    if($avatar) {
-        if(strpos($avatar, 'http') !== false) {
-            $driverAvatar = $avatar;
-        } else {
-            $driverAvatar = asset('avatars/' . $avatar);
-        }
-    } else {
-        $driverAvatar = asset('avatars/user-01.svg');
-    }
+    $user = Auth::user();
+    $driverAvatar = get_avatar($user);
 @endphp
 
 <div class="dropdown">
@@ -24,7 +14,7 @@
             <i class="dropdown-icon icon icon-home"></i>&nbsp;
             Site
         </a>
-        <a class="dropdown-item" href="{{ route('admin_user_edit', ['user' => Auth::user()]) }}">
+        <a class="dropdown-item" href="{{ route('admin_user_edit', ['user' => $user]) }}">
             <i class="dropdown-icon icon icon-user"></i>&nbsp;
             Mon Profil
         </a>
