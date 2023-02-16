@@ -19,7 +19,7 @@
 
                 <div class="card border border-black">
                     <div class="card-header bg-black">
-                        <h4 class="card-title fw-bold">Informations</h4>
+                        <h4 class="card-title fw-bold text-white">Informations</h4>
                     </div>
                     <div class="card-body">
 

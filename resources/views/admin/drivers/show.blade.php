@@ -46,7 +46,7 @@
                 <label for="" class="col-12 col-md-3 fw-bold">Scan du permis de conduire</label>
                 <div class="col-12 col-md-6">
                     <img src="{{ asset('licence/' . $driver->licence_scan) }}" alt="" class="img-fluid">
-                    @include('admin.drivers._partials.view-and-download', ['link' => asset('licence/' . $driver->licence_scan)])
+                    @include('admin.drivers._partials.view-and-download', ['link' => asset('licences/' . $driver->licence_scan)])
                 </div>
             </div>
 
