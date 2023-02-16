@@ -33,6 +33,12 @@ class UserController extends Controller
             ]);
         }
 
+        if(User::where('email', trim($request->input('email')))->exists()) {
+            session()->flash('warning', sprintf('L\'adresse email `<strong>%s</strong>` existe déjà', $request->input('email')));
+
+            return back();
+        }
+
         $user = User::create([
             'login' => $request->input('email'),
             'email' => $request->input('email'),
