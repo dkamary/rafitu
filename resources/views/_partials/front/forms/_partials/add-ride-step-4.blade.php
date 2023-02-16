@@ -108,12 +108,12 @@
     </div>
 
     <div class="form-group">
-        <div class="d-flex justify-content-between">
-            <a href="#itineraire" data-bs-toggle="tab" class="btn btn-secondary bg-dark  mb-0 waves-effect waves-light" onclick="document.querySelector('#itineraire').click();">
+        <div class="d-flex flex-wrap justify-content-between step-4-buttons">
+            <a href="#itineraire" data-bs-toggle="tab" class="btn btn-secondary bg-dark  mb-0 waves-effect waves-light my-2" onclick="document.querySelector('#itineraire').click();">
                 <i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;
                 Revenir
             </a>
-            <button type="submit" class="btn btn-primary  mb-0 waves-effect waves-light">
+            <button type="submit" class="btn btn-primary  mb-0 waves-effect waves-light my-2">
                 <i class="fa fa-arrow-check" aria-hidden="true"></i>&nbsp;
                 Publier votre trajet
             </button>
@@ -124,6 +124,17 @@
 
 
 @once
+    @push('header')
+        <style>
+            @media screen and (max-width: 576px) {
+                .step-4-buttons .btn {
+                    width: 100%;
+                    max-width: 100%;
+                }
+            }
+        </style>
+    @endpush
+
     @push('footer')
         <script id="step-4-scripts">
             window.addEventListener("DOMContentLoaded", event => {

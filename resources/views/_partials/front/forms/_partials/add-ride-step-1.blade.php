@@ -33,24 +33,24 @@
             value="{{ $tomorrow }}" required
                 placeholder="dd/mm/aaaa hh:mm">
 
-            <div class="date-suggestions d-flex justify-content-start align-items-center my-4">
-                <a href="#" class="date-suggestion btn btn-outline-info btn-xs me-2" data-time="{{ date('Y-m-d\TH:i') }}">
+            <div class="date-suggestions d-flex flex-wrap justify-content-start align-items-center my-4">
+                <a href="#" class="date-suggestion btn btn-outline-info btn-xs my-2 me-2" data-time="{{ date('Y-m-d\TH:i') }}">
                     <i class="fa fa-clock-o" aria-hidden="true"></i>
                     Ajourd'hui
                 </a>
-                <a href="#" class="date-suggestion btn btn-outline-info btn-xs me-2" data-time="{{ $demain->format('Y-m-d\TH:i') }}">
+                <a href="#" class="date-suggestion btn btn-outline-info btn-xs my-2 me-2" data-time="{{ $demain->format('Y-m-d\TH:i') }}">
                     <i class="fa fa-clock-o" aria-hidden="true"></i>
                     Demain
                 </a>
-                <a href="#" class="date-suggestion btn btn-outline-info btn-xs me-2" data-time="{{ $apresDemain->format('Y-m-d\TH:i') }}">
+                <a href="#" class="date-suggestion btn btn-outline-info btn-xs my-2 me-2" data-time="{{ $apresDemain->format('Y-m-d\TH:i') }}">
                     <i class="fa fa-clock-o" aria-hidden="true"></i>
                     Apprès demain
                 </a>
-                <a href="#" class="date-suggestion btn btn-outline-info btn-xs me-2" data-time="{{ $oneWeek->format('Y-m-d\TH:i') }}">
+                <a href="#" class="date-suggestion btn btn-outline-info btn-xs my-2 me-2" data-time="{{ $oneWeek->format('Y-m-d\TH:i') }}">
                     <i class="fa fa-clock-o" aria-hidden="true"></i>
                     Dans une semaine
                 </a>
-                <a href="#" class="date-suggestion btn btn-outline-info btn-xs me-2" data-time="{{ $oneMonth->format('Y-m-d\TH:i') }}">
+                <a href="#" class="date-suggestion btn btn-outline-info btn-xs my-2 me-2" data-time="{{ $oneMonth->format('Y-m-d\TH:i') }}">
                     <i class="fa fa-clock-o" aria-hidden="true"></i>
                     Dans un mois
                 </a>
@@ -70,8 +70,13 @@
 @once
 
     @push('head')
-        {{--  --}}
-
+        <style>
+            @media screen and (max-width: 576px) {
+                .date-suggestion {
+                    width: 100%;
+                }
+            }
+        </style>
     @endpush
 
     @push('footer')
