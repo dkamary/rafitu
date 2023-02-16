@@ -124,7 +124,7 @@
 
 
 @once
-    @push('header')
+    @push('head')
         <style>
             @media screen and (max-width: 576px) {
                 .step-4-buttons .btn {
