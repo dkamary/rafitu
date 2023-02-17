@@ -2,6 +2,13 @@
 /public/allCountries.txt
 /public/hot
 /public/storage
+/public/avatars
+/public/gray-cards
+/public/identifications
+/public/insurrances
+/public/licences
+/public/technicals
+/public/vehicles
 /storage/*.key
 /vendor
 .env
