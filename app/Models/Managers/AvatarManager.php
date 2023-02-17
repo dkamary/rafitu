@@ -6,6 +6,7 @@ use App\Models\User;
 use GdImage;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 
 class AvatarManager
@@ -61,10 +62,28 @@ class AvatarManager
         if(is_file($avatar)) {
             foreach(self::SIZES as $label => $size) {
                 $file = $filename .'-' . $label .'.' .$pathInfo['extension'];
-                unlink(AVATAR_DIR . $file);
+                try {
+                    unlink(AVATAR_DIR . $file);
+                } catch(\Throwable $th) {
+                    Log::warning(sprintf('Erreur dans la suppression du fichier `%s`: %s', AVATAR_DIR . $file, $th->getMessage()), [
+                        'code' => $th->getCode(),
+                        'file' => $th->getFile(),
+                        'line' => $th->getLine()
+                    ]);
+                }
             }
 
-            return unlink($avatar);
+            try {
+                unlink($avatar);
+            } catch(\Throwable $th) {
+                Log::warning(sprintf('Erreur dans la suppression du fichier `%s`: %s', $avatar, $th->getMessage()), [
+                    'code' => $th->getCode(),
+                    'file' => $th->getFile(),
+                    'line' => $th->getLine()
+                ]);
+            }
+
+            return true;
         }
 
         return false;
