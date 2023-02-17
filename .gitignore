@@ -9,6 +9,7 @@
 /public/licences
 /public/technicals
 /public/vehicles
+/public/test-cron.log
 /storage/*.key
 /vendor
 .env
