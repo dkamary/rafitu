@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Managers\AvatarManager;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -26,6 +27,7 @@ class UserController extends Controller
 
     public function create(Request $request) {
         if($request->getMethod() != Request::METHOD_POST) {
+
             return view('admin.users.set', [
                 'user' => new User(),
                 'towns' => [],
@@ -60,6 +62,11 @@ class UserController extends Controller
             'user_status_id' => 1,
         ]);
 
+        if($avatar = AvatarManager::handleUpload($request, 'avatar', $user)) {
+            $user->avatar = $avatar;
+            $user->save();
+        }
+
         session()->flash('success', 'Nouvel utilisateur créé!');
 
         return response()->redirectToRoute('admin_user_edit', ['user' => $user,]);
@@ -67,6 +74,7 @@ class UserController extends Controller
 
     public function edit(Request $request, User $user) {
         if($request->getMethod() != Request::METHOD_POST) {
+
             return view('admin.users.set', [
                 'user' => $user,
                 'towns' => [],
@@ -90,6 +98,9 @@ class UserController extends Controller
         if(is_null($user->login)) {
             $user->login = $user->email;
         }
+        if($avatar = AvatarManager::handleUpload($request, 'avatar', $user)) {
+            $user->avatar = $avatar;
+        }
         $user->save();
 
         session()->flash('success', 'Utilisateur mis à jour!');
@@ -109,6 +120,7 @@ class UserController extends Controller
     public function updatePassword(Request $request) : RedirectResponse {
         $user = User::where('id', '=', (int)$request->input('id'))->first();
         if(!$user) throw new NotFoundHttpException('Utilisateur introuvable');
+
         $user->password = bcrypt($request->input('password'));
         $user->save();
 

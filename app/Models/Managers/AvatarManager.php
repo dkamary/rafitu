@@ -37,11 +37,17 @@ class AvatarManager
         self::removePreviousAvatar($user->avatar);
 
         $uniqId = uniqid($fieldName . '-');
-        $original = $uniqId . '.' . $avatar->getClientOriginalExtension();
+        $oldExtension = $avatar->getClientOriginalExtension();
+        $original = $uniqId . '.' . $oldExtension;
         $avatar->move(public_path('avatars/'), $original);
-        $filename = $uniqId . '.webp';
+        $newExtension = strtolower($oldExtension) == 'svg' ? '.svg' : '.webp';
+        $filename = $uniqId . $newExtension;
 
-        self::resizeAvatar($original);
+        if(!self::resizeAvatar($original)) {
+            session()->flash('warning', 'Une erreur est survenue lors de la mise à jour de l\'avatar');
+
+            return null;
+        }
 
         return $filename;
     }
@@ -69,7 +75,13 @@ class AvatarManager
         $file = AVATAR_DIR . $filename;
         try {
             $ext = self::getImageExtension($file);
+
+            if($ext == 'svg') return true;
+
             $image = self::getImage($file, $ext);
+
+            if(!$image) return false;
+
             foreach(self::SIZES as $label => $s) {
                 $newImg = imagescale($image, $s['w'], -1);
                 $newFilename = $pathInfo['filename'] .'-' .$label .'.webp';
@@ -83,9 +95,15 @@ class AvatarManager
     }
 
     public static function getImageExtension(string $fullpath) : ?string {
+        $pathInfo = pathinfo($fullpath);
+        if(strtolower($pathInfo['extension']) == 'svg') return 'svg';
+
         $size = getimagesize($fullpath);
+        if(!$size) return null;
+
         $mime = $size['mime'];
         $ext = null;
+
         if($mime == 'image/png') $ext = 'png';
         elseif($mime == 'image/webp') $ext = 'webp';
         elseif($mime == 'image/gif') $ext = 'gif';

@@ -23,7 +23,11 @@
                 </div>
             </div>
 
-            @include('admin.forms.user', ['user' => $user])
+            {{-- @include('admin.forms.user', ['user' => $user]) --}}
+
+            {{-- @include('dashboard.forms.user', ['user' => $user]) --}}
+
+            @include('admin.users.form.user', ['user' => $user])
 
         </div>
     </div>
