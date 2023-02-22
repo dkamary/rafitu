@@ -6,17 +6,7 @@
     $other = $last->getUser();
     $client = $last->getClient();
 
-    // $avatar = $other ? $other->getAvatar() : null;
-    // $driverAvatar = $avatar;
-    // if($avatar) {
-    //     if(strpos($avatar, 'http') !== false) {
-    //         $driverAvatar = $avatar;
-    //     } else {
-    //         $driverAvatar = asset('avatars/' . $avatar);
-    //     }
-    // } else {
-    //     $driverAvatar = asset('avatars/user-01.svg');
-    // }
+    $isAdmin = $user->isAdmin();
 
     $avatar = get_avatar($conversation['receiver']);
     $firstname = isset($conversation['receiver']) && !is_null($conversation['receiver']) ? $conversation['receiver']->firstname : 'RAFITU';
@@ -52,7 +42,7 @@
             <div class="col-12 d-flex flex-column px-0">
                 @foreach ($messages as $msg)
                     @php
-                        $isMe = ($msg->sender == $user->id || is_null($msg->sender));
+                        $isMe = $isAdmin ? ($msg->client_id != $msg->sender) : ($msg->client_id == $msg->sender);
                     @endphp
                 <div id="message-{{ $msg->id }}"
                     data-user_id="{{ $msg->user_id }}"
