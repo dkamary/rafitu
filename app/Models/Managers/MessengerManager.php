@@ -59,12 +59,21 @@ class MessengerManager
 
         $tokens = $builder
             // ->limit(10)
+            ->orderBy('date_sent', 'DESC')
             ->get();
 
         foreach($tokens as $msgToken) {
             $lastMsg = self::lastMessageByToken($msgToken->token);
             if(strlen($lastMsg->token) > 3) $messages[$msgToken->token] = $lastMsg;
         }
+
+        // !TODO: Order by PHP
+        usort($messages, function(Message $a, Message $b){
+            $dateA = new \DateTime($a->date_sent);
+            $dateB = new \DateTime($b->date_sent);
+
+            return $dateB->getTimestamp() - $dateA->getTimestamp();
+        });
 
         return $messages;
     }
