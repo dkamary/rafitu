@@ -117,9 +117,10 @@ class RideAdminController extends Controller
             ]);
         }
 
-        return response()->redirectToRoute('admin_ride_show', [
-            'ride' => $ride,
-        ]);
+        return response()->redirectToRoute('admin_ride_index');
+        // return response()->redirectToRoute('admin_ride_show', [
+        //     'ride' => $ride,
+        // ]);
     }
 
     public function remove(Request $request) : RedirectResponse {
