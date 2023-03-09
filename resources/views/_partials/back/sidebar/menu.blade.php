@@ -105,4 +105,10 @@
             <li><a href="{{ route('admin_reservation_deleted') }}" class="slide-item">Réservations effacées</a></li>
         </ul>
     </li>
+    <li class="slide">
+        <a class="side-menu__item" data-bs-toggle="slide" href="{{ route('admin_funfact_index') }}">
+            <i class="side-menu__icon fa fa-square"></i>
+            <span class="side-menu__label">Faits amusants</span>
+        </a>
+    </li>
 </ul>

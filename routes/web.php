@@ -14,6 +14,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DriverAdminController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\FunfactController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MessageController;
@@ -242,6 +243,15 @@ Route::prefix('admin')->group(function () {
     // Paramètres
     Route::prefix('parametres')->group(function(){
         Route::get('/', [AdminController::class, 'parameters'])->name('admin_parameters_index');
+    });
+
+    // Funfact
+    Route::prefix('faits-amusants')->group(function(){
+        Route::get('/', [FunfactController::class, 'index'])->name('admin_funfact_index');
+        Route::get('/nouveau', [FunfactController::class, 'create'])->name('admin_funfact_new');
+        Route::get('/editer/{funfact}', [FunfactController::class, 'edit'])->name('admin_funfact_edit');
+        Route::post('/sauvegarde', [FunfactController::class, 'save'])->name('admin_funfact_save');
+        Route::post('/effacer', [FunfactController::class, 'remove'])->name('admin_funfact_remove');
     });
 });
 

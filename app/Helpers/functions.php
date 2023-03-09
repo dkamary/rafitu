@@ -2,6 +2,7 @@
 
 // Functions
 
+use App\Models\Funfact;
 use App\Models\RideStatus;
 use App\Models\User;
 
@@ -34,6 +35,30 @@ if(!function_exists('get_avatar')) {
         return $userAvatar;
     }
 
+}
+
+if(!function_exists('get_funfact_image')) {
+    function get_funfact_image(?string $filename) {
+        $default = asset('assets/images/other/conducteur-512x512.webp');
+        if(!$filename) return $default;
+
+        $file = IMAGES_DIR . $filename;
+        if(!is_file($file)) return $default;
+
+        return asset('images/' . $filename);
+    }
+}
+
+if(!function_exists('get_funfact_icon')) {
+    function get_funfact_icon(?string $filename) {
+        $default = asset('assets/images/icons/marker-icon.svg');
+        if(!$filename) return $default;
+
+        $file = IMAGES_DIR . $filename;
+        if(!is_file($file)) return $default;
+
+        return asset('images/' . $filename);
+    }
 }
 
 if(!function_exists('display_date')) {
@@ -94,4 +119,19 @@ if(!function_exists('ride_status')) {
         return RideStatus::getStatus($status, $default);
     }
 
+}
+
+
+if(!function_exists('get_funfacts')) {
+    function get_funfacts(int $count = 0, array $includes = []) {
+        $builder = Funfact::where('is_active', '=', 1);
+        if($count > 0) {
+            $builder->limit($count);
+        }
+        if(count($includes) > 0) {
+            $builder->whereIn('id', $includes);
+        }
+
+        return $builder->get();
+    }
 }

@@ -11,6 +11,7 @@ define('LARAVEL_START', microtime(true));
 define('PUBLIC_DIR', __DIR__ . DIRECTORY_SEPARATOR);
 define('ROOT_DIR', PUBLIC_DIR .'..' . DIRECTORY_SEPARATOR);
 define('AVATAR_DIR', PUBLIC_DIR . 'avatars' . DIRECTORY_SEPARATOR);
+define('IMAGES_DIR', PUBLIC_DIR . 'images'. DIRECTORY_SEPARATOR);
 
 /*
 |--------------------------------------------------------------------------
