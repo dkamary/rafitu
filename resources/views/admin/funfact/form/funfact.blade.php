@@ -87,6 +87,27 @@
 
 
 @once
+
+    @push('head')
+        <style>
+            .user-admin-form .required {
+                position: relative;
+            }
+
+            .user-admin-form .required::after {
+                content: "";
+                position: absolute;
+                width: .8rem;
+                height: .8rem;
+                background-image: url({{ asset('images/medical.png') }});
+                background-size: cover;
+                right: 1.5rem;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+        </style>
+    @endpush
+
     @push('footer')
         <script id="form-user-edit">
             window.addEventListener("DOMContentLoaded", event => {
