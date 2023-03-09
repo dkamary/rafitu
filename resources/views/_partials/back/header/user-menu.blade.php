@@ -18,11 +18,11 @@
             <i class="dropdown-icon icon icon-user"></i>&nbsp;
             Mon Profil
         </a>
-        <a class="dropdown-item" href="#">
+        <a class="dropdown-item" href="{{ route('dashboard_messenger_index') }}">
             <i class="dropdown-icon icon icon-speech"></i>&nbsp;
             Boîte de réception
         </a>
-        <a class="dropdown-item" href="#">
+        <a class="dropdown-item" href="{{ route('admin_parameters_index') }}">
             <i class="dropdown-icon  icon icon-settings"></i>&nbsp;
             Paramètres
         </a>
@@ -32,3 +32,4 @@
         </a>
     </div>
 </div>
+

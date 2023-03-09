@@ -238,6 +238,11 @@ Route::prefix('admin')->group(function () {
         Route::get('/', [SocialNetworkParameterAdminController::class, 'index'])->name('admin_social_network_parameter_index');
         Route::post('/save', [SocialNetworkParameterAdminController::class, 'save'])->name('admin_social_network_parameter_save');
     });
+
+    // Paramètres
+    Route::prefix('parametres')->group(function(){
+        Route::get('/', [AdminController::class, 'parameters'])->name('admin_parameters_index');
+    });
 });
 
 // CONTACT
