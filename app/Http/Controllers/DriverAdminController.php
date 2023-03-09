@@ -78,7 +78,7 @@ class DriverAdminController extends Controller
         $driver->save();
         session()->flash('success', sprintf('Chauffeur %s a été validé', $driver->getFullname()));
 
-        return response()->redirectToRoute('admin_driver_show', ['driver' => $driver]);
+        return response()->redirectToRoute('admin_driver_index');
     }
 
     public function remove(Request $request) : RedirectResponse {

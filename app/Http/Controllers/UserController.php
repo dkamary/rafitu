@@ -105,7 +105,7 @@ class UserController extends Controller
 
         session()->flash('success', 'Utilisateur mis à jour!');
 
-        return response()->redirectToRoute('admin_user_edit', ['user' => $user]);
+        return response()->redirectToRoute('admin_user_index');
     }
 
     public function deactivate(User $user) : RedirectResponse {

@@ -42,8 +42,6 @@ class PreReservationAdminController extends Controller
 
         session()->flash('success', "La pré-réservation a été mis à jour avec succès!");
 
-        return response()->redirectToRoute('admin_prereservation_edit', [
-            'prereservation' => $prereservation,
-        ]);
+        return response()->redirectToRoute('admin_prereservation_index');
     }
 }
