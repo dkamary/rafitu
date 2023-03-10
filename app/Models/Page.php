@@ -10,7 +10,7 @@ class Page extends Model
     protected $primaryKey = 'id';
     protected $fillable = [
         'slug', 'title', 'description', 'content', 'page_category_id', 'author_id', 'preview_image', 'page_status_id',
-        'created_at', 'updated_at',
+        'created_at', 'updated_at', 'views',
     ];
     public $timestamps = false;
 

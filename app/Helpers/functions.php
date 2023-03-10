@@ -3,6 +3,8 @@
 // Functions
 
 use App\Models\Funfact;
+use App\Models\Page;
+use App\Models\PageCategory;
 use App\Models\RideStatus;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -156,5 +158,47 @@ if(!function_exists('get_reviews')) {
         $note = $count > 0 ? ($total / $count) : 0.0;
 
         return $note;
+    }
+}
+
+if(!function_exists('post_mostview')) {
+    function post_mostview(int $count = 10) : array {
+        $pages = Page::where('page_category_id', '=', PageCategory::BLOG)
+            ->orderBy('views', 'DESC')
+            ->limit($count)
+            ->get();
+
+        $list = [];
+        foreach ($pages as $page) {
+            $list[] = (object)[
+                'id' => $page->id,
+                'slug' => $page->slug,
+                'title' => $page->title,
+                'views' => $page->views,
+            ];
+        }
+
+        return $list;
+    }
+}
+
+if(!function_exists('post_latest')) {
+    function post_latest(int $count = 10) : array {
+        $pages = Page::where('page_category_id', '=', PageCategory::BLOG)
+            ->orderBy('created_at', 'DESC')
+            ->limit($count)
+            ->get();
+
+        $list = [];
+        foreach ($pages as $page) {
+            $list[] = (object)[
+                'id' => $page->id,
+                'slug' => $page->slug,
+                'title' => $page->title,
+                'views' => $page->views,
+            ];
+        }
+
+        return $list;
     }
 }

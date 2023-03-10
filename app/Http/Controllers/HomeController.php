@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Managers\ParamManager;
 use App\Models\Managers\TrajetDestinationManager;
 use App\Models\Page;
+use App\Models\PageCategory;
 use App\Models\Position;
 use App\Models\Ride;
 use Illuminate\Http\Request;
@@ -26,6 +27,14 @@ class HomeController extends Controller
     {
         $page = Page::where('slug', 'LIKE', $slug)->first();
         if (!$page) throw new NotFoundHttpException('La page demandée est introuvable sur le site');
+        $page->views++;
+        $page->save();
+
+        if($page->page_category_id == PageCategory::BLOG) {
+            return view('pages.blog-page', [
+                'page' => $page,
+            ]);
+        }
 
         return view('pages.static-page', [
             'page' => $page,
