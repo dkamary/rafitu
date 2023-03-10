@@ -26,12 +26,14 @@ use App\Http\Controllers\PaypalController;
 use App\Http\Controllers\PreReservationAdminController;
 use App\Http\Controllers\ReservationAdminController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\ReviewAdminController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\RideAdminController;
 use App\Http\Controllers\RideController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SocialNetworkParameterAdminController;
 use App\Http\Controllers\SuggestionController;
+use App\Http\Controllers\UploadController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\VehiculeAdminController;
@@ -252,6 +254,19 @@ Route::prefix('admin')->group(function () {
         Route::get('/editer/{funfact}', [FunfactController::class, 'edit'])->name('admin_funfact_edit');
         Route::post('/sauvegarde', [FunfactController::class, 'save'])->name('admin_funfact_save');
         Route::post('/effacer', [FunfactController::class, 'remove'])->name('admin_funfact_remove');
+    });
+
+    // Commentaires
+    Route::prefix('commentaires')->group(function(){
+        Route::get('/', [ReviewAdminController::class, 'index'])->name('admin_review_index');
+        Route::get('/afficher', [ReviewAdminController::class, 'index'])->name('admin_review_show');
+        Route::post('/desactiver', [ReviewAdminController::class, 'index'])->name('admin_review_deactivate');
+    });
+
+    // Uploads
+    Route::prefix('upload')->group(function(){
+        Route::get('/', [UploadController::class, 'index'])->name('admin_upload_index');
+        Route::post('/televerser', [UploadController::class, 'upload'])->name('admin_upload_upload');
     });
 });
 

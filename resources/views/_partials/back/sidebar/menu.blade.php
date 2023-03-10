@@ -5,7 +5,6 @@
         <a class="side-menu__item" data-bs-toggle="slide" href="{{ route('admin') }}">
             <i class="side-menu__icon fa fa-tachometer"></i>
             <span class="side-menu__label">Tableau de bord</span>
-            {{-- <i class="angle fa fa-angle-right"></i> --}}
         </a>
     </li>
     <li class="slide">
@@ -24,6 +23,17 @@
             <li><a class="slide-item" href="{{ route('pages_nosValeurs') }}">Nos Valeurs</a></li>
             <li><a class="slide-item" href="{{ route('pages_qui_sommes_nous') }}">Qui sommes-nous</a></li>
             <li><a class="slide-item" href="{{ route('pages_faq') }}">Foire aux questions</a></li>
+        </ul>
+    </li>
+    <li class="slide">
+        <a class="side-menu__item" data-bs-toggle="slide" href="#">
+            <i class="side-menu__icon fa fa-file" aria-hidden="true"></i>
+            <span class="side-menu__label">Articles</span>
+            <i class="angle fa fa-angle-right"></i>
+        </a>
+        <ul class="slide-menu">
+            <li><a class="slide-item" href="{{ route('admin_blog_index') }}">Liste</a></li>
+            <li><a class="slide-item" href="{{ route('admin_blog_new') }}">Ajouter</a></li>
         </ul>
     </li>
     <li class="slide">

@@ -10,6 +10,7 @@
 /public/technicals
 /public/vehicles
 /public/test-cron.log
+/public/upload
 /storage/*.key
 /vendor
 .env

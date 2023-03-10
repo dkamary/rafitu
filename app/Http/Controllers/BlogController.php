@@ -45,7 +45,7 @@ class BlogController extends Controller
         return response()->redirectToRoute('admin_blog_edit', ['page' => $page,]);
     }
 
-    public function edit(Request $request, Page $page) : View {
+    public function edit(Request $request, Page $page) {
         if($request->getMethod() != Request::METHOD_POST) {
 
             return view('admin.blogs.edit', ['page' => $page]);

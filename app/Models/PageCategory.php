@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class PageCategory extends Model
 {
+    const STATIC = 1;
+    const BLOG = 2;
+
     protected $table = 'page_category';
     protected $primaryKey = 'id';
     protected $fillable = [
