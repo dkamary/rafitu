@@ -52,7 +52,7 @@
                 plugins: [
                     'advlist','autolink',
                     'lists','link','image','charmap','preview','anchor','searchreplace','visualblocks',
-                    'fullscreen','insertdatetime','media','table','help','wordcount', 'image'
+                    'fullscreen','insertdatetime','media','table','help','wordcount',
                 ],
                 toolbar: 'undo redo | casechange blocks | bold italic backcolor | ' +
                 'alignleft aligncenter alignright alignjustify | ' +

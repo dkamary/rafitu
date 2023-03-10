@@ -45,7 +45,8 @@
                 ],
                 toolbar: 'undo redo | casechange blocks | bold italic backcolor | ' +
                 'alignleft aligncenter alignright alignjustify | ' +
-                'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help'
+                'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help',
+                images_upload_url: '{{ route('admin_upload_upload') }}',
             });
             </script>
     @endpush
