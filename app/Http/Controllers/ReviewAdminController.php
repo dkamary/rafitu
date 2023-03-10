@@ -32,7 +32,7 @@ class ReviewAdminController extends Controller
 
     public function show(Review $review) : View {
 
-        return view('', [
+        return view('admin.review.show', [
             'review' => $review,
         ]);
     }

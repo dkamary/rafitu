@@ -76,7 +76,8 @@
                                 @if($review->is_active != 1)
 
                                 <form action="{{ route('admin_review_validate') }}" method="post" class="form-validate">
-                                    <button type="submit" @class([
+                                    <button type="submit"  onclick="if(!confirm('Voulez-vous valider le commentaire ?')) return false;"
+                                    @class([
                                         'btn',
                                         'btn-outline-success',
                                     ])>
@@ -90,7 +91,8 @@
                                 @elseif ($review->is_active == 1)
 
                                 <form action="{{ route('admin_review_deactivate') }}" method="post" class="form-delete">
-                                    <button type="submit" @class([
+                                    <button type="submit"  onclick="if(!confirm('Voulez-vous effacer le commentaire ?')) return false;"
+                                    @class([
                                         'btn',
                                         'btn-outline-danger',
                                     ])>

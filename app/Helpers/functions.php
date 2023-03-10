@@ -5,6 +5,7 @@
 use App\Models\Funfact;
 use App\Models\RideStatus;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 if(!function_exists('get_avatar')) {
     /**
@@ -133,5 +134,27 @@ if(!function_exists('get_funfacts')) {
         }
 
         return $builder->get();
+    }
+}
+
+if(!function_exists('get_reviews')) {
+    function get_reviews(int $userId) : float {
+        $builder = DB::table('review')
+            ->select(['note'])
+            ->join('reservation', 'reservation.id', '=', 'review.reservation_id')
+            ->join('ride', 'ride.id', '=', 'reservation.ride_id')
+            ->where('review.is_active', '=', 1)
+            ->where('ride.owner_id', '=', $userId);
+        $notes = $builder->get();
+        $total = 0;
+        $count = 0;
+        foreach($notes as $note) {
+            $total += (int)$note->note;
+            $count++;
+        }
+
+        $note = $count > 0 ? ($total / $count) : 0.0;
+
+        return $note;
     }
 }

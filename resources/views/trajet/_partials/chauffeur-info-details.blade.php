@@ -39,7 +39,14 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <em class="text-black-50">Aucun avis pour le moment</em>
+                        @php
+                            $note = get_reviews($ride->owner_id);
+                        @endphp
+                        @if ($note > 0)
+                            @include('trajet._partials.stars', ['note' => $note])
+                        @else
+                            <em class="text-black-50">Aucun avis pour le moment</em>
+                        @endif
                     </div>
                 </div>
 
