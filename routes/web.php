@@ -259,8 +259,9 @@ Route::prefix('admin')->group(function () {
     // Commentaires
     Route::prefix('commentaires')->group(function(){
         Route::get('/', [ReviewAdminController::class, 'index'])->name('admin_review_index');
-        Route::get('/afficher', [ReviewAdminController::class, 'index'])->name('admin_review_show');
-        Route::post('/desactiver', [ReviewAdminController::class, 'index'])->name('admin_review_deactivate');
+        Route::get('/afficher/{review}', [ReviewAdminController::class, 'show'])->name('admin_review_show');
+        Route::post('/desactiver', [ReviewAdminController::class, 'deactivate'])->name('admin_review_deactivate');
+        Route::post('/valider', [ReviewAdminController::class, 'validation'])->name('admin_review_validate');
     });
 
     // Uploads

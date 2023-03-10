@@ -35,4 +35,9 @@ class Review extends Model
     public function isActive() : bool {
         return $this->is_active == 1;
     }
+
+    public function getUserName() : string {
+        $user = $this->getUser();
+        return sprintf('<a href="%s">%s</a>', route('admin_user_edit', ['user' => $this->user_id]), $user ? $user->getFullname() : '&hellip;');
+    }
 }

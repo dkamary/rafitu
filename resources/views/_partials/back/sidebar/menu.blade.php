@@ -121,4 +121,16 @@
             <span class="side-menu__label">Faits amusants</span>
         </a>
     </li>
+    <li class="slide">
+        <a class="side-menu__item" data-bs-toggle="slide" href="{{ route('admin_reservation_all') }}">
+            <i class="side-menu__icon fa fa-comments"></i>
+            <span class="side-menu__label">Commentaires</span>
+            <i class="angle fa fa-angle-right"></i>
+        </a>
+        <ul class="slide-menu">
+            <li><a href="{{ route('admin_review_index') }}" class="slide-item">Tous les commentaires</a></li>
+            <li><a href="{{ route('admin_review_index', ['type' => 'todo']) }}" class="slide-item">A valider</a></li>
+            <li><a href="{{ route('admin_review_index', ['type' => 'deactivated']) }}" class="slide-item">Non validés</a></li>
+        </ul>
+    </li>
 </ul>
