@@ -398,4 +398,5 @@ Route::prefix('cron')->group(function(){
 Route::get('/long-trajet/{distance?}', [HomeController::class, 'longTrajet'])->name('long_trajet');
 Route::get('/trajet-quotidien/{distance?}', [HomeController::class, 'trajetQuotidien'])->name('trajet_quotidien');
 Route::get('/trouver-un-trajet', [HomeController::class, 'rechercherTrajet'])->name('trouver_trajet');
+Route::get('/actualites', [HomeController::class, 'listPage'])->name('blog_pages');
 Route::get('/{slug}', [HomeController::class, 'staticPage'])->name('static_pages');

@@ -6,6 +6,7 @@ use App\Models\Managers\ParamManager;
 use App\Models\Managers\TrajetDestinationManager;
 use App\Models\Page;
 use App\Models\PageCategory;
+use App\Models\PageStatus;
 use App\Models\Position;
 use App\Models\Ride;
 use Illuminate\Http\Request;
@@ -38,6 +39,17 @@ class HomeController extends Controller
 
         return view('pages.static-page', [
             'page' => $page,
+        ]);
+    }
+
+    public function listPage() : View {
+        $pages = Page::where('page_status_id', '=', PageStatus::PUBLIEE)
+            ->where('page_category_id', '=', PageCategory::BLOG)
+            ->orderBy('created_at', 'DESC')
+            ->paginate(12);
+
+        return view('pages.blog-list', [
+            'posts' => $pages,
         ]);
     }
 

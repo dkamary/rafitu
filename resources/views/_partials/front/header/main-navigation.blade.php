@@ -24,9 +24,9 @@
                 <li aria-haspopup="true">
                     <a href="{{ route('trouver_trajet') }}">Trouver votre trajet</a>
                 </li>
-                {{-- <li aria-haspopup="true">
-                    <a href="{{ route('trouver_trajet') }}">Actualités</a>
-                </li> --}}
+                <li aria-haspopup="true">
+                    <a href="{{ route('blog_pages') }}">Actualités</a>
+                </li>
                 @guest
                     <li aria-haspopup="true">
                         <a href="{{ route('login') }}">S'identifier</a>

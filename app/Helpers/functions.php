@@ -114,16 +114,13 @@ if(!function_exists('is_mobile')) {
 
 }
 
-
 if(!function_exists('ride_status')) {
 
     function ride_status(int $status, string $default = 'n/a') : string {
 
         return RideStatus::getStatus($status, $default);
     }
-
 }
-
 
 if(!function_exists('get_funfacts')) {
     function get_funfacts(int $count = 0, array $includes = []) {
