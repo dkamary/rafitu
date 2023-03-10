@@ -44,7 +44,7 @@
                         </main>
                     </article>
                 @empty
-                    <div class="row">
+                    <div class="row my-4 bg-white pt-4">
                         <div class="col-12">
                             <em>Il n'y a pas encore d'article pour le moment</em>
                         </div>
