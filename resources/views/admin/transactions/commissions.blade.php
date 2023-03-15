@@ -86,11 +86,11 @@
                         </div>
                     </div>
                     <div class="row mb-4">
-                        <label for="heure_execution" class="col-4 text-end align-items-center d-flex justify-content-end mb-0 fw-bold">Trajet quotidien</label>
+                        <label for="heure_execution" class="col-4 text-end align-items-center d-flex justify-content-end mb-0 fw-bold">Délai d'exécution</label>
                         <div class="col-8 col-md-4">
                             <div class="input-group">
                                 <input type="number" class="form-control text-end" name="heure_execution" id="heure_execution" value="{{ $parameter->heure_execution }}"
-                                    aria-label="Pourcentage pour la commission des trajets quotidiens" min="1">
+                                    aria-label="Délai d'exécution du traitement des commissions" min="1">
                                 <span class="input-group-text fw-bold">secondes</span>
                             </div>
                         </div>
