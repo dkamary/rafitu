@@ -6,6 +6,7 @@ use App\Models\CommissionPayment;
 use App\Models\Reservation;
 use App\Models\ReviewHistory;
 use App\Models\Transactions\Result;
+use Carbon\Carbon;
 use DateTime;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -19,7 +20,7 @@ class CronManager {
      * @return Result
      */
     public static function commissions() : Result {
-        $unpaids = CommissionManager::unpaidCommission(CommissionPayment::SOURCE_CINETPAY);
+        $unpaids = CommissionManager::unpaidCommission(CommissionPayment::SOURCE_CINETPAY, Carbon::today()->toDateString());
         if($unpaids->count() == 0) {
             return new Result(
                 Result::STATUS_SUCCESS,

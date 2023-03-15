@@ -53,6 +53,7 @@
                         <span class="badge bg-info px-3">Payé</span>
                     @else
                         <span class="badge bg-warning px-3">A payer</span>
+                        <button class="btn btn-primary mx-2" class="btn-pay" data-id="{{ $com->id }}">Payer</button>
                     @endif
                 </div>
             </div>
@@ -65,3 +66,48 @@
         @endif
     </main>
 </section>
+
+@once
+
+    @push('footer')
+        <script id="pay-commission-script">
+            window.addEventListener("DOMContentLoaded", event => {
+                const buttons = document.querySelectorAll(".btn-pay");
+                if(!buttons)
+            });
+
+            function managePayButton() {
+                const buttons = document.querySelectorAll(".btn-pay");
+                if(!buttons || buttons.length == 0) {
+                    console.warn("Unable to select pay button!");
+                    return;
+                }
+
+                buttons.foreach(button => {
+                    button.addEventListener("click", payCommission);
+                });
+            }
+
+            function payCommission(e) {
+                e.preventDefault();
+                const $this = e.currentTarget;
+                window.jQuery.ajax({
+                    type: 'POST',
+                    url: route('transaction_commissions_pay'),
+                    data: {
+                        token: "{{ csrf_token() }}",
+                        id: $this.dataset.id
+                    }
+                }).fail(xhr => {
+                    alert(`${xhr.status} - ${xhr.statusText}`);
+                }).done(response => {
+                    alert(response.message);
+                    if(response.done) {
+                        window.location.reload();
+                    }
+                });
+            }
+        </script>
+    @endpush
+
+@endonce

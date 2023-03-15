@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CommissionPayment;
 use App\Models\Managers\CommissionManager;
 use App\Models\Managers\ParamManager;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -92,5 +94,31 @@ class AdminTransactionController extends Controller
         session()->flash('success', 'Les paramètres du mode de paiement <strong>PAYPAL</strong> ont été mis à jour!');
 
         return response()->redirectToRoute('transaction_mode_de_paiements');
+    }
+
+    public function commissions_pay(Request $request) : JsonResponse {
+        $id = (int)$request->input('id');
+        $commissionPayment = CommissionPayment::where('id', '=', $id)->first();
+
+        if(!$commissionPayment) {
+
+            return response()->json([
+                'done' => false,
+                'message' => 'La commission est introuvable',
+            ]);
+        }
+
+        if(!CommissionManager::executePayment($commissionPayment)) {
+
+            return response()->json([
+                'done' => false,
+                'message' => 'Echec lors de la transaction',
+            ]);
+        }
+
+        return response()->json([
+            'done' => true,
+            'message' => 'Le paiement a été effectué avec succès',
+        ]);
     }
 }

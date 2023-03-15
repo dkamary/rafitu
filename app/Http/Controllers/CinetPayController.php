@@ -12,6 +12,7 @@ use App\Models\Payments\CinetPay\CinetPay;
 use App\Models\Reservation;
 use App\Models\Transactions\Result;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -355,6 +356,21 @@ class CinetPayController extends Controller
         return view('pages.payment.cancel', [
             'reservation' => $reservation,
             'result' => new Result(Result::STATUS_WARNING, 'Le processus de paiement n\'a pas aboutie'),
+        ]);
+    }
+
+    public function transfert(Request $request) : JsonResponse {
+        $postData = file_get_contents('php://input');
+
+        // Décoder les données JSON
+        $response = json_decode($postData);
+
+        Log::debug($postData, [
+            'response' => $response,
+        ]);
+
+        return response()->json([
+            'response' => $response,
         ]);
     }
 }

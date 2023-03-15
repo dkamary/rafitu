@@ -15,7 +15,7 @@ class CommissionPayment extends Model
 
     protected $table = 'commission_payment';
     protected $primaryKey = 'id';
-    protected $fillable = ['order_id', 'reservation_id', 'amount', 'driver_amount', 'rafitu_amount', 'commission', 'commission_type', 'created_at', 'updated_at', 'status', 'source', 'destination'];
+    protected $fillable = ['order_id', 'reservation_id', 'amount', 'driver_amount', 'rafitu_amount', 'commission', 'commission_type', 'created_at', 'updated_at', 'status', 'source', 'destination', 'last_notes'];
     public $timestamps = false;
 
     protected $order;
@@ -64,5 +64,9 @@ class CommissionPayment extends Model
         $this->updated_at = date('Y-m-d H:i:s');
 
         return $this;
+    }
+
+    public function getTransactionId() : string {
+        return 'com-' . (int)$this->id;
     }
 }

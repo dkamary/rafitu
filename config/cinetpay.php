@@ -7,4 +7,5 @@ return [
     'secret' => env('CINEPAY_SECRET', '609805087638b658c4238a7.53373500'),
     'currency' => env('CINEPAY_CURRENCY', 'XOF'),
     'language' => env('CINEPAY_LANG', 'fr'),
+    'password' => env('CINEPAY_PASSWORD', ''),
 ];

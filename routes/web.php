@@ -200,6 +200,7 @@ Route::prefix('admin')->group(function () {
     Route::prefix('transactions')->group(function(){
         Route::get('/paiements', [AdminTransactionController::class, 'paiements'])->name('transaction_paiements');
         Route::match(['get', 'post',], '/commissions', [AdminTransactionController::class, 'commissions'])->name('transaction_commissions');
+        Route::match(['get', 'post',], '/commissions-pay', [AdminTransactionController::class, 'commissions_pay'])->name('transaction_commissions_pay');
         Route::get('/remboursements', [AdminTransactionController::class, 'remboursements'])->name('transaction_remboursements');
         Route::get('/mode-de-paiements', [AdminTransactionController::class, 'modePaiements'])->name('transaction_mode_de_paiements');
         Route::post('/mode-de-paiements/cinetpay', [AdminTransactionController::class, 'updateCinetPay'])->name('transaction_mode_de_paiements_cinetpay');
@@ -334,6 +335,7 @@ Route::prefix('paiement')->group(function(){
     Route::match(['get', 'post'], '/cinetpay/retour', [CinetPayController::class, 'retour'])->name('cinetpay_return');
     Route::match(['get', 'post'], '/cinetpay/annule', [CinetPayController::class, 'cancel'])->name('cinetpay_cancel');
     Route::match(['get', 'post'], '/cinetpay/echec', [CinetPayController::class, 'fail'])->name('cinetpay_fail');
+    Route::match(['get', 'post'], '/cinetpay/transfert', [CinetPayController::class, 'transfert'])->name('cinetpay_transfert');
 
 });
 
