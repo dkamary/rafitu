@@ -23,12 +23,16 @@ class Kernel extends ConsoleKernel
             $result = CronManager::commissions();
 
             Log::info($result->getMessage(), ['data' => $result->getData()]);
-        })->hourly();
+        })
+        ->name('Manage Commissions')
+        ->hourly();
 
         $schedule->call(function(){
             $result = CronManager::reviews();
             Log::info($result->getMessage(), ['data' => $result->getData()]);
-        })->hourlyAt(30);
+        })
+        ->name('Update Reservation and Reviews')
+        ->hourlyAt(30);
     }
 
     /**
