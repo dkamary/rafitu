@@ -37,7 +37,7 @@ class AdminTransactionController extends Controller
 
         $parameter->com_longtrajet = $request->input('com_longtrajet');
         $parameter->com_quotidien = $request->input('com_quotidien');
-        // $parameter->dist_longtrajet = $request->input('dist_longtrajet');
+        $parameter->heure_execution = (int)$request->input('heure_execution', 18000);
 
         $parameter->save();
 
