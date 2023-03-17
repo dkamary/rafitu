@@ -15,7 +15,7 @@
     </div>
     <div class="mb-3">
         <label for="description" class="form-label">Description</label>
-        <textarea name="description" id="description" rows="3" class="form-control" placeholder="Courte description" required title="Description utile pour le résumé de l'article"></textarea>
+        <textarea name="description" id="description" rows="3" class="form-control" placeholder="Courte description" required title="Description utile pour le résumé de l'article" maxlength="255"></textarea>
     </div>
     <div class="mb-3">
         <label for="content-wysiwyg" class="form-label">Contenu</label>

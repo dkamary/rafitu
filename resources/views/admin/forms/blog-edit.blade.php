@@ -13,7 +13,7 @@
     @endif
     <div class="mb-3">
         <label for="title" class="form-label">Titre</label>
-        <input type="text" name="title" id="title" class="form-control" value="{{ $page->title }}">
+        <input type="text" name="title" id="title" class="form-control" value="{{ $page->title }}" required>
     </div>
     <div class="mb-3">
         <label for="slug" class="form-label">URL</label>
@@ -21,7 +21,7 @@
     </div>
     <div class="mb-3">
         <label for="description" class="form-label">Description</label>
-        <textarea name="description" id="description" rows="3" class="form-control">{!! $page->description !!}</textarea>
+        <textarea name="description" id="description" rows="3" class="form-control" required maxlength="255">{!! $page->description !!}</textarea>
     </div>
     <div class="mb-3">
         <label for="content-wysiwyg" class="form-label">Contenu</label>
