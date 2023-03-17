@@ -18,6 +18,7 @@ class BlogController extends Controller
     public function index() : View {
         $pages = Page::where('page_status_id', '=', 1)
         ->where('page_category_id', '!=', 1)
+        ->orderBy('created_at', 'DESC')
         ->paginate(50);
 
         return view('admin.blogs.index', ['pages' => $pages]);
