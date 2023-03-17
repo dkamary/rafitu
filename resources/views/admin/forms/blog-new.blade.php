@@ -7,7 +7,7 @@
 <form action="{{ route('admin_blog_new') }}" method="post" id="{{ $formId }}">
     <div class="mb-3">
         <label for="title" class="form-label">Titre</label>
-        <input type="text" name="title" id="title" class="form-control" value="" placeholder="Titre de l'article">
+        <input type="text" name="title" id="title" class="form-control" value="" placeholder="Titre de l'article" required title="Titre de l'article">
     </div>
     <div class="mb-3">
         <label for="slug" class="form-label">URL</label>
@@ -15,11 +15,11 @@
     </div>
     <div class="mb-3">
         <label for="description" class="form-label">Description</label>
-        <textarea name="description" id="description" rows="3" class="form-control" placeholder="Courte description"></textarea>
+        <textarea name="description" id="description" rows="3" class="form-control" placeholder="Courte description" required title="Description utile pour le résumé de l'article"></textarea>
     </div>
     <div class="mb-3">
         <label for="content-wysiwyg" class="form-label">Contenu</label>
-        <textarea name="content" id="content" class="form-control" rows="10" placeholder="Contenu de l'article"></textarea>
+        <textarea name="content" id="content" class="form-control" rows="10" placeholder="Contenu de l'article" required></textarea>
     </div>
     <div class="mb-3">
         <div class="col-12 text-end">
