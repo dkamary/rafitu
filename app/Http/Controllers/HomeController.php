@@ -45,7 +45,7 @@ class HomeController extends Controller
     public function listPage() : View {
         $pages = Page::where('page_status_id', '=', PageStatus::PUBLIEE)
             ->where('page_category_id', '=', PageCategory::BLOG)
-            ->orderBy('created_at', 'DESC')
+            ->orderBy('id', 'DESC')
             ->paginate(12);
 
         return view('pages.blog-list', [
