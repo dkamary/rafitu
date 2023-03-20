@@ -45,7 +45,7 @@ class MessengerManager
         $messages = [];
 
         $builder = DB::table('message')
-            ->selectRaw('DISTINCT token')
+            ->selectRaw('DISTINCT token, date_sent')
             ->where('is_deleted', '=', $isDeleted)
             ->whereRaw('(`user_id` = ? OR `client_id` = ? OR `sender` = ?)', [$userId, $userId, $userId], 'or');
 
