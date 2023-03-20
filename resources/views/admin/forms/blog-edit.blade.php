@@ -60,5 +60,24 @@
                 images_upload_url: '{{ route('admin_upload_upload') }}',
             });
         </script>
+        <script id="garde-fou-de-description">
+            window.addEventListener("DOMContentLoaded", event => {
+                const description = document.querySelector("#description");
+                if(description) {
+                    description.addEventListener("keyup", event => {
+                        description.value = cleanupDescription(description.value);
+                    });
+                    description.addEventListener("paste", event => {
+                        description.value = cleanupDescription(event.clipboardData.getData("text/plain"));
+                    });
+                }
+            });
+
+            function cleanupDescription(texte) {
+                let value = texte.replace(/<[^>]+>/g, '');
+                value = value.slice(0, 254);
+                return value;
+            }
+        </script>
     @endpush
 @endonce

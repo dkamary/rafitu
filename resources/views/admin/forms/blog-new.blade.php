@@ -14,7 +14,7 @@
         <input type="text" name="slug" id="slug" class="form-control" value="" readonly disabled>
     </div>
     <div class="mb-3">
-        <label for="description" class="form-label">Description</label>
+        <label for="description" class="form-label">Description (<em>limité à moins de 255 caractères</em>)</label>
         <textarea name="description" id="description" rows="3" class="form-control" placeholder="Courte description" required title="Description utile pour le résumé de l'article" maxlength="255"></textarea>
     </div>
     <div class="mb-3">
@@ -34,7 +34,7 @@
 
 @once
     @push('footer')
-    <script src="https://cdn.tiny.cloud/1/dviruupf3fk2hf5cgzannqrlgyv58fj65b3bgjdca5y9t9qr/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+        <script src="https://cdn.tiny.cloud/1/dviruupf3fk2hf5cgzannqrlgyv58fj65b3bgjdca5y9t9qr/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
         <script>
             tinymce.init({
                 selector: '#content',
@@ -48,6 +48,25 @@
                 'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help',
                 images_upload_url: '{{ route('admin_upload_upload') }}',
             });
-            </script>
+        </script>
+        <script id="garde-fou-de-description">
+            window.addEventListener("DOMContentLoaded", event => {
+                const description = document.querySelector("#description");
+                if(description) {
+                    description.addEventListener("keyup", event => {
+                        description.value = cleanupDescription(description.value);
+                    });
+                    description.addEventListener("paste", event => {
+                        description.value = cleanupDescription(event.clipboardData.getData("text/plain"));
+                    });
+                }
+            });
+
+            function cleanupDescription(texte) {
+                let value = texte.replace(/<[^>]+>/g, '');
+                value = value.slice(0, 254);
+                return value;
+            }
+        </script>
     @endpush
 @endonce
