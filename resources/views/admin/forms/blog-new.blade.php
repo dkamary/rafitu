@@ -51,6 +51,16 @@
         </script>
         <script id="garde-fou-de-description">
             window.addEventListener("DOMContentLoaded", event => {
+                const title = document.querySelector("#title");
+                if(title) {
+                    title.addEventListener("keyup", event => {
+                        title.value = cleanupDescription(title.value);
+                    });
+                    title.addEventListener("paste", event => {
+                        title.value = cleanupDescription(event.clipboardData.getData("text/plain"));
+                    });
+                }
+
                 const description = document.querySelector("#description");
                 if(description) {
                     description.addEventListener("keyup", event => {

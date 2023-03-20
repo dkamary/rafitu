@@ -13,7 +13,7 @@
     @endif
     <div class="mb-3">
         <label for="title" class="form-label">Titre</label>
-        <input type="text" name="title" id="title" class="form-control" value="{{ $page->title }}" required>
+        <input type="text" name="title" id="title" class="form-control" value="{{ $page->title }}" required maxlength="255">
     </div>
     <div class="mb-3">
         <label for="slug" class="form-label">URL</label>
@@ -62,6 +62,16 @@
         </script>
         <script id="garde-fou-de-description">
             window.addEventListener("DOMContentLoaded", event => {
+                const title = document.querySelector("#title");
+                if(title) {
+                    title.addEventListener("keyup", event => {
+                        title.value = cleanupDescription(title.value);
+                    });
+                    title.addEventListener("paste", event => {
+                        title.value = cleanupDescription(event.clipboardData.getData("text/plain"));
+                    });
+                }
+
                 const description = document.querySelector("#description");
                 if(description) {
                     description.addEventListener("keyup", event => {
