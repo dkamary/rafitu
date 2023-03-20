@@ -74,14 +74,15 @@ class Message extends Model
         $date = new DateTime($this->date_sent);
         $now = new DateTime();
         $diff = $now->diff($date);
-        if($diff->d < 1) {
-            return 'Aujourd\'hui à ' . $date->format($format);
-        } elseif($diff->d == 1) {
-            return 'Hier à ' . $date->format($format);
-        } elseif($diff->d == 2) {
-            return 'Avant hier à ' . $date->format($format);
-        } else {
-            return $date->format('d/m/Y à ' . $format);
-        }
+
+        if($diff->m == 0 || $diff->y == 0) return $date->format('d/m/Y à ' . $format);
+
+        if($diff->d < 1) return 'Aujourd\'hui à ' . $date->format($format);
+
+        if($diff->d == 1) return 'Hier à ' . $date->format($format);
+
+        if($diff->d == 2) return 'Avant hier à ' . $date->format($format);
+
+        return $date->format('d/m/Y à ' . $format);
     }
 }
