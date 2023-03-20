@@ -31,9 +31,9 @@ class BlogController extends Controller
         }
 
         $page = Page::create([
-            'title' => $request->input('title'),
+            'title' => substr(trim($request->input('title')), 0, 254),
             'slug' => Str::slug($request->input('title', uniqid('article-')), '-', 'fr'),
-            'description' => substr($request->input('description', '...'), 0, 254),
+            'description' => substr(trim($request->input('description', '...')), 0, 254),
             'content' => $request->input('content', '<p></p>'),
             'page_status_id'=> 1,
             'page_category_id' => 2,
