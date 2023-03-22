@@ -29,7 +29,7 @@
     </div>
     <div class="mb-3">
         <div class="col-12 text-end">
-            <button type="submit" class="btn btn-primary">
+            <button type="button" class="btn btn-primary" id="btn-submit">
                 <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;
                 Enregistrer
             </button>
@@ -80,6 +80,68 @@
                     description.addEventListener("paste", event => {
                         description.value = cleanupDescription(event.clipboardData.getData("text/plain"));
                     });
+                }
+
+                const form = document.querySelector("#{{ $formId }}");
+                if(form) {
+                    form.addEventListener("submit", event => {
+                        console.debug("form submit");
+                        const title = document.querySelector("#title");
+                        const description = document.querySelector("#description");
+                        if(title.value.length < 3) {
+                            alert("Le titre est trop court !");
+                            title.style.border = "solid 1px #ee0000";
+                            event.preventDefault();
+                        } else if(title.value.length > 254) {
+                            alert("Le titre est trop long !");
+                            title.style.border = "solid 1px #ee0000";
+                            event.preventDefault();
+                        } else if(description.value.length < 3) {
+                            alert("La description est trop courte !");
+                            description.style.border = "solid 1px #ee0000";
+                            event.preventDefault();
+                        } else if(description.value.length > 254) {
+                            alert("La description est trop longue !");
+                            description.style.border = "solid 1px #ee0000";
+                            event.preventDefault();
+                        }
+                        event.preventDefault();
+                    });
+
+                    const submitBtn = form.querySelector("#btn-submit");
+                    if(submitBtn) {
+                        submitBtn.addEventListener("click", event => {
+
+                            const title = document.querySelector("#title");
+                            const description = document.querySelector("#description");
+                            if(title.value.length < 3) {
+                                alert("Le titre est trop court !");
+                                title.style.border = "solid 1px #ee0000";
+                                event.preventDefault();
+                                return false;
+                            } else if(title.value.length > 254) {
+                                alert("Le titre est trop long !");
+                                title.style.border = "solid 1px #ee0000";
+                                event.preventDefault();
+                                return false;
+                            } else if(description.value.length < 3) {
+                                alert("La description est trop courte !");
+                                description.style.border = "solid 1px #ee0000";
+                                event.preventDefault();
+                                return false;
+                            } else if(description.value.length > 254) {
+                                alert("La description est trop longue !");
+                                description.style.border = "solid 1px #ee0000";
+                                event.preventDefault();
+                                return false;
+                            }
+
+                            console.debug("Triggering form submit");
+                            form.submit();
+                        });
+                    } else {
+                        console.warn("No submit button found!!!");
+                    }
                 }
             });
 
