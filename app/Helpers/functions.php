@@ -172,6 +172,7 @@ if (!function_exists('post_mostview')) {
     function post_mostview(int $count = 10): array
     {
         $pages = Page::where('page_category_id', '=', PageCategory::BLOG)
+            ->where('page_status_id', '=', 1)
             ->orderBy('views', 'DESC')
             ->limit($count)
             ->get();
@@ -194,6 +195,7 @@ if (!function_exists('post_latest')) {
     function post_latest(int $count = 10): array
     {
         $pages = Page::where('page_category_id', '=', PageCategory::BLOG)
+            ->where('page_status_id', '=', 1)
             ->orderBy('created_at', 'DESC')
             ->limit($count)
             ->get();
