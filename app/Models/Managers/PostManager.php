@@ -50,15 +50,29 @@ class PostManager {
         return false;
     }
 
-    public static function getValidSlug(?string $suggestion = null, ?int $pageId = null) : string {
+    public static function getValidSlugOld(?string $suggestion = null, int $index = 2, ?int $pageId = null) : string {
         if(!$suggestion || strlen(trim($suggestion)) == 0) return uniqid('article-');
         $builder = Page::where('slug', 'LIKE', $suggestion);
         if($pageId && $pageId > 0) {
             $builder->where('id', '<>', $pageId);
         }
         $count = $builder->count();
-        if($count == 0) return $suggestion;
+        if($count == 0) return $suggestion . '-' . $index;
 
-        return self::getValidSlug($suggestion);
+        return self::getValidSlug($suggestion, ++$count, $pageId);
+    }
+
+    public static function getValidSlug(?string $suggestion = null, int $index = 2, ?int $pageId = null) : string {
+        if(!$suggestion || strlen(trim($suggestion)) == 0) return uniqid('article-');
+        $slug = $suggestion . (($index > 2) ? '-' . $index : '');
+        $builder = Page::where('slug', 'LIKE', $slug);
+        if($pageId && $pageId > 0) {
+            $builder->where('id', '<>', $pageId);
+        }
+        $count = $builder->count();
+
+        if($count == 0) return $slug;
+
+        return self::getValidSlug($suggestion, ++$index, $pageId);
     }
 }
