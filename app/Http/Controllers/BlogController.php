@@ -57,7 +57,7 @@ class BlogController extends Controller
         }
         // verify slug
         $title = substr(trim($request->input('title', uniqid('article-'))), 0, 254);
-        $slug = PostManager::getValidSlug(Str::slug($title, '-', 'fr'), $page->id);
+        $slug = PostManager::getValidSlug(Str::slug($title, '-', 'fr'), 2, $page->id);
 
         $page->title = $title;
         if(!$page->title) $page->title = 'Article ' . uniqid();
