@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Managers\PostManager;
 use App\Models\Page;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -30,9 +31,11 @@ class BlogController extends Controller
             return view('admin.blogs.new');
         }
 
+        $slug = PostManager::getValidSlug(Str::slug($request->input('title', uniqid('article-')), '-', 'fr'));
+
         $page = Page::create([
             'title' => substr(trim($request->input('title')), 0, 254),
-            'slug' => Str::slug($request->input('title', uniqid('article-')), '-', 'fr'),
+            'slug' => $slug,
             'description' => substr(trim($request->input('description', '...')), 0, 254),
             'content' => $request->input('content', '<p></p>'),
             'page_status_id'=> 1,
