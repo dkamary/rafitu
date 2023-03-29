@@ -31,10 +31,11 @@ class BlogController extends Controller
             return view('admin.blogs.new');
         }
 
-        $slug = PostManager::getValidSlug(Str::slug($request->input('title', uniqid('article-')), '-', 'fr'));
+        $title = substr(trim($request->input('title', uniqid('article-'))), 0, 254);
+        $slug = PostManager::getValidSlug(Str::slug($title, '-', 'fr'));
 
         $page = Page::create([
-            'title' => substr(trim($request->input('title')), 0, 254),
+            'title' => $title,
             'slug' => $slug,
             'description' => substr(trim($request->input('description', '...')), 0, 254),
             'content' => $request->input('content', '<p></p>'),
@@ -55,16 +56,13 @@ class BlogController extends Controller
             return view('admin.blogs.edit', ['page' => $page]);
         }
         // verify slug
-        $slug = Str::slug($page->title, '-', 'fr');
-        $count = Page::where('slug', 'LIKE', $slug)->where('id', '<>', $page->id)->count();
-        if($count > 0) {
-            $slug .= '-' . ++$count;
-        }
+        $title = substr(trim($request->input('title', uniqid('article-'))), 0, 254);
+        $slug = PostManager::getValidSlug(Str::slug($title, '-', 'fr'), $page->id);
 
-        $page->title = $request->input('title', '');
+        $page->title = $title;
         if(!$page->title) $page->title = 'Article ' . uniqid();
         $page->slug = $slug;
-        $page->description = $request->input('description', '');
+        $page->description = substr(trim($request->input('description', '...')), 0, 254);
         $page->content = $request->input('content', '<p></p>');
 
         $page->save();
