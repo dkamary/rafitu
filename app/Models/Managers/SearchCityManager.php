@@ -132,8 +132,9 @@ class SearchCityManager {
         return self::manageDuplicateCityName($cities);
     }
 
-    public static function searchRide(?string $search = null, int $count = 10, string $field = 'departure_label') : Collection {
+    public static function searchRide(?string $search = null, int $count = 10, ?string $field = 'departure_label') : Collection {
         if(!$search) return new Collection();
+        if(!$field) $field = 'departure_label';
 
         $search = self::manageSearchString($search);
 

@@ -49,4 +49,12 @@ class PostManager {
 
         return false;
     }
+
+    public static function getValidSlug(?string $suggestion = null) : string {
+        if(!$suggestion) return uniqid('article-');
+        $count = Page::where('slug', 'LIKE', $suggestion)->count();
+        if($count == 0) return $suggestion;
+
+        return $suggestion .'-' . ++$count;
+    }
 }
