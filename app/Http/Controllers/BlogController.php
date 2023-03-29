@@ -54,10 +54,16 @@ class BlogController extends Controller
 
             return view('admin.blogs.edit', ['page' => $page]);
         }
+        // verify slug
+        $slug = Str::slug($page->title, '-', 'fr');
+        $count = Page::where('slug', 'LIKE', $slug)->where('id', '<>', $page->id)->count();
+        if($count > 0) {
+            $slug .= '-' . ++$count;
+        }
 
         $page->title = $request->input('title', '');
         if(!$page->title) $page->title = 'Article ' . uniqid();
-        $page->slug = Str::slug($page->title, '-', 'fr');
+        $page->slug = $slug;
         $page->description = $request->input('description', '');
         $page->content = $request->input('content', '<p></p>');
 
