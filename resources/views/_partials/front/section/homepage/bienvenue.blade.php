@@ -12,13 +12,15 @@
             </div>
             <div class="col-12 col-lg-6 d-flex flex-column justify-content-center px-md-9 p-1 fs-5">
                 <p class="text-bold">
-                    Nous sommes spécialisés dans la fourniture d'un service de haute qualité et assurons votre sécurité.
+                    Nous sommes spécialisés dans la fourniture d'un service de haute qualité et nous assurons votre sécurité.
                 </p>
                 <p>
                     Pour assurer votre sécurité pendant votre voyage,
-                    nous mettons toute œuvre en recueillant les informations
-                    de nos conducteurs et vous les transmettons sur demande.
-                    Vous pouvez donc connaître l'identité de ceux avec qui vous voyagez.
+                    nous mettons tout en œuvre en recueillant
+                    les informations de nos conducteurs et nous
+                    vous les transmettons sur demande.
+                    Vous pouvez ainsi connaître l'identité de ceux
+                    avec qui vous voyagez.
                 </p>
             </div>
         </div>
