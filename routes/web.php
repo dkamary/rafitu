@@ -216,6 +216,7 @@ Route::prefix('admin')->group(function () {
         Route::post('/sauvegarder', [RideAdminController::class, 'save'])->name('admin_ride_save'); // JSON
         Route::post('/effacer', [RideAdminController::class, 'remove'])->name('admin_ride_remove'); // JSON
         Route::match(['get', 'post'], '/parametres', [RideAdminController::class, 'parameters'])->name('admin_ride_parameters');
+        Route::get('/republier/{ride}', [RideAdminController::class, 'republish'])->name('admin_ride_republish');
     });
 
     // PRERESERVATION

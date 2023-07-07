@@ -21,7 +21,8 @@ class RideAdminController extends Controller
         $this->middleware('auth.admin');
     }
 
-    public function index(Request $request):  View {
+    public function index(Request $request): View
+    {
         $allRides = Ride::where('id', '>', 0)
             // ->where('ride_status_id', '>', 0)
             ->orderBy('departure_date', 'DESC')
@@ -32,7 +33,8 @@ class RideAdminController extends Controller
         ]);
     }
 
-    public function toValidate() : View {
+    public function toValidate(): View
+    {
         $toValidates = Ride::where('ride_status_id', '=', 5)
             ->orderBy('departure_date', 'DESC')
             ->paginate(10);
@@ -42,7 +44,8 @@ class RideAdminController extends Controller
         ]);
     }
 
-    public function show(Ride $ride) : View {
+    public function show(Ride $ride): View
+    {
 
         return view('admin.ride.show', [
             'ride' => $ride,
@@ -51,7 +54,8 @@ class RideAdminController extends Controller
         ]);
     }
 
-    public function validation(Request $request) : JsonResponse {
+    public function validation(Request $request): JsonResponse
+    {
         $ride = Ride::where('id', '=', (int)$request->input('id'))->first();
         $ride->ride_status_id = (int)$request->input('ride_status_id');
         $ride->save();
@@ -64,11 +68,12 @@ class RideAdminController extends Controller
         ]);
     }
 
-    public function save(Request $request) {
+    public function save(Request $request)
+    {
         $ride = Ride::where('id', '=', (int)$request->input('id'))->first();
         // dd($ride);
 
-        if(!$ride) {
+        if (!$ride) {
             $ride = new Ride();
             $ride->created_at = date('Y-m-d H:i:s');
         } else {
@@ -107,7 +112,7 @@ class RideAdminController extends Controller
 
         session()->flash('success', 'Le trajet a été mis à jour!');
 
-        if($request->isXmlHttpRequest()) {
+        if ($request->isXmlHttpRequest()) {
 
             return response()->json([
                 'done' => true,
@@ -123,9 +128,10 @@ class RideAdminController extends Controller
         // ]);
     }
 
-    public function remove(Request $request) : RedirectResponse {
+    public function remove(Request $request): RedirectResponse
+    {
         $ride = Ride::where('id', '=', (int)$request->input('id'))->first();
-        if(!$ride) {
+        if (!$ride) {
             return response()->redirectToRoute('admin_ride_index');
         }
 
@@ -137,9 +143,10 @@ class RideAdminController extends Controller
         return response()->redirectToRoute('admin_ride_index');
     }
 
-    public function parameters(Request $request) : View {
+    public function parameters(Request $request): View
+    {
         $parameters = ParamManager::getParameters();
-        if($request->isMethod(Request::METHOD_POST)) {
+        if ($request->isMethod(Request::METHOD_POST)) {
             $parameters->dist_longtrajet = (int)$request->input('dist_longtrajet', 30000);
             $parameters->save();
 
@@ -149,5 +156,16 @@ class RideAdminController extends Controller
         return view('admin.ride.parameters', [
             'parameters' => $parameters,
         ]);
+    }
+
+    public function republish(Ride $ride): RedirectResponse
+    {
+        $ride
+            ->republish()
+            ->save();
+
+        session()->flash('success', sprintf('Le trajet #%d <strong>%s</strong> a été republié sur le site', $ride->id, $ride->toString()));
+
+        return response()->redirectToRoute('admin_ride_show', ['ride' => $ride->id]);
     }
 }

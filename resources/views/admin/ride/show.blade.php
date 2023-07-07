@@ -270,6 +270,10 @@
 
                 <div class="row">
                     <div class="col-12 text-center">
+                        <a href="{{ route('admin_ride_republish', ['ride' => $ride->id]) }}" class="btn btn-secondary mr-2 btn-republish" title="Cliquez ici pour permettre à ce trajet d'apparaître sur le site">
+                            <i class="fa fa-refresh" aria-hidden="true"></i>&nbsp;
+                            Réactiver le trajet
+                        </a>
                         <button type="submit" class="btn btn-primary">
                             <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;
                             Enregistrer
@@ -281,3 +285,21 @@
         </div>
     </div>
 @endsection
+
+@once
+    @push('footer')
+        <script>
+            window.addEventListener("DOMContentLoaded", () => {
+                const refreshBtn = document.querySelector(".btn-republish");
+                if(refreshBtn) {
+                    refreshBtn.addEventListener("click", e => {
+                        if (!confirm("Voulez-vous re-publier ce trajet ?")) {
+                            e.preventDefault();
+                            return false;
+                        }
+                    });
+                }
+            });
+        </script>
+    @endpush
+@endonce

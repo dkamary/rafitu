@@ -223,4 +223,11 @@ class Ride extends Model
     public function isToValidate() : bool {
         return ($this->ride_status_id == 5);
     }
+
+    public function republish() : self
+    {
+        $this->ride_status_id = 1;
+
+        return $this;
+    }
 }
