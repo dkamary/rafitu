@@ -23,7 +23,7 @@ class RideAdminController extends Controller
 
     public function index(Request $request):  View {
         $allRides = Ride::where('id', '>', 0)
-            ->where('ride_status_id', '>', 0)
+            // ->where('ride_status_id', '>', 0)
             ->orderBy('departure_date', 'DESC')
             ->paginate(10);
 

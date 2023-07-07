@@ -28,7 +28,7 @@
                             </div>
                             <div class="col-4">
                                 <div class="mb-0 text-end">
-                                    <strong class="fs-4">{{ number_format($ride->price, 0) }}</strong><sup>F CFA</sup>
+                                    <strong class="fs-4">{{ number_format($ride->price, 2, '.', '') }}</strong><sup>F CFA</sup>
                                 </div>
                                 <div class="mb-0 text-end">
                                     <em style="font-size: .8em">par passager</em>
