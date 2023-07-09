@@ -27,6 +27,7 @@ class DriverAdminController extends Controller
         $qb = DB::table('user')
             ->select(['id'])
             ->where('user_status_id', '<>', 5)
+            ->where('user_status_id', '<>', 2)
             ->whereRaw($whereRaw, [], 'and');
         $results = $qb->get();
 
@@ -84,7 +85,7 @@ class DriverAdminController extends Controller
     public function remove(Request $request) : RedirectResponse {
         $driver = User::where('id', '=', (int)$request->input('id'))->first();
         if($driver) {
-            $driver->user_status_id = 1;
+            $driver->user_status_id = 2;
             $driver->save();
 
             session()->flash('success', "Chauffeur effacé");
