@@ -23,13 +23,29 @@ class RideAdminController extends Controller
 
     public function index(Request $request): View
     {
-        $allRides = Ride::where('id', '>', 0)
+        $builder = Ride::where('id', '>', 0);
             // ->where('ride_status_id', '>', 0)
+
+        $filter = $request->input('filter', 'planifie');
+        if ($filter == 'planifie') {
+            $builder->where('ride_status_id', '=', 1);
+        } elseif ($filter == 'a-valider') {
+            $builder->where('ride_status_id', '=', 5);
+        } elseif ($filter == 'efface') {
+            $builder->where('ride_status_id', '=', 0);
+        } elseif ($filter == 'arrive') {
+            $builder->where('ride_status_id', '=', 3);
+        } elseif ($filter == 'annule') {
+            $builder->where('ride_status_id', '=', 4);
+        }
+
+        $allRides = $builder
             ->orderBy('departure_date', 'DESC')
             ->paginate(10);
 
         return view('admin.ride.index', [
             'rides' => $allRides,
+            'filter' => $filter,
         ]);
     }
 

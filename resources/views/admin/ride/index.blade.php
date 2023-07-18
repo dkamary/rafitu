@@ -2,8 +2,24 @@
 
 @extends('_layouts.back')
 
+@php
+    $filter = $filter ?? 'a-valider';
+    $title = '';
+    if ($filter == 'planifie') {
+        $title = 'Planifié';
+    } elseif ($filter == 'a-valider') {
+        $title = 'A valider';
+    } elseif ($filter == 'efface') {
+        $title = 'Effacé';
+    } elseif ($filter == 'arrive') {
+        $title = 'Arrivé';
+    } elseif ($filter == 'annule') {
+        $title = 'Annulé';
+    }
+@endphp
+
 @section('meta_title')
-    Trajets
+    Trajets {{ $title }}(s)
 @endsection
 
 @section('main')
@@ -14,6 +30,32 @@
     <div class="row py-5 bg-white">
         <div class="col-12">
 
+            <div class="row my-3">
+                <div class="col-6 col-md-2">
+                    <a @class(['btn', 'btn-block', 'btn-success' => ($filter == 'a-valider'), 'btn-outline-success' => !($filter == 'a-valider')])
+                        href="{{ route('admin_ride_index', ['filter' => 'a-valider']) }}">
+                        A valider
+                    </a>
+                </div>
+                <div class="col-6 col-md-2">
+                    <a @class(['btn', 'btn-block', 'btn-secondary' => ($filter == 'planifie'), 'btn-outline-secondary' => !($filter == 'planifie')])
+                        href="{{ route('admin_ride_index', ['filter' => 'planifie']) }}">
+                        Planifié
+                    </a>
+                </div>
+                <div class="col-6 col-md-2">
+                    <a @class(['btn', 'btn-block', 'btn-warning' => ($filter == 'efface'), 'btn-outline-warning' => !($filter == 'efface')])
+                        href="{{ route('admin_ride_index', ['filter' => 'efface']) }}">
+                        Effacé
+                    </a>
+                </div>
+                <div class="col-6 col-md-2">
+                    <a @class(['btn', 'btn-block', 'btn-danger' => ($filter == 'annule'), 'btn-outline-danger' => !($filter == 'annule')])
+                        href="{{ route('admin_ride_index', ['filter' => 'annule']) }}">
+                        Annulé
+                    </a>
+                </div>
+            </div>
             <section class="trajet-list my-5">
                 <header class="trajet-list__header row py-3 bg-secondary mx-0 text-white">
                     <div class="col-md-1 col-12 d-none d-md-flex fw-bold fs-6">#</div>
@@ -90,102 +132,13 @@
                         </div>
                     @empty
                         <div class="row">
-                            <div class="col-12 py-1">
+                            <div class="col-12 pt-5 ps-6">
                                 <em>Aucun trajet trouvé dans la base de données</em>
                             </div>
                         </div>
                     @endforelse
                 </main>
             </section>
-
-            {{-- <table class="table table-striped">
-                <thead class="table-secondary">
-                    <tr>
-                        <th width="5%" class="text-center fw-bold">#</th>
-                        <th width="35%" class="text-start fw-bold">Trajet</th>
-                        <th width="20%" class="text-center fw-bold">Date de départ</th>
-                        <th width="20%" class="text-center fw-bold">Statut</th>
-                        <th width="20%" class="text-center fw-bold">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    @forelse ($rides as $ride)
-                        <tr id="ride-{{ $ride->id }}">
-                            <td>
-                                {{ $ride->id }}
-                            </td>
-                            <td>
-                                <p class="mb-1">
-                                    <strong>Départ :</strong>
-                                    <em>{{ $ride->departure_label }}</em>
-                                </p>
-                                <p class="mb-1">
-                                    <strong>Arrivée :</strong>
-                                    <em>{{ $ride->arrival_label }}</em>
-                                </p>
-                            </td>
-                            <td class="text-center">
-                                {{ display_date($ride->departure_date, 'H:i') }}
-                            </td>
-                            <td class="text-center" title="{{ $ride->ride_status_id }}">
-                                <strong @class([
-                                    'text-success' => $ride->ride_status_id == 1,
-                                    'text-info' => $ride->ride_status_id == 2,
-                                    'text-danger' => $ride->ride_status_id == 4,
-                                    'text-warning' => $ride->ride_status_id == 5
-                                ])>
-                                    {{ ride_status($ride->ride_status_id) }}
-                                </strong>
-                            </td>
-                            <td>
-                                <div class="d-flex flex-wrap justify-content-center align-items-center">
-                                    <a href="{{ route('admin_ride_show', ['ride' => $ride->id]) }}" class="btn btn-outline-info ms-1 my-1">
-                                        <i class="fa fa-check-square-o" aria-hidden="true"></i>&nbsp;
-                                        <span class="d-none d-sm-inline-block">Voir</span>
-                                    </a>
-
-                                    @if ($ride->isToValidate())
-                                    <form action="{{ route('admin_ride_validate') }}" method="post" class="validate-ride-form ms-1 my-1">
-                                        <button type="submit" class="btn btn-outline-dark">
-                                            <i class="fa fa-check-square-o" aria-hidden="true"></i>&nbsp;
-                                            <span class="d-sm-inline-block">Valider</span>
-                                        </button>
-                                        <input type="hidden" id="token" name="_token" value="{{ csrf_token() }}">
-                                        <input type="hidden" id="id" name="id" value="{{ $ride->id }}">
-                                    </form>
-                                    @endif
-
-                                    <form action="{{ route('admin_ride_remove') }}" method="POST" class="remove-ride-form ms-1 my-1">
-                                        <button type="submit" class="btn btn-outline-danger">
-                                            <i class="fa fa-times" aria-hidden="true"></i>&nbsp;
-                                            Effacer
-                                        </button>
-                                        <input type="hidden" id="id" name="id" value="{{ $ride->id }}">
-                                        @csrf
-                                    </form>
-
-                                </div>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="5">
-                                Il n'y a pas encore de trajet dans la base de données.
-                            </td>
-                        </tr>
-                    @endforelse
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="5">
-                            <div class="d-flex w-100 flex-wrap justify-content-center align-items-center">
-                                {!! $rides->links() !!}
-                            </div>
-                        </td>
-                    </tr>
-                </tfoot>
-            </table> --}}
         </div>
     </div>
 @endsection
