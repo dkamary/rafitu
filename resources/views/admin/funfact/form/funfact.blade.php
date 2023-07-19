@@ -41,7 +41,7 @@
                 <label for="email" class="col-12 col-sm-4 fw-bold">Icone</label>
                 <div class="col-12 col-sm-8 required">
                     <div class="col-12 d-flex justify-content-center align-items-center flex-column">
-                        <img id="icone-preview"
+                        <img id="icon-preview"
                         src="{{ get_funfact_icon($funfact->icon) }}"
                         alt="{{ $funfact->id.'-'.$funfact->title }}"
                         class="mb-4"
@@ -59,7 +59,7 @@
             <div class="row mb-3">
                 <label for="birthdate" class="col-12 col-sm-4 fw-bold">Valeur</label>
                 <div class="col-6 col-sm-2">
-                    <input type="text" name="count" id="count" placeholder="Saisir une valeur" class="form-control" value="{{ $funfact->count }}" maxlength="3">
+                    <input type="text" name="count" id="count" placeholder="Saisir une valeur" class="form-control" value="{{ $funfact->count }}">
                 </div>
             </div>
         </div>

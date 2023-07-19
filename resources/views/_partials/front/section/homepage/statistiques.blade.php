@@ -21,7 +21,12 @@
                                     {{-- <i class="fa fa-users" aria-hidden="true"></i> --}}
                                     <img src="{{ get_funfact_icon($f->icon) }}" alt="img" class="br-te-7 br-ts-7" style="height: 64px; width: auto;">
                                 </h3>
-                                <h4 class="mb-0">{{ $f->title }}<span>({{ $f->count }})</span></h4>
+                                <h4 class="mb-0">
+                                    {{ $f->title }}
+                                    @isset($f->count)
+                                        <span>({{ $f->count }})</span>
+                                    @endisset
+                                </h4>
                             </div>
                         </div>
                     </div>
@@ -92,6 +97,10 @@
 
             .statistiques .item-card:hover .item-card-desc::before {
                 background: rgba(26, 66, 243, .5);
+            }
+
+            .item-card .item-card-desc .item-card-text {
+                top: 25% !important;
             }
         </style>
     @endpush
