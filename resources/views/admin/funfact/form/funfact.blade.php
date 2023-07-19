@@ -58,7 +58,7 @@
             </div>
             <div class="row mb-3">
                 <label for="birthdate" class="col-12 col-sm-4 fw-bold">Valeur</label>
-                <div class="col-6 col-sm-2">
+                <div class="col-12 col-sm-8">
                     <input type="text" name="count" id="count" placeholder="Saisir une valeur" class="form-control" value="{{ $funfact->count }}">
                 </div>
             </div>
