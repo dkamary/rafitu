@@ -1,9 +1,10 @@
 {
-    "name": "laravel/laravel",
+    "name": "rafitu/rafitu",
     "type": "project",
     "description": "The Laravel Framework.",
     "keywords": ["framework", "laravel"],
     "license": "MIT",
+    "version": "1.0",
     "require": {
         "php": "^7.3|^8.0",
         "brick/phonenumber": "^0.5.0",
